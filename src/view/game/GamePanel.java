@@ -157,7 +157,7 @@ public class GamePanel extends ListenerPanel {
 
     public void afterMove() {
         this.steps++;
-        this.stepLabel.setText(String.format("Step: %d", this.steps));
+        this.stepLabel.setText(String.format("步数: %d", this.steps));
     }
 
     public void resetGame() {
@@ -170,7 +170,7 @@ public class GamePanel extends ListenerPanel {
         // 重置选中状态和步数
         selectedBox = null;
         steps = 0;
-        stepLabel.setText("Step: 0");
+        stepLabel.setText("步数: 0");
 
         // 重新初始化游戏
         initialGame();
@@ -183,6 +183,7 @@ public class GamePanel extends ListenerPanel {
 
     public void setSteps(int steps) {
         this.steps = steps;
+        stepLabel.setText(String.format("步数: %d", this.steps));
     }
 
     public int getSteps() {

@@ -1,5 +1,6 @@
 package model;
 
+import java.io.File;
 import java.io.Serializable;
 
 public class User implements Serializable {
@@ -24,4 +25,8 @@ public class User implements Serializable {
     public String getUsername() { return username; }
     public GameSave getSaveData() { return saveData; }
     public void setSaveData(GameSave saveData) { this.saveData = saveData; }
+
+    public boolean hasSaveData() {
+        return new File(username + ".save").exists();
+    }
 }

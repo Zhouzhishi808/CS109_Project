@@ -5,10 +5,12 @@ package model;
  */
 public class MapModel {
     int[][] matrix;
+    String name;
 
 
-    public MapModel(int[][] matrix) {
+    public MapModel(int[][] matrix, String name) {
         this.matrix = matrix;
+        this.name = name;
     }
 
     public int getWidth() {
@@ -22,6 +24,8 @@ public class MapModel {
     public int getId(int row, int col) {
         return matrix[row][col];
     }
+
+    public String getName() {return this.name;}
 
     public int[][] getMatrix() {
         return matrix;

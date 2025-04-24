@@ -1,11 +1,13 @@
 package view.login;
 
+import controller.GameController;
 import model.UserManager;
 import view.FrameUtil;
 import view.game.GameFrame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class LoginFrame extends JFrame {
     private JTextField username;
@@ -21,11 +23,11 @@ public class LoginFrame extends JFrame {
         this.setSize(width, height);
 
         // 用户名标签和输入框
-        JLabel userLabel = FrameUtil.createJLabel(this, new Point(50, 20), 70, 40, "username:");
+        JLabel userLabel = FrameUtil.createJLabel(this, new Point(50, 20), 70, 40, "用户名:");
         username = FrameUtil.createJTextField(this, new Point(120, 20), 120, 40);
 
         // 密码标签和输入框（使用 JPasswordField）
-        JLabel passLabel = FrameUtil.createJLabel(this, new Point(50, 80), 70, 40, "password:");
+        JLabel passLabel = FrameUtil.createJLabel(this, new Point(50, 80), 70, 40, "密码:");
         password = new JPasswordField(); // 手动初始化
         password.setLocation(120, 80);
         password.setSize(120, 40);

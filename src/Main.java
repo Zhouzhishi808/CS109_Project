@@ -14,7 +14,7 @@ public class Main {
                     {0,0,0,4,4},
                     {0,0,0,4,4},
                     {1,2,2,2,2}
-            });
+            }, "demoMap");
             GameFrame gameFrame = new GameFrame(450, 450, mapModel);
             gameFrame.setVisible(false);
             loginFrame.setGameFrame(gameFrame);

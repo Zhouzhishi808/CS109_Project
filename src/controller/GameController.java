@@ -165,6 +165,9 @@ public class GameController {
     }
 
     public void saveGame(User user) throws IOException {
+        if (user == null) {
+            throw new IOException("用户未登录");
+        }
         GameSave save = new GameSave(
                 deepCopy(model.getMatrix()),
                 view.getSteps()
@@ -174,16 +177,23 @@ public class GameController {
         try (ObjectOutputStream oos = new ObjectOutputStream(
                 new FileOutputStream(user.getUsername() + ".save"))) {
             oos.writeObject(save);
+        } catch (SecurityException e) {
+            throw new IOException("无文件写入权限");
         }
     }
 
     public void loadGame(User user) throws IOException, ClassNotFoundException {
+        if (user == null) {
+            throw new IllegalArgumentException("用户未登录");
+        }
         try (ObjectInputStream ois = new ObjectInputStream(
                 new FileInputStream(user.getUsername() + ".save"))) {
             GameSave save = (GameSave) ois.readObject();
-            model.setMatrix(save.getMapState());
+            model.setMatrix(deepCopy(save.getMapState()));
+            view.resetGame(); // 强制刷新视图
             view.setSteps(save.getSteps());
-            view.resetGame();
+        } catch (FileNotFoundException e) {
+            throw new IOException("存档文件不存在");
         }
     }
     //todo: add other methods such as loadGame, saveGame...
