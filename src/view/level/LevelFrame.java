@@ -6,26 +6,32 @@ package view.level;
 import model.Constants;
 import model.MapModel;
 import model.User;
+import view.FrameUtil;
 import view.game.GameFrame;
+import view.login.LoginFrame;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class LevelFrame extends JFrame {
     //界面初始化
     private GameFrame gameFrame;
+    private LoginFrame loginFrame;
 
-    private JButton level1Button = new JButton("横刀立马");
-    private JButton level2Button = new JButton("层层设防");
-    private JButton level3Button = new JButton("四将连关");
-    private JButton level4Button = new JButton("水泄不通");
-    private JButton level5Button = new JButton("兵分三路");
+    private final JButton level1Button = new JButton("横刀立马");
+    private final JButton level2Button = new JButton("层层设防");
+    private final JButton level3Button = new JButton("四将连关");
+    private final JButton level4Button = new JButton("水泄不通");
+    private final JButton level5Button = new JButton("兵分三路");
+    private final JButton returnBtn;
 
     private User currentUser;
     private MapModel mapModel;
 
-    public LevelFrame(int width, int height) {
+    public LevelFrame(int width, int height, LoginFrame loginFrame) {
+        this.loginFrame = loginFrame;
         this.setTitle("选择关卡");
         this.setLayout(null);
         this.setSize(width, height);
@@ -46,7 +52,7 @@ public class LevelFrame extends JFrame {
                 Level1();
                 mapModel.setName("横刀立马");
                 mapModel.setMatrix(Constants.MAP);
-                gameFrame = new GameFrame(450, 450,mapModel);
+                gameFrame = new GameFrame(450, 450,mapModel, LevelFrame.this);
                 LevelFrame.this.setVisible(false);
                 gameFrame.setVisible(true);
             }
@@ -57,7 +63,7 @@ public class LevelFrame extends JFrame {
                 Level2();
                 mapModel.setName("层层设防");
                 mapModel.setMatrix(Constants.MAP);
-                gameFrame = new GameFrame(450, 450,mapModel);
+                gameFrame = new GameFrame(450, 450,mapModel, LevelFrame.this);
                 LevelFrame.this.setVisible(false);
                 gameFrame.setVisible(true);
             }
@@ -68,7 +74,7 @@ public class LevelFrame extends JFrame {
                 Level3();
                 mapModel.setName("四将连关");
                 mapModel.setMatrix(Constants.MAP);
-                gameFrame = new GameFrame(450, 450,mapModel);
+                gameFrame = new GameFrame(450, 450,mapModel, LevelFrame.this);
                 LevelFrame.this.setVisible(false);
                 gameFrame.setVisible(true);
             }
@@ -79,7 +85,7 @@ public class LevelFrame extends JFrame {
                 Level4();
                 mapModel.setName("水泄不通");
                 mapModel.setMatrix(Constants.MAP);
-                gameFrame = new GameFrame(450, 450,mapModel);
+                gameFrame = new GameFrame(450, 450,mapModel, LevelFrame.this);
                 LevelFrame.this.setVisible(false);
                 gameFrame.setVisible(true);
             }
@@ -90,9 +96,12 @@ public class LevelFrame extends JFrame {
                 Level5();
                 mapModel.setName("兵分三路");
                 mapModel.setMatrix(Constants.MAP);
-                gameFrame = new GameFrame(450, 450,mapModel);
+                gameFrame = new GameFrame(450, 450,mapModel, LevelFrame.this);
                 LevelFrame.this.setVisible(false);
                 gameFrame.setVisible(true);
+                if (currentUser != null) {
+                    gameFrame.setUser(currentUser);
+                }
             }
         });
 
@@ -101,6 +110,12 @@ public class LevelFrame extends JFrame {
         this.getContentPane().add(level3Button);
         this.getContentPane().add(level4Button);
         this.getContentPane().add(level5Button);
+
+        this.returnBtn = FrameUtil.createButton(this, "返回",
+                new Point(20,40), 100, 30);
+        returnBtn.addActionListener(e -> returnToLogin());
+
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
     public void setUser(User user) {
@@ -170,5 +185,10 @@ public class LevelFrame extends JFrame {
         for (int row = 0; row < map.length; row++) {
             System.arraycopy(map[row], 0, Constants.MAP[row], 0, map[row].length);
         }
+    }
+
+    private void returnToLogin() {
+        this.dispose(); // 销毁当前游戏窗口
+        loginFrame.setVisible(true); // 显示关卡选择界面
     }
 }

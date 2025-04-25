@@ -4,6 +4,7 @@ import controller.GameController;
 import model.MapModel;
 import model.User;
 import view.FrameUtil;
+import view.level.LevelFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,19 +13,21 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 
 public class GameFrame extends JFrame {
+    private LevelFrame levelFrame;
 
     private GameController controller;
     private JButton restartBtn;
     private JButton loadBtn;
     private JButton saveBtn;
-    private JButton exitBtn;
+    private JButton returnBtn;
 
     private JLabel stepLabel;
     private GamePanel gamePanel;
 
     private User currentUser;
 
-    public GameFrame(int width, int height, MapModel mapModel) {
+    public GameFrame(int width, int height, MapModel mapModel, LevelFrame levelFrame) {
+        this.levelFrame = levelFrame;
         this.setTitle(mapModel.getName());
         this.setLayout(null);
         this.setSize(width, height);
@@ -77,6 +80,10 @@ public class GameFrame extends JFrame {
                 autoSaveGame(); // 窗口关闭时自动保存
             }
         });
+
+        this.returnBtn = FrameUtil.createButton(this, "返回关卡",
+                new Point(gamePanel.getWidth() + 80, 390), 100, 30);
+        returnBtn.addActionListener(e -> returnToLevel());
         //todo: add other button here
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -104,5 +111,10 @@ public class GameFrame extends JFrame {
 
     public GameController getController() {
         return this.controller;
+    }
+
+    private void returnToLevel() {
+        this.dispose(); // 销毁当前游戏窗口
+        levelFrame.setVisible(true); // 显示关卡选择界面
     }
 }
