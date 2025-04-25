@@ -20,14 +20,10 @@ public abstract class ListenerPanel extends JPanel {
         super.processKeyEvent(e);
         if (e.getID() == KeyEvent.KEY_PRESSED) {
             switch (e.getKeyCode()) {
-                case KeyEvent.VK_RIGHT -> doMoveRight();
-                case KeyEvent.VK_D -> doMoveRight();
-                case KeyEvent.VK_LEFT -> doMoveLeft();
-                case KeyEvent.VK_A -> doMoveLeft();
-                case KeyEvent.VK_UP -> doMoveUp();
-                case KeyEvent.VK_W -> doMoveUp();
-                case KeyEvent.VK_DOWN -> doMoveDown();
-                case KeyEvent.VK_S -> doMoveDown();
+                case KeyEvent.VK_RIGHT, KeyEvent.VK_D -> doMoveRight();
+                case KeyEvent.VK_LEFT, KeyEvent.VK_A -> doMoveLeft();
+                case KeyEvent.VK_UP, KeyEvent.VK_W -> doMoveUp();
+                case KeyEvent.VK_DOWN, KeyEvent.VK_S -> doMoveDown();
             }
         }
     }
