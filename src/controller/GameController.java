@@ -5,6 +5,7 @@ import model.GameSave;
 import model.MapModel;
 import model.User;
 import view.game.BoxComponent;
+import view.game.GameFrame;
 import view.game.GamePanel;
 
 import javax.swing.*;
@@ -18,12 +19,14 @@ import java.util.Arrays;
 public class GameController {
     private final GamePanel view;
     private final MapModel model;
+    private final GameFrame gameframe;
     private final int[][] initialMap;
     private final int victoryRowStart = 3;
     private final int victoryColStart = 1;
     public static final int CAO_CAO_ID = 4;
 
-    public GameController(GamePanel view, MapModel model) {
+    public GameController(GamePanel view, MapModel model, GameFrame gameframe) {
+        this.gameframe = gameframe;
         this.view = view;
         this.model = model;
         this.initialMap = deepCopy(model.getMatrix()); // 保存初始数据
@@ -161,7 +164,7 @@ public class GameController {
                 "恭喜您游戏胜利！\n步数: " + steps,
                 "胜利",
                 JOptionPane.INFORMATION_MESSAGE);
-        restartGame(); // 可选：胜利后自动重置游戏
+        gameframe.returnToLevel(); // 可选：胜利后自动重置游戏
     }
 
     public void saveGame(User user) throws IOException {

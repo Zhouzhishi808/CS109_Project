@@ -34,7 +34,7 @@ public class GameFrame extends JFrame {
         gamePanel = new GamePanel(mapModel);
         gamePanel.setLocation(30, height / 2 - gamePanel.getHeight() / 2);
         this.add(gamePanel);
-        this.controller = new GameController(gamePanel, mapModel);
+        this.controller = new GameController(gamePanel, mapModel, this);
 
         this.restartBtn = FrameUtil.createButton(this, "重置", new Point(gamePanel.getWidth() + 80, 120), 80, 50);
         this.loadBtn = FrameUtil.createButton(this, "加载", new Point(gamePanel.getWidth() + 80, 210), 80, 50);
@@ -113,7 +113,7 @@ public class GameFrame extends JFrame {
         return this.controller;
     }
 
-    private void returnToLevel() {
+    public void returnToLevel() {
         this.dispose(); // 销毁当前游戏窗口
         levelFrame.setVisible(true); // 显示关卡选择界面
     }
