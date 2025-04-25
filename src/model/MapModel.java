@@ -1,11 +1,15 @@
 package model;
 
+import view.game.GamePanel;
+
 /**
  * This class is to record the map of one game. For example:
  */
 public class MapModel {
     int[][] matrix;
     String name;
+
+    public MapModel(){}
 
 
     public MapModel(int[][] matrix, String name) {
@@ -26,6 +30,10 @@ public class MapModel {
     }
 
     public String getName() {return this.name;}
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public int[][] getMatrix() {
         return matrix;

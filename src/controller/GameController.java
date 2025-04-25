@@ -19,8 +19,8 @@ public class GameController {
     private final GamePanel view;
     private final MapModel model;
     private final int[][] initialMap;
-    private final int victoryRowStart = 1;
-    private final int victoryColStart = 0;
+    private final int victoryRowStart = 3;
+    private final int victoryColStart = 1;
     public static final int CAO_CAO_ID = 4;
 
     public GameController(GamePanel view, MapModel model) {

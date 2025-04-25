@@ -17,6 +17,7 @@ public class GameFrame extends JFrame {
     private JButton restartBtn;
     private JButton loadBtn;
     private JButton saveBtn;
+    private JButton exitBtn;
 
     private JLabel stepLabel;
     private GamePanel gamePanel;
@@ -98,6 +99,8 @@ public class GameFrame extends JFrame {
             }
         }
     }
+
+    public void setGamePanel(GamePanel gamePanel) {}
 
     public GameController getController() {
         return this.controller;

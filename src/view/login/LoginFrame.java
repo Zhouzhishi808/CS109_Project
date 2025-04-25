@@ -4,6 +4,7 @@ import controller.GameController;
 import model.UserManager;
 import view.FrameUtil;
 import view.game.GameFrame;
+import view.level.LevelFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +15,7 @@ public class LoginFrame extends JFrame {
     private JPasswordField password; // 修正为 JPasswordField
     private JButton submitBtn;
     private JButton resetBtn;
-    private GameFrame gameFrame;
+    private LevelFrame levelFrame;
     private final UserManager userManager = new UserManager();
 
     public LoginFrame(int width, int height) {
@@ -102,18 +103,18 @@ public class LoginFrame extends JFrame {
     }
 
     private void startAsGuest() {
-        this.gameFrame.setUser(null);
-        this.gameFrame.setVisible(true);
+        this.levelFrame.setUser(null);
+        this.levelFrame.setVisible(true);
         this.setVisible(false);
     }
 
     private void startGameAsUser() {
-        this.gameFrame.setUser(userManager.getCurrentUser());
-        this.gameFrame.setVisible(true);
+        this.levelFrame.setUser(userManager.getCurrentUser());
+        this.levelFrame.setVisible(true);
         this.setVisible(false);
     }
 
-    public void setGameFrame(GameFrame gameFrame) {
-        this.gameFrame = gameFrame;
+    public void setLevelFrame(LevelFrame levelFrame) {
+        this.levelFrame = levelFrame;
     }
 }
