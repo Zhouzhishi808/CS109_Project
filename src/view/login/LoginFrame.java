@@ -18,7 +18,7 @@ public class LoginFrame extends JFrame {
     private final UserManager userManager = new UserManager();
 
     public LoginFrame(int width, int height) {
-        this.setTitle("Login Frame");
+        this.setTitle("登录界面");
         this.setLayout(null);
         this.setSize(width, height);
 
