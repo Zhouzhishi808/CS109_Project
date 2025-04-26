@@ -1,8 +1,11 @@
 package model;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class GameSave implements Serializable {
+    @Serial
+    private static final long serialVersionUID = -6347149812494695620L;
     private final int[][] mapState;
     private final int steps;
     private final String levelName; // 关卡名称字段
