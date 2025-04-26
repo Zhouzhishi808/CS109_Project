@@ -22,21 +22,26 @@ public class LoginFrame extends JFrame {
         this.setTitle("登录界面");
         this.setLayout(null);
         this.setSize(width, height);
+        JFrame confirmFrame = new JFrame("游客登陆");
+        confirmFrame.setVisible(true);
+        confirmFrame.setLocationRelativeTo(null);
+        confirmFrame.setAlwaysOnTop(true);
+        confirmFrame.setSize(280,280);
 
         // 用户名标签和输入框
-        JLabel userLabel = FrameUtil.createJLabel(this, new Point(50, 20), 70, 40, "用户名:");
-        username = FrameUtil.createJTextField(this, new Point(120, 20), 120, 40);
+        JLabel userLabel = FrameUtil.createJLabel(this, new Point(500, 120), 70, 30, "用户名:");
+        username = FrameUtil.createJTextField(this, new Point(570, 120), 120, 30);
 
         // 密码标签和输入框（使用 JPasswordField）
-        JLabel passLabel = FrameUtil.createJLabel(this, new Point(50, 80), 70, 40, "密码:");
+        JLabel passLabel = FrameUtil.createJLabel(this, new Point(500, 180), 70, 30, "密码:");
         password = new JPasswordField(); // 手动初始化
-        password.setLocation(120, 80);
-        password.setSize(120, 40);
+        password.setLocation(570, 180);
+        password.setSize(120, 30);
         this.add(password);
 
         // 确认和重置按钮
-        submitBtn = FrameUtil.createButton(this, "登录", new Point(40, 140), 100, 40);
-        resetBtn = FrameUtil.createButton(this, "重置", new Point(160, 140), 100, 40);
+        submitBtn = FrameUtil.createButton(this, "登录", new Point(480, 250), 80, 30);
+        resetBtn = FrameUtil.createButton(this, "重置", new Point(680, 250), 80, 30);
 
         // 提交按钮监听器
         submitBtn.addActionListener(e -> {
@@ -62,7 +67,7 @@ public class LoginFrame extends JFrame {
         });
 
         // 注册按钮
-        JButton registerBtn = FrameUtil.createButton(this, "注册", new Point(100, 180), 80, 30);
+        JButton registerBtn = FrameUtil.createButton(this, "注册", new Point(580, 250), 80, 30);
         registerBtn.addActionListener(e -> showRegisterDialog());
 
         this.setLocationRelativeTo(null);
