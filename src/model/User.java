@@ -1,9 +1,12 @@
 package model;
 
 import java.io.File;
+import java.io.Serial;
 import java.io.Serializable;
 
 public class User implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 4675739331147943844L;
     private final String username;
     private final String passwordHash;
     private GameSave saveData;
@@ -26,7 +29,8 @@ public class User implements Serializable {
     public GameSave getSaveData() { return saveData; }
     public void setSaveData(GameSave saveData) { this.saveData = saveData; }
 
-    public boolean hasSaveData() {
-        return new File(username + ".save").exists();
+    public boolean hasSaveDataForLevel(String levelName) {
+        String savePath = Constants.SAVE_DIRECTORY + username + "_" + levelName + ".save";
+        return new File(savePath).exists();
     }
 }

@@ -55,6 +55,9 @@ public class LevelFrame extends JFrame {
                 gameFrame = new GameFrame(450, 450,mapModel, LevelFrame.this);
                 LevelFrame.this.setVisible(false);
                 gameFrame.setVisible(true);
+                if (currentUser != null) {
+                    gameFrame.setUser(currentUser);
+                }
             }
         });
         level2Button.addActionListener(new ActionListener() {
@@ -66,6 +69,9 @@ public class LevelFrame extends JFrame {
                 gameFrame = new GameFrame(450, 450,mapModel, LevelFrame.this);
                 LevelFrame.this.setVisible(false);
                 gameFrame.setVisible(true);
+                if (currentUser != null) {
+                    gameFrame.setUser(currentUser);
+                }
             }
         });
         level3Button.addActionListener(new ActionListener() {
@@ -77,6 +83,9 @@ public class LevelFrame extends JFrame {
                 gameFrame = new GameFrame(450, 450,mapModel, LevelFrame.this);
                 LevelFrame.this.setVisible(false);
                 gameFrame.setVisible(true);
+                if (currentUser != null) {
+                    gameFrame.setUser(currentUser);
+                }
             }
         });
         level4Button.addActionListener(new ActionListener() {
@@ -88,6 +97,9 @@ public class LevelFrame extends JFrame {
                 gameFrame = new GameFrame(450, 450,mapModel, LevelFrame.this);
                 LevelFrame.this.setVisible(false);
                 gameFrame.setVisible(true);
+                if (currentUser != null) {
+                    gameFrame.setUser(currentUser);
+                }
             }
         });
         level5Button.addActionListener(new ActionListener() {

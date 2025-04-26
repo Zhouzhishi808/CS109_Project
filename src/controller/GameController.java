@@ -1,9 +1,6 @@
 package controller;
 
-import model.Direction;
-import model.GameSave;
-import model.MapModel;
-import model.User;
+import model.*;
 import view.game.BoxComponent;
 import view.game.GameFrame;
 import view.game.GamePanel;
@@ -168,32 +165,38 @@ public class GameController {
     }
 
     public void saveGame(User user) throws IOException {
-        if (user == null) {
-            throw new IOException("用户未登录");
+        if (user == null) throw new IOException("用户未登录");
+
+        String levelName = model.getName();
+
+        // 检查并创建存档目录
+        File saveDir = new File(Constants.SAVE_DIRECTORY);
+        if (!saveDir.exists()) {
+            if (!saveDir.mkdirs()) {
+                throw new IOException("无法创建存档文件夹");
+            }
         }
-        GameSave save = new GameSave(
-                deepCopy(model.getMatrix()),
-                view.getSteps()
-        );
+
+        GameSave save = new GameSave(deepCopy(model.getMatrix()), view.getSteps(), levelName);
         user.setSaveData(save);
 
-        try (ObjectOutputStream oos = new ObjectOutputStream(
-                new FileOutputStream(user.getUsername() + ".save"))) {
+        // 使用新路径保存文件
+        String savePath = Constants.SAVE_DIRECTORY + user.getUsername() + "_" + levelName + ".save";
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(savePath))) {
             oos.writeObject(save);
-        } catch (SecurityException e) {
-            throw new IOException("无文件写入权限");
         }
     }
 
     public void loadGame(User user) throws IOException, ClassNotFoundException {
-        if (user == null) {
-            throw new IllegalArgumentException("用户未登录");
-        }
-        try (ObjectInputStream ois = new ObjectInputStream(
-                new FileInputStream(user.getUsername() + ".save"))) {
+        if (user == null) throw new IllegalArgumentException("用户未登录");
+
+        String levelName = model.getName();
+
+        String savePath = Constants.SAVE_DIRECTORY + user.getUsername() + "_" + levelName +".save";
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(savePath))) {
             GameSave save = (GameSave) ois.readObject();
             model.setMatrix(deepCopy(save.getMapState()));
-            view.resetGame(); // 强制刷新视图
+            view.resetGame();
             view.setSteps(save.getSteps());
         } catch (FileNotFoundException e) {
             throw new IOException("存档文件不存在");

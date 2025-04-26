@@ -11,6 +11,5 @@ public class Main {
             loginFrame.setLevelFrame(levelFrame);
             loginFrame.setVisible(true);
         });
-
     }
 }

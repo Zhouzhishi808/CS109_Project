@@ -25,9 +25,11 @@ public class GameFrame extends JFrame {
     private GamePanel gamePanel;
 
     private User currentUser;
+    private String levelName;
 
     public GameFrame(int width, int height, MapModel mapModel, LevelFrame levelFrame) {
         this.levelFrame = levelFrame;
+        this.levelName = mapModel.getName();
         this.setTitle(mapModel.getName());
         this.setLayout(null);
         this.setSize(width, height);
@@ -65,6 +67,7 @@ public class GameFrame extends JFrame {
                 try {
                     controller.saveGame(currentUser);
                     JOptionPane.showMessageDialog(this, "保存成功");
+                    loadBtn.setEnabled(true);
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(this, "保存失败");
                 }
@@ -93,7 +96,7 @@ public class GameFrame extends JFrame {
     public void setUser(User user) {
         this.currentUser = user;
         saveBtn.setEnabled(user != null); // 控制保存按钮状态
-        loadBtn.setEnabled(user != null && user.hasSaveData());
+        loadBtn.setEnabled(user != null && user.hasSaveDataForLevel(levelName));
     }
 
     private void autoSaveGame() {
