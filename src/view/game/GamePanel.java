@@ -117,7 +117,7 @@ public class GamePanel extends ListenerPanel {
     //使被选择的方块移动
     @Override
     public void doMoveRight() {
-        System.out.println("Click VK_RIGHT");
+        System.out.println("右");
         if (selectedBox != null) {
             if (controller.doMove(selectedBox.getRow(), selectedBox.getCol(), Direction.RIGHT)) {
                 afterMove();
@@ -127,7 +127,7 @@ public class GamePanel extends ListenerPanel {
 
     @Override
     public void doMoveLeft() {
-        System.out.println("Click VK_LEFT");
+        System.out.println("左");
         if (selectedBox != null) {
             if (controller.doMove(selectedBox.getRow(), selectedBox.getCol(), Direction.LEFT)) {
                 afterMove();
@@ -137,7 +137,7 @@ public class GamePanel extends ListenerPanel {
 
     @Override
     public void doMoveUp() {
-        System.out.println("Click VK_Up");
+        System.out.println("上");
         if (selectedBox != null) {
             if (controller.doMove(selectedBox.getRow(), selectedBox.getCol(), Direction.UP)) {
                 afterMove();
@@ -147,7 +147,7 @@ public class GamePanel extends ListenerPanel {
 
     @Override
     public void doMoveDown() {
-        System.out.println("Click VK_DOWN");
+        System.out.println("下");
         if (selectedBox != null) {
             if (controller.doMove(selectedBox.getRow(), selectedBox.getCol(), Direction.DOWN)) {
                 afterMove();
@@ -175,6 +175,20 @@ public class GamePanel extends ListenerPanel {
         // 重新初始化游戏
         initialGame();
         repaint();
+    }
+
+    public void refreshBoxes() {
+        // 清理旧方块
+        for (BoxComponent box : boxes) {
+            this.remove(box);
+        }
+        boxes.clear();
+
+        // 重新根据当前模型生成方块
+        initialGame();
+        selectedBox = null; // 重置选中状态
+        repaint();
+        revalidate(); // 强制重新布局
     }
 
     public void setStepLabel(JLabel stepLabel) {

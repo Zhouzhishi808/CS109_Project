@@ -17,7 +17,7 @@ public class User implements Serializable {
     }
 
     private String hashPassword(String password) {
-        return Integer.toString(password.hashCode()); // 简单哈希，实际应使用BCrypt等安全哈希
+        return Integer.toString(password.hashCode());
     }
 
     public boolean validatePassword(String password) {
@@ -29,6 +29,7 @@ public class User implements Serializable {
     public GameSave getSaveData() { return saveData; }
     public void setSaveData(GameSave saveData) { this.saveData = saveData; }
 
+    //检查是否有有存档文件
     public boolean hasSaveDataForLevel(String levelName) {
         String savePath = Constants.SAVE_DIRECTORY + username + "_" + levelName + ".save";
         return new File(savePath).exists();

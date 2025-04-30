@@ -19,6 +19,7 @@ public class GameFrame extends JFrame {
     private JButton restartBtn;
     private JButton loadBtn;
     private JButton saveBtn;
+    private JButton exitBtn;
     private JButton returnBtn;
 
     private JLabel stepLabel;
@@ -37,6 +38,8 @@ public class GameFrame extends JFrame {
         gamePanel.setLocation(30, height / 2 - gamePanel.getHeight() / 2);
         this.add(gamePanel);
         this.controller = new GameController(gamePanel, mapModel, this);
+
+        controller.addInitialState();
 
         this.restartBtn = FrameUtil.createButton(this, "重置", new Point(gamePanel.getWidth() + 80, 120), 80, 50);
         this.loadBtn = FrameUtil.createButton(this, "加载", new Point(gamePanel.getWidth() + 80, 210), 80, 50);
@@ -84,9 +87,15 @@ public class GameFrame extends JFrame {
             }
         });
 
-        this.returnBtn = FrameUtil.createButton(this, "返回关卡",
+        this.exitBtn = FrameUtil.createButton(this, "返回关卡",
                 new Point(gamePanel.getWidth() + 80, 390), 100, 30);
-        returnBtn.addActionListener(e -> returnToLevel());
+        exitBtn.addActionListener(e -> returnToLevel());
+
+        this.returnBtn = FrameUtil.createButton(this, "退", new Point(30, 30), 30, 30);
+        returnBtn.addActionListener(e -> {
+            controller.backStep();
+            gamePanel.requestFocusInWindow();
+        });
         //todo: add other button here
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

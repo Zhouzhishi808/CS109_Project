@@ -7,6 +7,7 @@ import view.game.GamePanel;
 
 import javax.swing.*;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -21,6 +22,8 @@ public class GameController {
     private final int victoryRowStart = 3;
     private final int victoryColStart = 1;
     public static final int CAO_CAO_ID = 4;
+
+    private ArrayList<MapModel> mapModels = new ArrayList<>();
 
     public GameController(GamePanel view, MapModel model, GameFrame gameframe) {
         this.gameframe = gameframe;
@@ -61,6 +64,9 @@ public class GameController {
         // 执行移动：清空原位置，填充新位置
         clearOriginalPosition(row, col, width, height);
         fillNewPosition(nextRow, nextCol, blockId, width, height);
+
+        //记录当前地图
+        mapModels.add(new MapModel(deepCopy(model.getMatrix()), model.getName()));
 
         // 更新界面组件位置
         updateBoxComponentPosition(row, col, nextRow, nextCol, blockId, direction);
@@ -201,6 +207,34 @@ public class GameController {
         } catch (FileNotFoundException e) {
             throw new IOException("存档文件不存在");
         }
+    }
+
+    public void backStep() {
+        if (mapModels.size() <= 1) { // 至少保留初始状态
+            JOptionPane.showMessageDialog(view, "无法回退，已无历史步骤", "提示", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // 移除当前状态，恢复到上一个状态
+        mapModels.remove(mapModels.size() - 1); // 移除当前状态
+        MapModel previousModel = mapModels.get(mapModels.size() - 1); // 获取上一个状态
+        model.setMatrix(deepCopy(previousModel.getMatrix()));
+
+        // 更新步数（确保不小于0）
+        int currentSteps = view.getSteps();
+        view.setSteps(Math.max(currentSteps - 1, 0));
+
+        // 强制刷新视图（包括清除旧方块和重新生成）
+        view.refreshBoxes();
+        BoxComponent selectedBox = view.getSelectedBox();
+        if (selectedBox != null) {
+            selectedBox.setSelected(false);
+            view.repaint();
+        }
+    }
+
+    public void addInitialState() {
+        mapModels.add(new MapModel(deepCopy(model.getMatrix()), model.getName()));
     }
     //todo: add other methods such as loadGame, saveGame...
 
