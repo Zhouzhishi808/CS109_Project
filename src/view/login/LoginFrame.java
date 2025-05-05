@@ -23,7 +23,7 @@ public class LoginFrame extends JFrame {
         this.setLayout(null);
         this.setSize(width, height);
         JFrame confirmFrame = new JFrame("游客登陆");
-        confirmFrame.setVisible(true);
+        confirmFrame.setVisible(false);
         confirmFrame.setLocationRelativeTo(null);
         confirmFrame.setAlwaysOnTop(true);
         confirmFrame.setSize(280,280);

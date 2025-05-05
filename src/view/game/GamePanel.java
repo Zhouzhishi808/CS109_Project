@@ -185,7 +185,9 @@ public class GamePanel extends ListenerPanel {
         boxes.clear();
 
         // 重新根据当前模型生成方块
+        int tempSteps = this.steps;
         initialGame();
+        steps = tempSteps;
         selectedBox = null; // 重置选中状态
         repaint();
         revalidate(); // 强制重新布局

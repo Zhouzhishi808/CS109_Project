@@ -222,7 +222,7 @@ public class GameController {
 
         // 更新步数（确保不小于0）
         int currentSteps = view.getSteps();
-        view.setSteps(Math.max(currentSteps - 1, 0));
+        view.setSteps(currentSteps - 1);
 
         // 强制刷新视图（包括清除旧方块和重新生成）
         view.refreshBoxes();

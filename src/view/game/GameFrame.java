@@ -91,7 +91,7 @@ public class GameFrame extends JFrame {
                 new Point(gamePanel.getWidth() + 80, 390), 100, 30);
         exitBtn.addActionListener(e -> returnToLevel());
 
-        this.returnBtn = FrameUtil.createButton(this, "退", new Point(30, 30), 30, 30);
+        this.returnBtn = FrameUtil.createButton(this, "退", new Point(50, 50), 50, 50);
         returnBtn.addActionListener(e -> {
             controller.backStep();
             gamePanel.requestFocusInWindow();
@@ -99,6 +99,9 @@ public class GameFrame extends JFrame {
         //todo: add other button here
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        SwingUtilities.invokeLater(() -> {
+            gamePanel.requestFocusInWindow();
+        });
     }
 
 
