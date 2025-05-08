@@ -138,8 +138,8 @@ public class LevelFrame extends JFrame {
         int [][] map = {
                 {3,4,4,3},
                 {3,4,4,3},
-                {3,2,2,3},
-                {3,1,1,3},
+                {3,0,0,3},
+                {3,0,0,3},
                 {1,0,0,1},
         };
         for (int row = 0; row < map.length; row++) {

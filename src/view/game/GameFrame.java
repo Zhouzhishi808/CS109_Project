@@ -1,6 +1,7 @@
 package view.game;
 
 import controller.GameController;
+import model.GameTimer;
 import model.MapModel;
 import model.User;
 import view.FrameUtil;
@@ -16,6 +17,8 @@ public class GameFrame extends JFrame {
     private LevelFrame levelFrame;
 
     private GameController controller;
+    private GameTimer gameTimer;
+
     private JButton restartBtn;
     private JButton loadBtn;
     private JButton saveBtn;
@@ -23,6 +26,7 @@ public class GameFrame extends JFrame {
     private JButton returnBtn;
 
     private JLabel stepLabel;
+    private JLabel timeLabel;
     private GamePanel gamePanel;
 
     private User currentUser;
@@ -43,12 +47,25 @@ public class GameFrame extends JFrame {
 
         this.restartBtn = FrameUtil.createButton(this, "重置", new Point(gamePanel.getWidth() + 80, 120), 80, 50);
         this.loadBtn = FrameUtil.createButton(this, "加载", new Point(gamePanel.getWidth() + 80, 210), 80, 50);
-        this.stepLabel = FrameUtil.createJLabel(this, "步数：0", new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 80, 70), 180, 50);
+        this.stepLabel = FrameUtil.createJLabel(this, "步数：0",
+                new Font("serif", Font.ITALIC, 22),
+                new Point(gamePanel.getWidth() + 80, 50), 180, 30);
+        this.timeLabel = FrameUtil.createJLabel(this, "时间: 00:00",
+                new Font("serif", Font.ITALIC, 22),
+                new Point(gamePanel.getWidth() + 80, 90), 180, 30);
+
+        gameTimer = new GameTimer(timeLabel);// 进入游戏时自动开始计时
+        controller.setGameTimer(gameTimer);
+        gameTimer.start();
+
         gamePanel.setStepLabel(stepLabel);
+
 
         this.restartBtn.addActionListener(e -> {
             controller.restartGame();
-            gamePanel.requestFocusInWindow();//enable key listener
+            gameTimer.reset(); // 重置计时器
+            gameTimer.start();
+            gamePanel.requestFocusInWindow();
         });
         this.loadBtn.addActionListener(e -> {
             if (currentUser != null) {
@@ -131,5 +148,10 @@ public class GameFrame extends JFrame {
     public void returnToLevel() {
         this.dispose(); // 销毁当前游戏窗口
         levelFrame.setVisible(true); // 显示关卡选择界面
+    }
+
+    public String getTime()
+    {
+        return timeLabel.getText();
     }
 }

@@ -22,6 +22,7 @@ public class GamePanel extends ListenerPanel {
     private int steps;
     private final int GRID_SIZE = 50;
     private BoxComponent selectedBox;
+    private int timeInSeconds;
 
 
     public GamePanel(MapModel model) {
@@ -217,5 +218,14 @@ public class GamePanel extends ListenerPanel {
 
     public int getGRID_SIZE() {
         return GRID_SIZE;
+    }
+
+    public void setTimeInSeconds(int time) {
+        this.timeInSeconds = time;
+        // 更新UI（需通过GameFrame的timeLabel更新）
+    }
+
+    public int getTimeInSeconds() {
+        return timeInSeconds;
     }
 }

@@ -18,6 +18,7 @@ public class GameController {
     private final GamePanel view;
     private final MapModel model;
     private final GameFrame gameframe;
+    private GameTimer gameTimer;
     private final int[][] initialMap;
     private final int victoryRowStart = 3;
     private final int victoryColStart = 1;
@@ -163,8 +164,9 @@ public class GameController {
 
     private void showWinDialog() {
         int steps = view.getSteps();
+        gameTimer.pause();
         JOptionPane.showMessageDialog(view,
-                "恭喜您游戏胜利！\n步数: " + steps,
+                "恭喜您游戏胜利！\n步数: " + steps + "\n" + gameframe.getTime(),
                 "胜利",
                 JOptionPane.INFORMATION_MESSAGE);
         gameframe.returnToLevel(); // 可选：胜利后自动重置游戏
@@ -235,6 +237,10 @@ public class GameController {
 
     public void addInitialState() {
         mapModels.add(new MapModel(deepCopy(model.getMatrix()), model.getName()));
+    }
+
+    public void setGameTimer(GameTimer gameTimer) {
+        this.gameTimer = gameTimer;
     }
     //todo: add other methods such as loadGame, saveGame...
 
