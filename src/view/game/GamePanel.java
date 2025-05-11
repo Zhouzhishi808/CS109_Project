@@ -220,12 +220,15 @@ public class GamePanel extends ListenerPanel {
         return GRID_SIZE;
     }
 
-    public void setTimeInSeconds(int time) {
-        this.timeInSeconds = time;
-        // 更新UI（需通过GameFrame的timeLabel更新）
+    public void setTimeInSeconds(int seconds) {
+        this.timeInSeconds = seconds;
     }
 
     public int getTimeInSeconds() {
-        return timeInSeconds;
+        // 优先从timer获取实时时间
+        if (controller != null && controller.getGameTimer() != null) {
+            return controller.getGameTimer().getTimeInSeconds();
+        }
+        return timeInSeconds; // 回退到本地存储
     }
 }

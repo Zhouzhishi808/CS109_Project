@@ -60,7 +60,6 @@ public class GameFrame extends JFrame {
 
         gamePanel.setStepLabel(stepLabel);
 
-
         this.restartBtn.addActionListener(e -> {
             controller.restartGame();
             gameTimer.reset(); // 重置计时器

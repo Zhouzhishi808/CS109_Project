@@ -20,8 +20,6 @@ public class GameController {
     private final GameFrame gameframe;
     private GameTimer gameTimer;
     private final int[][] initialMap;
-    private final int victoryRowStart = 3;
-    private final int victoryColStart = 1;
     public static final int CAO_CAO_ID = 4;
 
     private ArrayList<MapModel> mapModels = new ArrayList<>();
@@ -32,6 +30,10 @@ public class GameController {
         this.model = model;
         this.initialMap = deepCopy(model.getMatrix()); // 保存初始数据
         view.setController(this);
+
+        if (gameTimer != null) {
+            gameTimer.setTimeUpdateListener(view::setTimeInSeconds);
+        }
     }
 
     public boolean doMove(int row, int col, Direction direction) {
@@ -154,7 +156,9 @@ public class GameController {
 
     private boolean checkWin() {
         int[][] matrix = model.getMatrix();
+        int victoryRowStart = 3;
         for (int i = victoryRowStart; i < victoryRowStart + 2; i++) {
+            int victoryColStart = 1;
             for (int j = victoryColStart; j < victoryColStart + 2; j++) {
                 if (matrix[i][j] != CAO_CAO_ID) return false;
             }
@@ -185,8 +189,9 @@ public class GameController {
             }
         }
 
-        GameSave save = new GameSave(deepCopy(model.getMatrix()), view.getSteps(), levelName);
+        GameSave save = new GameSave(deepCopy(model.getMatrix()), view.getSteps(), levelName, view.getTimeInSeconds());
         user.setSaveData(save);
+        System.out.println(view.getTimeInSeconds());
 
         // 使用新路径保存文件
         String savePath = Constants.SAVE_DIRECTORY + user.getUsername() + "_" + levelName + ".save";
@@ -206,6 +211,9 @@ public class GameController {
             model.setMatrix(deepCopy(save.getMapState()));
             view.resetGame();
             view.setSteps(save.getSteps());
+
+            gameTimer.continueFrom(save.getTimeInSeconds());
+            view.setTimeInSeconds(save.getTimeInSeconds());
         } catch (FileNotFoundException e) {
             throw new IOException("存档文件不存在");
         }
@@ -218,8 +226,8 @@ public class GameController {
         }
 
         // 移除当前状态，恢复到上一个状态
-        mapModels.remove(mapModels.size() - 1); // 移除当前状态
-        MapModel previousModel = mapModels.get(mapModels.size() - 1); // 获取上一个状态
+        mapModels.removeLast(); // 移除当前状态
+        MapModel previousModel = mapModels.getLast(); // 获取上一个状态
         model.setMatrix(deepCopy(previousModel.getMatrix()));
 
         // 更新步数（确保不小于0）
@@ -241,6 +249,14 @@ public class GameController {
 
     public void setGameTimer(GameTimer gameTimer) {
         this.gameTimer = gameTimer;
+    }
+
+    public GameTimer getGameTimer() {
+        return gameTimer;
+    }
+
+    public void addTimeUpdateListener(){
+        gameTimer.addTimeUpdateListener(this.view::setTimeInSeconds);
     }
     //todo: add other methods such as loadGame, saveGame...
 
