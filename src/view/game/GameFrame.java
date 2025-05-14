@@ -37,6 +37,11 @@ public class GameFrame extends JFrame {
     private User currentUser;
     private String levelName;
 
+    ImageIcon downIcon = new ImageIcon("buttonPic/downBtn.png");
+    ImageIcon upIcon = new ImageIcon("buttonPic/upBtn.png");
+    ImageIcon leftIcon = new ImageIcon("buttonPic/leftBtn.png");
+    ImageIcon rightIcon = new ImageIcon("buttonPic/rightBtn.png");
+
     public GameFrame(int width, int height, MapModel mapModel, LevelFrame levelFrame) {
         this.levelFrame = levelFrame;
         this.levelName = mapModel.getName();
@@ -50,13 +55,31 @@ public class GameFrame extends JFrame {
 
         controller.addInitialState();
 
-        this.restartBtn = FrameUtil.createButton(this, "重置", new Point(gamePanel.getWidth() + 80, 120), 80, 50);
-        this.loadBtn = FrameUtil.createButton(this, "加载", new Point(gamePanel.getWidth() + 80, 210), 80, 50);
+        this.restartBtn = FrameUtil.createButton(this, downIcon,new Point(gamePanel.getWidth() + 80, 120), 80, 50);
+        restartBtn.setBorderPainted(false);
+        restartBtn.setContentAreaFilled(false);
+        restartBtn.setFocusPainted(false);
+        this.loadBtn = FrameUtil.createButton(this,downIcon, new Point(gamePanel.getWidth() + 80, 210), 80, 50);
+        loadBtn.setBorderPainted(false);
+        loadBtn.setContentAreaFilled(false);
+        loadBtn.setFocusPainted(false);
 
-        this.rightBtn = FrameUtil.createButton(this, "右", new Point(gamePanel.getWidth() + 480, 120), 50, 50);
-        this.leftBtn = FrameUtil.createButton(this, "左", new Point(gamePanel.getWidth() + 320, 120), 50, 50);
-        this.upBtn = FrameUtil.createButton(this, "上", new Point(gamePanel.getWidth() + 400, 80), 50, 50);
-        this.downBtn = FrameUtil.createButton(this, "下", new Point(gamePanel.getWidth() + 400, 140), 50, 50);
+        this.rightBtn = FrameUtil.createButton(this, rightIcon, new Point(gamePanel.getWidth() + 450, 120), 52, 52);
+        rightBtn.setBorderPainted(false);
+        rightBtn.setContentAreaFilled(false);
+        rightBtn.setFocusPainted(false);
+        this.leftBtn = FrameUtil.createButton(this, leftIcon, new Point(gamePanel.getWidth() + 350, 120), 52, 52);
+        leftBtn.setBorderPainted(false);
+        leftBtn.setContentAreaFilled(false);
+        leftBtn.setFocusPainted(false);
+        this.upBtn = FrameUtil.createButton(this, upIcon, new Point(gamePanel.getWidth() + 400, 80), 52, 52);
+        upBtn.setBorderPainted(false);
+        upBtn.setContentAreaFilled(false);
+        upBtn.setFocusPainted(false);
+        this.downBtn = FrameUtil.createButton(this, downIcon, new Point(gamePanel.getWidth() + 400, 160), 52, 52);
+        downBtn.setBorderPainted(false);
+        downBtn.setContentAreaFilled(false);
+        downBtn.setFocusPainted(false);
 
         this.stepLabel = FrameUtil.createJLabel(this, "步数：0",
                 new Font("serif", Font.ITALIC, 22),
@@ -91,7 +114,10 @@ public class GameFrame extends JFrame {
             gamePanel.requestFocusInWindow();
         });
 
-        this.saveBtn = FrameUtil.createButton(this, "保存", new Point(gamePanel.getWidth() + 80, 300), 80, 50);
+        this.saveBtn = FrameUtil.createButton(this, downIcon,new Point(gamePanel.getWidth() + 80, 300), 80, 50);
+        saveBtn.setBorderPainted(false);
+        saveBtn.setContentAreaFilled(false);
+        saveBtn.setFocusPainted(false);
         saveBtn.addActionListener(e -> {
             if (currentUser != null) {
                 try {
@@ -114,11 +140,13 @@ public class GameFrame extends JFrame {
             }
         });
 
-        this.exitBtn = FrameUtil.createButton(this, "返回关卡",
-                new Point(gamePanel.getWidth() + 80, 390), 100, 30);
+        this.exitBtn = FrameUtil.createButton(this,downIcon, new Point(gamePanel.getWidth() + 80, 390), 100, 30);
+        exitBtn.setBorderPainted(false);
+        exitBtn.setContentAreaFilled(false);
+        exitBtn.setFocusPainted(false);
         exitBtn.addActionListener(e -> returnToLevel());
 
-        this.returnBtn = FrameUtil.createButton(this, "退", new Point(50, 50), 50, 50);
+        this.returnBtn = FrameUtil.createButton(this, downIcon,new Point(50, 50), 50, 50);
         returnBtn.addActionListener(e -> {
             controller.backStep();
             gamePanel.requestFocusInWindow();

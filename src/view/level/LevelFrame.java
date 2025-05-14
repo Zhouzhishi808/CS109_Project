@@ -20,11 +20,11 @@ public class LevelFrame extends JFrame {
     private GameFrame gameFrame;
     private LoginFrame loginFrame;
 
-    private final JButton level1Button = new JButton("横刀立马");
-    private final JButton level2Button = new JButton("层层设防");
-    private final JButton level3Button = new JButton("四将连关");
-    private final JButton level4Button = new JButton("水泄不通");
-    private final JButton level5Button = new JButton("兵分三路");
+    private final JButton level1Button;
+    private final JButton level2Button;
+    private final JButton level3Button;
+    private final JButton level4Button;
+    private final JButton level5Button;
     private final JButton returnBtn;
 
     private User currentUser;
@@ -37,11 +37,33 @@ public class LevelFrame extends JFrame {
         this.setSize(width, height);
         this.setLocationRelativeTo(null);
 
-        level1Button.setBounds(148, 80, 100, 40);
-        level2Button.setBounds(148, 160, 100, 40);
-        level3Button.setBounds(148, 240, 100, 40);
-        level4Button.setBounds(148, 320, 100, 40);
-        level5Button.setBounds(148, 400, 100, 40);
+        ImageIcon backIcon = new ImageIcon("buttonPic/backBtn.png");
+        ImageIcon level1Icon = new ImageIcon("buttonPic/level1Btn.png");
+        ImageIcon level2Icon = new ImageIcon("buttonPic/level2Btn.png");
+        ImageIcon level3Icon = new ImageIcon("buttonPic/level3Btn.png");
+        ImageIcon level4Icon = new ImageIcon("buttonPic/level4Btn.png");
+        ImageIcon level5Icon = new ImageIcon("buttonPic/level5Btn.png");
+
+        level1Button = FrameUtil.createButton(this, level1Icon, new Point(133,80), 146,51);
+        level1Button.setBorderPainted(false);
+        level1Button.setContentAreaFilled(false);
+        level1Button.setFocusPainted(false);
+        level2Button = FrameUtil.createButton(this, level2Icon, new Point(133,160), 137, 50);
+        level2Button.setBorderPainted(false);
+        level2Button.setContentAreaFilled(false);
+        level2Button.setFocusPainted(false);
+        level3Button = FrameUtil.createButton(this, level3Icon, new Point(133,240), 143, 50);
+        level3Button.setBorderPainted(false);
+        level3Button.setContentAreaFilled(false);
+        level3Button.setFocusPainted(false);
+        level4Button = FrameUtil.createButton(this, level4Icon, new Point(133,320), 134, 56);
+        level4Button.setBorderPainted(false);
+        level4Button.setContentAreaFilled(false);
+        level4Button.setFocusPainted(false);
+        level5Button = FrameUtil.createButton(this, level5Icon, new Point(133,400), 144, 52);
+        level5Button.setBorderPainted(false);
+        level5Button.setContentAreaFilled(false);
+        level5Button.setFocusPainted(false);
 
         mapModel = new MapModel();
 
@@ -123,8 +145,10 @@ public class LevelFrame extends JFrame {
         this.getContentPane().add(level4Button);
         this.getContentPane().add(level5Button);
 
-        this.returnBtn = FrameUtil.createButton(this, "返回",
-                new Point(20,40), 100, 30);
+        this.returnBtn = FrameUtil.createButton(this, backIcon, new Point(20,40), 90, 34);
+        returnBtn.setBorderPainted(false);
+        returnBtn.setContentAreaFilled(false);
+        returnBtn.setFocusPainted(false);
         returnBtn.addActionListener(e -> returnToLogin());
 
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

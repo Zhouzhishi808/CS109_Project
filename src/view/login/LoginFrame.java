@@ -28,6 +28,10 @@ public class LoginFrame extends JFrame {
         confirmFrame.setAlwaysOnTop(true);
         confirmFrame.setSize(280,280);
 
+        ImageIcon loginIcon = new ImageIcon("buttonPic/loginBtn.png");
+        ImageIcon registerIcon = new ImageIcon("buttonPic/registerBtn.png");
+        ImageIcon resetIcon = new ImageIcon("buttonPic/resetBtn.png");
+
         // 用户名标签和输入框
         JLabel userLabel = FrameUtil.createJLabel(this, new Point(500, 120), 70, 30, "用户名:");
         username = FrameUtil.createJTextField(this, new Point(570, 120), 120, 30);
@@ -40,8 +44,14 @@ public class LoginFrame extends JFrame {
         this.add(password);
 
         // 确认和重置按钮
-        submitBtn = FrameUtil.createButton(this, "登录", new Point(480, 250), 80, 30);
-        resetBtn = FrameUtil.createButton(this, "重置", new Point(680, 250), 80, 30);
+        submitBtn = FrameUtil.createButton(this, loginIcon, new Point(480, 250), 95, 42);
+        resetBtn = FrameUtil.createButton(this, resetIcon,new Point(680, 250), 90, 49);
+        submitBtn.setBorderPainted(false);
+        submitBtn.setContentAreaFilled(false);
+        submitBtn.setFocusPainted(false);
+        resetBtn.setBorderPainted(false);
+        resetBtn.setContentAreaFilled(false);
+        resetBtn.setFocusPainted(false);
 
         submitBtn.addActionListener(e -> {
             String inputUser = username.getText();
@@ -66,7 +76,10 @@ public class LoginFrame extends JFrame {
         });
 
         // 注册按钮
-        JButton registerBtn = FrameUtil.createButton(this, "注册", new Point(580, 250), 80, 30);
+        JButton registerBtn = FrameUtil.createButton(this, registerIcon, new Point(580, 250), 92, 45);
+        registerBtn.setBorderPainted(false);
+        registerBtn.setContentAreaFilled(false);
+        registerBtn.setFocusPainted(false);
         registerBtn.addActionListener(e -> showRegisterDialog());
 
         this.setLocationRelativeTo(null);
