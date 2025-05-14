@@ -25,6 +25,11 @@ public class GameFrame extends JFrame {
     private JButton exitBtn;
     private JButton returnBtn;
 
+    private JButton rightBtn;
+    private JButton leftBtn;
+    private JButton upBtn;
+    private JButton downBtn;
+
     private JLabel stepLabel;
     private JLabel timeLabel;
     private GamePanel gamePanel;
@@ -47,6 +52,12 @@ public class GameFrame extends JFrame {
 
         this.restartBtn = FrameUtil.createButton(this, "重置", new Point(gamePanel.getWidth() + 80, 120), 80, 50);
         this.loadBtn = FrameUtil.createButton(this, "加载", new Point(gamePanel.getWidth() + 80, 210), 80, 50);
+
+        this.rightBtn = FrameUtil.createButton(this, "右", new Point(gamePanel.getWidth() + 480, 120), 50, 50);
+        this.leftBtn = FrameUtil.createButton(this, "左", new Point(gamePanel.getWidth() + 320, 120), 50, 50);
+        this.upBtn = FrameUtil.createButton(this, "上", new Point(gamePanel.getWidth() + 400, 80), 50, 50);
+        this.downBtn = FrameUtil.createButton(this, "下", new Point(gamePanel.getWidth() + 400, 140), 50, 50);
+
         this.stepLabel = FrameUtil.createJLabel(this, "步数：0",
                 new Font("serif", Font.ITALIC, 22),
                 new Point(gamePanel.getWidth() + 80, 50), 180, 30);
@@ -112,7 +123,24 @@ public class GameFrame extends JFrame {
             controller.backStep();
             gamePanel.requestFocusInWindow();
         });
-        //todo: add other button here
+
+        this.rightBtn.addActionListener(e -> {
+            gamePanel.doMoveRight();
+            gamePanel.requestFocusInWindow();
+        });
+        this.leftBtn.addActionListener(e -> {
+            gamePanel.doMoveLeft();
+            gamePanel.requestFocusInWindow();
+        });
+        this.upBtn.addActionListener(e -> {
+            gamePanel.doMoveUp();
+            gamePanel.requestFocusInWindow();
+        });
+        this.downBtn.addActionListener(e -> {
+            gamePanel.doMoveDown();
+            gamePanel.requestFocusInWindow();
+        });
+
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         SwingUtilities.invokeLater(() -> {

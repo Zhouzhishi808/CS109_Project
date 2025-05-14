@@ -32,9 +32,9 @@ public class LoginFrame extends JFrame {
         JLabel userLabel = FrameUtil.createJLabel(this, new Point(500, 120), 70, 30, "用户名:");
         username = FrameUtil.createJTextField(this, new Point(570, 120), 120, 30);
 
-        // 密码标签和输入框（使用 JPasswordField）
+        // 密码标签和输入框
         JLabel passLabel = FrameUtil.createJLabel(this, new Point(500, 180), 70, 30, "密码:");
-        password = new JPasswordField(); // 手动初始化
+        password = new JPasswordField();
         password.setLocation(570, 180);
         password.setSize(120, 30);
         this.add(password);
@@ -43,10 +43,9 @@ public class LoginFrame extends JFrame {
         submitBtn = FrameUtil.createButton(this, "登录", new Point(480, 250), 80, 30);
         resetBtn = FrameUtil.createButton(this, "重置", new Point(680, 250), 80, 30);
 
-        // 提交按钮监听器
         submitBtn.addActionListener(e -> {
             String inputUser = username.getText();
-            char[] inputPassChars = password.getPassword(); // 正确获取密码
+            char[] inputPassChars = password.getPassword();
             String inputPass = new String(inputPassChars);
 
             if (inputUser.isEmpty()) {

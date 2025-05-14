@@ -189,7 +189,7 @@ public class GameController {
             }
         }
 
-        GameSave save = new GameSave(deepCopy(model.getMatrix()), view.getSteps(), levelName, view.getTimeInSeconds());
+        GameSave save = new GameSave(deepCopy(model.getMatrix()), view.getSteps(), levelName, view.getTimeInSeconds(), this.mapModels);
         user.setSaveData(save);
         System.out.println(view.getTimeInSeconds());
 
@@ -211,6 +211,7 @@ public class GameController {
             model.setMatrix(deepCopy(save.getMapState()));
             view.resetGame();
             view.setSteps(save.getSteps());
+            this.mapModels = save.getMapModels();
 
             gameTimer.continueFrom(save.getTimeInSeconds());
             view.setTimeInSeconds(save.getTimeInSeconds());
@@ -258,6 +259,4 @@ public class GameController {
     public void addTimeUpdateListener(){
         gameTimer.addTimeUpdateListener(this.view::setTimeInSeconds);
     }
-    //todo: add other methods such as loadGame, saveGame...
-
 }

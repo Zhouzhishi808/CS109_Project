@@ -52,7 +52,7 @@ public class LevelFrame extends JFrame {
                 Level1();
                 mapModel.setName("横刀立马");
                 mapModel.setMatrix(Constants.MAP);
-                gameFrame = new GameFrame(450, 450,mapModel, LevelFrame.this);
+                gameFrame = new GameFrame(800, 500,mapModel, LevelFrame.this);
                 LevelFrame.this.setVisible(false);
                 gameFrame.setVisible(true);
                 if (currentUser != null) {
@@ -66,7 +66,7 @@ public class LevelFrame extends JFrame {
                 Level2();
                 mapModel.setName("层层设防");
                 mapModel.setMatrix(Constants.MAP);
-                gameFrame = new GameFrame(450, 450,mapModel, LevelFrame.this);
+                gameFrame = new GameFrame( 800, 500,mapModel, LevelFrame.this);
                 LevelFrame.this.setVisible(false);
                 gameFrame.setVisible(true);
                 if (currentUser != null) {
@@ -80,7 +80,7 @@ public class LevelFrame extends JFrame {
                 Level3();
                 mapModel.setName("四将连关");
                 mapModel.setMatrix(Constants.MAP);
-                gameFrame = new GameFrame(450, 450,mapModel, LevelFrame.this);
+                gameFrame = new GameFrame(800, 500,mapModel, LevelFrame.this);
                 LevelFrame.this.setVisible(false);
                 gameFrame.setVisible(true);
                 if (currentUser != null) {
@@ -94,7 +94,7 @@ public class LevelFrame extends JFrame {
                 Level4();
                 mapModel.setName("水泄不通");
                 mapModel.setMatrix(Constants.MAP);
-                gameFrame = new GameFrame(450, 450,mapModel, LevelFrame.this);
+                gameFrame = new GameFrame(800, 500,mapModel, LevelFrame.this);
                 LevelFrame.this.setVisible(false);
                 gameFrame.setVisible(true);
                 if (currentUser != null) {
@@ -108,7 +108,7 @@ public class LevelFrame extends JFrame {
                 Level5();
                 mapModel.setName("兵分三路");
                 mapModel.setMatrix(Constants.MAP);
-                gameFrame = new GameFrame(450, 450,mapModel, LevelFrame.this);
+                gameFrame = new GameFrame(800, 500,mapModel, LevelFrame.this);
                 LevelFrame.this.setVisible(false);
                 gameFrame.setVisible(true);
                 if (currentUser != null) {
@@ -138,8 +138,8 @@ public class LevelFrame extends JFrame {
         int [][] map = {
                 {3,4,4,3},
                 {3,4,4,3},
-                {3,0,0,3},
-                {3,0,0,3},
+                {3,2,2,3},
+                {3,1,1,3},
                 {1,0,0,1},
         };
         for (int row = 0; row < map.length; row++) {

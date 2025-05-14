@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class GameSave implements Serializable {
     @Serial
@@ -10,12 +11,14 @@ public class GameSave implements Serializable {
     private final int steps;
     private final String levelName;
     private final int timeInSeconds;
+    private final ArrayList<MapModel> mapModels;
 
-    public GameSave(int[][] mapState, int steps, String levelName, int timeInSeconds) {
+    public GameSave(int[][] mapState, int steps, String levelName, int timeInSeconds, ArrayList<MapModel> mapModels) {
         this.mapState = mapState;
         this.steps = steps;
         this.levelName = levelName;
         this.timeInSeconds = timeInSeconds;
+        this.mapModels = mapModels;
     }
 
     // Getters
@@ -23,4 +26,5 @@ public class GameSave implements Serializable {
     public int getSteps() { return steps; }
     public String getLevelName() { return levelName; }
     public int getTimeInSeconds() { return timeInSeconds; }
+    public ArrayList<MapModel> getMapModels() { return mapModels; }
 }
