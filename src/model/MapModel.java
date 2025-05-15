@@ -2,10 +2,15 @@ package model;
 
 import view.game.GamePanel;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * This class is to record the map of one game. For example:
  */
-public class MapModel {
+public class MapModel implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 8755964951736167768L;
     int[][] matrix;
     String name;
 

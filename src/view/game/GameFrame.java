@@ -24,6 +24,7 @@ public class GameFrame extends JFrame {
     private JButton saveBtn;
     private JButton exitBtn;
     private JButton returnBtn;
+    private JButton leaderboardBtn;
 
     private JButton rightBtn;
     private JButton leftBtn;
@@ -92,12 +93,21 @@ public class GameFrame extends JFrame {
         controller.setGameTimer(gameTimer);
         gameTimer.start();
 
+        gameTimer.setTimeoutAction(() -> {
+            gameTimer.pause();
+            JOptionPane.showMessageDialog(this,
+                    "游戏超时（超过30分钟）！",
+                    "游戏结束",
+                    JOptionPane.WARNING_MESSAGE);
+            returnToLevel();
+        });
+
         gamePanel.setStepLabel(stepLabel);
 
         this.restartBtn.addActionListener(e -> {
             controller.restartGame();
             gameTimer.reset(); // 重置计时器
-            gameTimer.start();
+            gameTimer.start();//重启计时器
             gamePanel.requestFocusInWindow();
         });
         this.loadBtn.addActionListener(e -> {
@@ -153,19 +163,41 @@ public class GameFrame extends JFrame {
         });
 
         this.rightBtn.addActionListener(e -> {
-            gamePanel.doMoveRight();
+            try {
+                gamePanel.doMoveRight();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
             gamePanel.requestFocusInWindow();
         });
         this.leftBtn.addActionListener(e -> {
-            gamePanel.doMoveLeft();
+            try {
+                gamePanel.doMoveLeft();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
             gamePanel.requestFocusInWindow();
         });
         this.upBtn.addActionListener(e -> {
-            gamePanel.doMoveUp();
+            try {
+                gamePanel.doMoveUp();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
             gamePanel.requestFocusInWindow();
         });
         this.downBtn.addActionListener(e -> {
-            gamePanel.doMoveDown();
+            try {
+                gamePanel.doMoveDown();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            gamePanel.requestFocusInWindow();
+        });
+
+        this.leaderboardBtn = FrameUtil.createButton(this, downIcon,new Point(400, 400), 50, 50);
+        leaderboardBtn.addActionListener(e -> {
+            showLeaderboard();
             gamePanel.requestFocusInWindow();
         });
 
@@ -181,6 +213,10 @@ public class GameFrame extends JFrame {
         this.currentUser = user;
         saveBtn.setEnabled(user != null); // 控制保存按钮状态
         loadBtn.setEnabled(user != null && user.hasSaveDataForLevel(levelName));
+    }
+
+    public User getUser() {
+        return currentUser;
     }
 
     private void autoSaveGame() {
@@ -208,5 +244,9 @@ public class GameFrame extends JFrame {
     public String getTime()
     {
         return timeLabel.getText();
+    }
+
+    private void showLeaderboard() {
+        new RankFrame(levelName).setVisible(true);
     }
 }

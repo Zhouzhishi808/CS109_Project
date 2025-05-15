@@ -12,11 +12,16 @@ public class GameTimer {
     private JLabel timeLabel;
     private List<TimeUpdateListener> listeners = new ArrayList<>();
     private TimeUpdateListener timeUpdateListener;
-
+    private TimeoutListener timeoutListener;
+    private Runnable timeoutAction;
 
     public interface TimeUpdateListener {
         void onTimeUpdate(int seconds);
     }
+    public interface TimeoutListener {
+        void onTimeout();
+    }
+
 
     public void addTimeUpdateListener(TimeUpdateListener listener) {
         listeners.add(listener);
@@ -43,6 +48,10 @@ public class GameTimer {
         // 通知监听器
         for (TimeUpdateListener listener : listeners) {
             listener.onTimeUpdate(secondsElapsed);
+        }
+
+        if (secondsElapsed >= 1800) {
+            timeoutAction.run();
         }
     }
 
@@ -77,5 +86,9 @@ public class GameTimer {
 
     public void setTimeUpdateListener(TimeUpdateListener listener) {
         this.timeUpdateListener = listener;
+    }
+
+    public void setTimeoutAction(Runnable action) {
+        this.timeoutAction = action;
     }
 }

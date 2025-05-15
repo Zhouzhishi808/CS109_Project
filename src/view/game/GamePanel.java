@@ -7,6 +7,7 @@ import model.MapModel;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,7 +118,7 @@ public class GamePanel extends ListenerPanel {
     }
     //使被选择的方块移动
     @Override
-    public void doMoveRight() {
+    public void doMoveRight() throws IOException {
         System.out.println("右");
         if (selectedBox != null) {
             if (controller.doMove(selectedBox.getRow(), selectedBox.getCol(), Direction.RIGHT)) {
@@ -127,7 +128,7 @@ public class GamePanel extends ListenerPanel {
     }
 
     @Override
-    public void doMoveLeft() {
+    public void doMoveLeft() throws IOException {
         System.out.println("左");
         if (selectedBox != null) {
             if (controller.doMove(selectedBox.getRow(), selectedBox.getCol(), Direction.LEFT)) {
@@ -137,7 +138,7 @@ public class GamePanel extends ListenerPanel {
     }
 
     @Override
-    public void doMoveUp() {
+    public void doMoveUp() throws IOException {
         System.out.println("上");
         if (selectedBox != null) {
             if (controller.doMove(selectedBox.getRow(), selectedBox.getCol(), Direction.UP)) {
@@ -147,7 +148,7 @@ public class GamePanel extends ListenerPanel {
     }
 
     @Override
-    public void doMoveDown() {
+    public void doMoveDown() throws IOException {
         System.out.println("下");
         if (selectedBox != null) {
             if (controller.doMove(selectedBox.getRow(), selectedBox.getCol(), Direction.DOWN)) {
