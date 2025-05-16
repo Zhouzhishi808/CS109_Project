@@ -37,10 +37,15 @@ public class GameFrame extends JFrame {
     private User currentUser;
     private String levelName;
 
-    ImageIcon downIcon = new ImageIcon("buttonPic/downBtn.png");
-    ImageIcon upIcon = new ImageIcon("buttonPic/upBtn.png");
-    ImageIcon leftIcon = new ImageIcon("buttonPic/leftBtn.png");
-    ImageIcon rightIcon = new ImageIcon("buttonPic/rightBtn.png");
+    ImageIcon downIcon = new ImageIcon("Picture/buttonPic/downBtn.png");
+    ImageIcon upIcon = new ImageIcon("Picture/buttonPic/upBtn.png");
+    ImageIcon leftIcon = new ImageIcon("Picture/buttonPic/leftBtn.png");
+    ImageIcon rightIcon = new ImageIcon("Picture/buttonPic/rightBtn.png");
+    ImageIcon exitIcon = new ImageIcon("Picture/buttonPic/exitBtn.png");
+    ImageIcon resetIcon = new ImageIcon("Picture/buttonPic/resetBtn.png");
+    ImageIcon loadIcon = new ImageIcon("Picture/buttonPic/loadBtn.png");
+    ImageIcon saveIcon = new ImageIcon("Picture/buttonPic/saveBtn.png");
+    ImageIcon returnIcon = new ImageIcon("Picture/buttonPic/returnBtn.png");
 
     public GameFrame(int width, int height, MapModel mapModel, LevelFrame levelFrame) {
         this.levelFrame = levelFrame;
@@ -55,11 +60,11 @@ public class GameFrame extends JFrame {
 
         controller.addInitialState();
 
-        this.restartBtn = FrameUtil.createButton(this, downIcon,new Point(gamePanel.getWidth() + 80, 120), 80, 50);
+        this.restartBtn = FrameUtil.createButton(this, resetIcon,new Point(gamePanel.getWidth() + 80, 120), 90, 49);
         restartBtn.setBorderPainted(false);
         restartBtn.setContentAreaFilled(false);
         restartBtn.setFocusPainted(false);
-        this.loadBtn = FrameUtil.createButton(this,downIcon, new Point(gamePanel.getWidth() + 80, 210), 80, 50);
+        this.loadBtn = FrameUtil.createButton(this,loadIcon, new Point(gamePanel.getWidth() + 60, 210), 138, 46);
         loadBtn.setBorderPainted(false);
         loadBtn.setContentAreaFilled(false);
         loadBtn.setFocusPainted(false);
@@ -114,7 +119,7 @@ public class GameFrame extends JFrame {
             gamePanel.requestFocusInWindow();
         });
 
-        this.saveBtn = FrameUtil.createButton(this, downIcon,new Point(gamePanel.getWidth() + 80, 300), 80, 50);
+        this.saveBtn = FrameUtil.createButton(this, saveIcon,new Point(gamePanel.getWidth() + 80, 300), 91, 47);
         saveBtn.setBorderPainted(false);
         saveBtn.setContentAreaFilled(false);
         saveBtn.setFocusPainted(false);
@@ -140,13 +145,16 @@ public class GameFrame extends JFrame {
             }
         });
 
-        this.exitBtn = FrameUtil.createButton(this,downIcon, new Point(gamePanel.getWidth() + 80, 390), 100, 30);
+        this.exitBtn = FrameUtil.createButton(this,exitIcon, new Point(50, 50), 90, 34);
         exitBtn.setBorderPainted(false);
         exitBtn.setContentAreaFilled(false);
         exitBtn.setFocusPainted(false);
         exitBtn.addActionListener(e -> returnToLevel());
 
-        this.returnBtn = FrameUtil.createButton(this, downIcon,new Point(50, 50), 50, 50);
+        this.returnBtn = FrameUtil.createButton(this, returnIcon,new Point(gamePanel.getWidth() + 80, 390), 93, 49);
+        returnBtn.setBorderPainted(false);
+        returnBtn.setContentAreaFilled(false);
+        returnBtn.setFocusPainted(false);
         returnBtn.addActionListener(e -> {
             controller.backStep();
             gamePanel.requestFocusInWindow();

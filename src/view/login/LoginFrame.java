@@ -28,9 +28,14 @@ public class LoginFrame extends JFrame {
         confirmFrame.setAlwaysOnTop(true);
         confirmFrame.setSize(280,280);
 
-        ImageIcon loginIcon = new ImageIcon("buttonPic/loginBtn.png");
-        ImageIcon registerIcon = new ImageIcon("buttonPic/registerBtn.png");
-        ImageIcon resetIcon = new ImageIcon("buttonPic/resetBtn.png");
+        ImageIcon loginIcon = new ImageIcon("Picture/buttonPic/loginBtn.png");
+        ImageIcon registerIcon = new ImageIcon("Picture/buttonPic/registerBtn.png");
+        ImageIcon resetIcon = new ImageIcon("Picture/buttonPic/resetBtn.png");
+        ImageIcon loginFrameIcon = new ImageIcon("Picture/framePic/loginFrame.png");
+
+        JLabel backgroundLabel = new JLabel(loginFrameIcon);
+        backgroundLabel.setLayout(null);
+        this.setContentPane(backgroundLabel);
 
         // 用户名标签和输入框
         JLabel userLabel = FrameUtil.createJLabel(this, new Point(500, 120), 70, 30, "用户名:");
