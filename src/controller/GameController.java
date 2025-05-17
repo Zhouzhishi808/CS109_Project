@@ -36,7 +36,7 @@ public class GameController {
         }
     }
 
-    public boolean doMove(int row, int col, Direction direction) {
+    public boolean doMove(int row, int col, Direction direction) throws IOException {
         int blockId = model.getId(row, col);
         if (blockId == 0) return false; // 空位置不可移动
 
@@ -150,6 +150,8 @@ public class GameController {
     public void restartGame() {
         // 重置模型数据
         model.setMatrix(deepCopy(initialMap));
+        //清楚移动记录
+        mapModels.clear();
         // 通知视图重置
         view.resetGame();
     }
@@ -166,8 +168,26 @@ public class GameController {
         return true;
     }
 
-    private void showWinDialog() {
+    private void showWinDialog() throws IOException{
         int steps = view.getSteps();
+
+        File rankDir = new File(Constants.RANK_DIRECTORY);
+        if (!rankDir.exists()) {
+            if (!rankDir.mkdirs()) {
+                throw new IOException("无法创建排行榜文件夹");
+            }
+        }
+
+        if (gameframe.getUser() != null) {
+                RankManager.saveRankData(
+                    model.getName(),
+                    new Rank(
+                            gameframe.getUser().getUsername(),
+                            gameTimer.getTimeInSeconds()
+                    )
+            );
+        }
+
         gameTimer.pause();
         JOptionPane.showMessageDialog(view,
                 "恭喜您游戏胜利！\n步数: " + steps + "\n" + gameframe.getTime(),

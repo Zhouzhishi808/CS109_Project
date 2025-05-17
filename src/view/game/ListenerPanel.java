@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 /**
  * This class is only to enable key events.
@@ -20,10 +21,34 @@ public abstract class ListenerPanel extends JPanel {
         super.processKeyEvent(e);
         if (e.getID() == KeyEvent.KEY_PRESSED) {
             switch (e.getKeyCode()) {
-                case KeyEvent.VK_RIGHT, KeyEvent.VK_D -> doMoveRight();
-                case KeyEvent.VK_LEFT, KeyEvent.VK_A -> doMoveLeft();
-                case KeyEvent.VK_UP, KeyEvent.VK_W -> doMoveUp();
-                case KeyEvent.VK_DOWN, KeyEvent.VK_S -> doMoveDown();
+                case KeyEvent.VK_RIGHT, KeyEvent.VK_D -> {
+                    try {
+                        doMoveRight();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+                case KeyEvent.VK_LEFT, KeyEvent.VK_A -> {
+                    try {
+                        doMoveLeft();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+                case KeyEvent.VK_UP, KeyEvent.VK_W -> {
+                    try {
+                        doMoveUp();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+                case KeyEvent.VK_DOWN, KeyEvent.VK_S -> {
+                    try {
+                        doMoveDown();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
             }
         }
     }
@@ -36,13 +61,13 @@ public abstract class ListenerPanel extends JPanel {
     }
     public abstract void doMouseClick(Point point);
 
-    public abstract void doMoveRight();
+    public abstract void doMoveRight() throws IOException;
 
-    public abstract void doMoveLeft();
+    public abstract void doMoveLeft() throws IOException;
 
-    public abstract void doMoveUp();
+    public abstract void doMoveUp() throws IOException;
 
-    public abstract void doMoveDown();
+    public abstract void doMoveDown() throws IOException;
 
 
 }
