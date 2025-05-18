@@ -193,7 +193,7 @@ public class GameController {
                 "恭喜您游戏胜利！\n步数: " + steps + "\n" + gameframe.getTime(),
                 "胜利",
                 JOptionPane.INFORMATION_MESSAGE);
-
+        MusicController.playBackgroundMusic("Music/BGM/levelFrame.wav");
         gameframe.returnToLevel(); // 可选：胜利后自动重置游戏
     }
 
