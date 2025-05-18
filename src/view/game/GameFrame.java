@@ -126,7 +126,7 @@ public class GameFrame extends JFrame {
 
         gameTimer.setTimeoutAction(() -> {
             gameTimer.pause();
-            this.musicController.startMusic("Music/");
+//            this.musicController.startMusic("Music/");
             JOptionPane.showMessageDialog(this,
                     "游戏超时（超过30分钟）！",
                     "游戏结束",
@@ -239,7 +239,7 @@ public class GameFrame extends JFrame {
             public void mouseReleased(MouseEvent e) {
                 exitBtn.setLocation(50, 50);
                 exitBtn.setIcon(exitIcon);
-                musicController.stopMusic();
+                musicController.stopBackgroundMusic();
                 returnToLevel();
             }
         });

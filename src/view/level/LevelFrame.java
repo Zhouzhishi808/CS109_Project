@@ -111,7 +111,7 @@ public class LevelFrame extends JFrame {
                     gameFrame.setUser(currentUser);
                     gameFrame.setTitle("兵分三路 当前用户:" + currentUser.getUsername());
                 }
-                musicController.startMusic("Music/BGM/level1.wav");
+                MusicController.playBackgroundMusic("Music/BGM/level1.wav");
             }
         });
 
@@ -137,7 +137,7 @@ public class LevelFrame extends JFrame {
                     gameFrame.setUser(currentUser);
                     gameFrame.setTitle(currentUser.getUsername());
                 }
-                musicController.startMusic("Music/BGM/level2.wav");
+                MusicController.playBackgroundMusic("Music/BGM/level2.wav");
             }
         });
 
@@ -163,7 +163,7 @@ public class LevelFrame extends JFrame {
                     gameFrame.setUser(currentUser);
                     gameFrame.setTitle(currentUser.getUsername());
                 }
-                musicController.startMusic("Music/BGM/level3.wav");
+                MusicController.playBackgroundMusic("Music/BGM/level3.wav");
             }
         });
 
@@ -189,7 +189,7 @@ public class LevelFrame extends JFrame {
                     gameFrame.setUser(currentUser);
                     gameFrame.setTitle(currentUser.getUsername());
                 }
-                musicController.startMusic("Music/BGM/level4.wav");
+                MusicController.playBackgroundMusic("Music/BGM/level4.wav");
             }
         });
 
@@ -215,7 +215,7 @@ public class LevelFrame extends JFrame {
                     gameFrame.setUser(currentUser);
                     gameFrame.setTitle(currentUser.getUsername());
                 }
-                musicController.startMusic("Music/BGM/level5.wav");
+                MusicController.playBackgroundMusic("Music/BGM/level5.wav");
             }
         });
 
@@ -232,7 +232,7 @@ public class LevelFrame extends JFrame {
                 returnBtn.setLocation(40,40);
                 returnBtn.setIcon(exitIcon);
                 returnToLogin();
-                musicController.stopMusic();
+                musicController.stopBackgroundMusic();
             }
         });
 
