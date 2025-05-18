@@ -19,7 +19,8 @@ public class LoginFrame extends JFrame {
     private JPasswordField password; // 修正为 JPasswordField
     private JButton submitBtn;
     private JButton resetBtn;
-    private LevelFrame levelFrame;
+    private LevelFrame levelFrame = new LevelFrame(480, 492, this);;
+    private MusicController musicController;
     private final UserManager userManager = new UserManager();
 
     public LoginFrame(int width, int height) {
@@ -31,6 +32,9 @@ public class LoginFrame extends JFrame {
         confirmFrame.setLocationRelativeTo(null);
         confirmFrame.setAlwaysOnTop(true);
         confirmFrame.setSize(280,280);
+
+        MusicController musicController = new MusicController();
+        levelFrame.setMusicController(musicController);
 
         ImageIcon loginIcon = new ImageIcon("Picture/buttonPic/loginBtn.png");
         ImageIcon registerIcon = new ImageIcon("Picture/buttonPic/registerBtn.png");
@@ -72,7 +76,7 @@ public class LoginFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 submitBtn.setIcon(loginPressedIcon);
                 submitBtn.setLocation(200, 352);
-                MusicController.playClickSound();
+                musicController.playClickSound();
             }
 
             @Override
@@ -101,7 +105,7 @@ public class LoginFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 resetBtn.setIcon(resetPressedIcon);
                 resetBtn.setLocation(330, 352);
-                MusicController.playClickSound();
+                musicController.playClickSound();
             }
 
             @Override
@@ -124,7 +128,7 @@ public class LoginFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 registerBtn.setIcon(registerPressedIcon);
                 registerBtn.setLocation(460, 352);
-                MusicController.playClickSound();
+                musicController.playClickSound();
             }
 
             @Override

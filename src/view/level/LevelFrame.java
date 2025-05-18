@@ -34,7 +34,7 @@ public class LevelFrame extends JFrame {
     private User currentUser;
     private MapModel mapModel;
 
-    private MusicController musicController_level1 = new MusicController("Music/BGM/level1.wav");
+    private MusicController musicController;
 
     public LevelFrame(int width, int height, LoginFrame loginFrame) {
         this.loginFrame = loginFrame;
@@ -94,6 +94,7 @@ public class LevelFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 level1Button.setIcon(level1PressedIcon);
                 level1Button.setLocation(160, 52);
+                musicController.playClickSound();
             }
 
             @Override
@@ -103,14 +104,14 @@ public class LevelFrame extends JFrame {
                 Level1();
                 mapModel.setName("横刀立马");
                 mapModel.setMatrix(Constants.MAP);
-                gameFrame = new GameFrame(800, 500,mapModel, LevelFrame.this);
+                gameFrame = new GameFrame(800, 500,mapModel, LevelFrame.this, musicController);
                 LevelFrame.this.setVisible(false);
                 gameFrame.setVisible(true);
                 if (currentUser != null) {
                     gameFrame.setUser(currentUser);
                     gameFrame.setTitle("兵分三路 当前用户:" + currentUser.getUsername());
                 }
-                musicController_level1.startMusic();
+                musicController.startMusic("Music/BGM/level1.wav");
             }
         });
 
@@ -119,7 +120,7 @@ public class LevelFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 level2Button.setIcon(level2PressedIcon);
                 level2Button.setLocation(163, 134);
-                MusicController.playClickSound();
+                musicController.playClickSound();
             }
 
             @Override
@@ -129,14 +130,14 @@ public class LevelFrame extends JFrame {
                 Level2();
                 mapModel.setName("层层设防");
                 mapModel.setMatrix(Constants.MAP);
-                gameFrame = new GameFrame( 800, 500,mapModel, LevelFrame.this);
+                gameFrame = new GameFrame( 800, 500,mapModel, LevelFrame.this, musicController);
                 LevelFrame.this.setVisible(false);
                 gameFrame.setVisible(true);
                 if (currentUser != null) {
                     gameFrame.setUser(currentUser);
                     gameFrame.setTitle(currentUser.getUsername());
                 }
-                MusicController.playLevel2Sound();
+                musicController.startMusic("Music/BGM/level2.wav");
             }
         });
 
@@ -145,7 +146,7 @@ public class LevelFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 level3Button.setIcon(level3PressedIcon);
                 level3Button.setLocation(163, 212);
-                MusicController.playClickSound();
+                musicController.playClickSound();
             }
 
             @Override
@@ -155,14 +156,14 @@ public class LevelFrame extends JFrame {
                 Level3();
                 mapModel.setName("四将连关");
                 mapModel.setMatrix(Constants.MAP);
-                gameFrame = new GameFrame(800, 500,mapModel, LevelFrame.this);
+                gameFrame = new GameFrame(800, 500,mapModel, LevelFrame.this, musicController);
                 LevelFrame.this.setVisible(false);
                 gameFrame.setVisible(true);
                 if (currentUser != null) {
                     gameFrame.setUser(currentUser);
                     gameFrame.setTitle(currentUser.getUsername());
                 }
-                MusicController.playLevel3Sound();
+                musicController.startMusic("Music/BGM/level3.wav");
             }
         });
 
@@ -171,7 +172,7 @@ public class LevelFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 level4Button.setIcon(level4PressedIcon);
                 level4Button.setLocation(167, 292);
-                MusicController.playClickSound();
+                musicController.playClickSound();
             }
 
             @Override
@@ -181,14 +182,14 @@ public class LevelFrame extends JFrame {
                 Level4();
                 mapModel.setName("水泄不通");
                 mapModel.setMatrix(Constants.MAP);
-                gameFrame = new GameFrame(800, 500,mapModel, LevelFrame.this);
+                gameFrame = new GameFrame(800, 500,mapModel, LevelFrame.this, musicController);
                 LevelFrame.this.setVisible(false);
                 gameFrame.setVisible(true);
                 if (currentUser != null) {
                     gameFrame.setUser(currentUser);
                     gameFrame.setTitle(currentUser.getUsername());
                 }
-                MusicController.playLevel4Sound();
+                musicController.startMusic("Music/BGM/level4.wav");
             }
         });
 
@@ -197,7 +198,7 @@ public class LevelFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 level5Button.setIcon(level5PressedIcon);
                 level5Button.setLocation(165, 372);
-                MusicController.playClickSound();
+                musicController.playClickSound();
             }
 
             @Override
@@ -207,14 +208,14 @@ public class LevelFrame extends JFrame {
                 Level5();
                 mapModel.setName("兵分三路");
                 mapModel.setMatrix(Constants.MAP);
-                gameFrame = new GameFrame(800, 500,mapModel, LevelFrame.this);
+                gameFrame = new GameFrame(800, 500,mapModel, LevelFrame.this, musicController);
                 LevelFrame.this.setVisible(false);
                 gameFrame.setVisible(true);
                 if (currentUser != null) {
                     gameFrame.setUser(currentUser);
                     gameFrame.setTitle(currentUser.getUsername());
                 }
-                MusicController.playLevel5Sound();
+                musicController.startMusic("Music/BGM/level5.wav");
             }
         });
 
@@ -223,7 +224,7 @@ public class LevelFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 returnBtn.setIcon(returnPressedIcon);
                 returnBtn.setLocation(40, 42);
-                MusicController.playClickSound();
+                musicController.playClickSound();
             }
 
             @Override
@@ -231,7 +232,7 @@ public class LevelFrame extends JFrame {
                 returnBtn.setLocation(40,40);
                 returnBtn.setIcon(exitIcon);
                 returnToLogin();
-                musicController_level1.stopMusic();
+                musicController.stopMusic();
             }
         });
 
@@ -310,5 +311,9 @@ public class LevelFrame extends JFrame {
     private void returnToLogin() {
         this.dispose(); // 销毁当前游戏窗口
         loginFrame.setVisible(true); // 显示关卡选择界面
+    }
+
+    public void setMusicController(MusicController musicController) {
+        this.musicController = musicController;
     }
 }

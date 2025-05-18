@@ -25,6 +25,7 @@ public class GamePanel extends ListenerPanel {
     private final int GRID_SIZE = 50;
     private BoxComponent selectedBox;
     private int timeInSeconds;
+    private MusicController musicController;
 
 
     public GamePanel(MapModel model) {
@@ -124,7 +125,7 @@ public class GamePanel extends ListenerPanel {
         if (selectedBox != null) {
             if (controller.doMove(selectedBox.getRow(), selectedBox.getCol(), Direction.RIGHT)) {
                 afterMove();
-                MusicController.playMoveSound();
+                musicController.playMoveSound();
             }
         }
     }
@@ -135,7 +136,7 @@ public class GamePanel extends ListenerPanel {
         if (selectedBox != null) {
             if (controller.doMove(selectedBox.getRow(), selectedBox.getCol(), Direction.LEFT)) {
                 afterMove();
-                MusicController.playMoveSound();
+                musicController.playMoveSound();
             }
         }
     }
@@ -146,7 +147,7 @@ public class GamePanel extends ListenerPanel {
         if (selectedBox != null) {
             if (controller.doMove(selectedBox.getRow(), selectedBox.getCol(), Direction.UP)) {
                 afterMove();
-                MusicController.playMoveSound();
+                musicController.playMoveSound();
             }
         }
     }
@@ -157,7 +158,7 @@ public class GamePanel extends ListenerPanel {
         if (selectedBox != null) {
             if (controller.doMove(selectedBox.getRow(), selectedBox.getCol(), Direction.DOWN)) {
                 afterMove();
-                MusicController.playMoveSound();
+                musicController.playMoveSound();
             }
         }
     }

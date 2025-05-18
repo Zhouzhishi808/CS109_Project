@@ -187,7 +187,6 @@ public class GameController {
                     )
             );
         }
-        MusicController.playVictorySound();
 
         gameTimer.pause();
         JOptionPane.showMessageDialog(view,
