@@ -29,12 +29,6 @@ public class LevelFrame extends JFrame {
     private final JButton level4Button;
     private final JButton level5Button;
     private final JButton returnBtn;
-    private ImageIcon level1PressedIcon;
-    private ImageIcon level2PressedIcon;
-    private ImageIcon level3PressedIcon;
-    private ImageIcon level4PressedIcon;
-    private ImageIcon level5PressedIcon;
-    private ImageIcon returnPressedIcon;
 
     private User currentUser;
     private MapModel mapModel;
@@ -92,9 +86,17 @@ public class LevelFrame extends JFrame {
 
         mapModel = new MapModel();
 
-        level1Button.addActionListener(new ActionListener() {
+        level1Button.addMouseListener(new MouseAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void mousePressed(MouseEvent e) {
+                level1Button.setIcon(level1PressedIcon);
+                level1Button.setLocation(160, 52);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                level1Button.setLocation(160,50);
+                level1Button.setIcon(level1Icon);
                 Level1();
                 mapModel.setName("横刀立马");
                 mapModel.setMatrix(Constants.MAP);
@@ -104,12 +106,20 @@ public class LevelFrame extends JFrame {
                 if (currentUser != null) {
                     gameFrame.setUser(currentUser);
                 }
-                level1Button.setIcon(level1PressedIcon);
             }
         });
-        level2Button.addActionListener(new ActionListener() {
+
+        level2Button.addMouseListener(new MouseAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void mousePressed(MouseEvent e) {
+                level2Button.setIcon(level2PressedIcon);
+                level2Button.setLocation(163, 134);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                level2Button.setLocation(163,132);
+                level2Button.setIcon(level2Icon);
                 Level2();
                 mapModel.setName("层层设防");
                 mapModel.setMatrix(Constants.MAP);
@@ -119,12 +129,20 @@ public class LevelFrame extends JFrame {
                 if (currentUser != null) {
                     gameFrame.setUser(currentUser);
                 }
-                level2Button.setIcon(level2PressedIcon);
             }
         });
-        level3Button.addActionListener(new ActionListener() {
+
+        level3Button.addMouseListener(new MouseAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void mousePressed(MouseEvent e) {
+                level3Button.setIcon(level3PressedIcon);
+                level3Button.setLocation(163, 212);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                level3Button.setLocation(163,210);
+                level3Button.setIcon(level3Icon);
                 Level3();
                 mapModel.setName("四将连关");
                 mapModel.setMatrix(Constants.MAP);
@@ -134,12 +152,20 @@ public class LevelFrame extends JFrame {
                 if (currentUser != null) {
                     gameFrame.setUser(currentUser);
                 }
-                level3Button.setIcon(level3PressedIcon);
             }
         });
-        level4Button.addActionListener(new ActionListener() {
+
+        level4Button.addMouseListener(new MouseAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void mousePressed(MouseEvent e) {
+                level4Button.setIcon(level4PressedIcon);
+                level4Button.setLocation(167, 292);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                level4Button.setLocation(167,290);
+                level4Button.setIcon(level4Icon);
                 Level4();
                 mapModel.setName("水泄不通");
                 mapModel.setMatrix(Constants.MAP);
@@ -149,12 +175,20 @@ public class LevelFrame extends JFrame {
                 if (currentUser != null) {
                     gameFrame.setUser(currentUser);
                 }
-                level4Button.setIcon(level4PressedIcon);
             }
         });
-        level5Button.addActionListener(new ActionListener() {
+
+        level5Button.addMouseListener(new MouseAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void mousePressed(MouseEvent e) {
+                level5Button.setIcon(level5PressedIcon);
+                level5Button.setLocation(165, 372);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                level5Button.setLocation(165,370);
+                level5Button.setIcon(level5Icon);
                 Level5();
                 mapModel.setName("兵分三路");
                 mapModel.setMatrix(Constants.MAP);
@@ -164,11 +198,23 @@ public class LevelFrame extends JFrame {
                 if (currentUser != null) {
                     gameFrame.setUser(currentUser);
                 }
-                level5Button.setIcon(level5PressedIcon);
             }
         });
 
-        returnBtn.addActionListener(e -> returnToLogin());
+        returnBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                returnBtn.setIcon(returnPressedIcon);
+                returnBtn.setLocation(40, 42);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                returnBtn.setLocation(40,40);
+                returnBtn.setIcon(exitIcon);
+                returnToLogin();
+            }
+        });
 
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }

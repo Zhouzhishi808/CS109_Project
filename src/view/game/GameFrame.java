@@ -1,6 +1,7 @@
 package view.game;
 
 import controller.GameController;
+import model.Constants;
 import model.GameTimer;
 import model.MapModel;
 import model.User;
@@ -9,6 +10,8 @@ import view.level.LevelFrame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -47,6 +50,16 @@ public class GameFrame extends JFrame {
     ImageIcon loadIcon = new ImageIcon("Picture/buttonPic/loadBtn.png");
     ImageIcon saveIcon = new ImageIcon("Picture/buttonPic/saveBtn.png");
     ImageIcon returnIcon = new ImageIcon("Picture/buttonPic/returnBtn.png");
+    ImageIcon downPressedIcon = new ImageIcon("Picture/buttonPic/downPressedBtn.png");
+    ImageIcon upPressedIcon = new ImageIcon("Picture/buttonPic/upPressedBtn.png");
+    ImageIcon leftPressedIcon = new ImageIcon("Picture/buttonPic/leftPressedBtn.png");
+    ImageIcon rightPressedIcon = new ImageIcon("Picture/buttonPic/rightPressedBtn.png");
+    ImageIcon exitPressedIcon = new ImageIcon("Picture/buttonPic/exitPressedBtn.png");
+    ImageIcon resetPressedIcon = new ImageIcon("Picture/buttonPic/resetPressedBtn.png");
+    ImageIcon loadPressedIcon = new ImageIcon("Picture/buttonPic/loadPressedBtn.png");
+    ImageIcon savePressedIcon = new ImageIcon("Picture/buttonPic/savePressedBtn.png");
+    ImageIcon returnPressedIcon = new ImageIcon("Picture/buttonPic/returnPressedBtn.png");
+    ImageIcon gameFrameIcon = new ImageIcon("Picture/framePic/gameFrameSanGuo.png");
 
     public GameFrame(int width, int height, MapModel mapModel, LevelFrame levelFrame) {
         this.levelFrame = levelFrame;
@@ -54,6 +67,9 @@ public class GameFrame extends JFrame {
         this.setTitle(mapModel.getName());
         this.setLayout(null);
         this.setSize(width, height);
+        JLabel backgroundLabel = new JLabel(gameFrameIcon);
+        backgroundLabel.setLayout(null);
+        this.setContentPane(backgroundLabel);
         gamePanel = new GamePanel(mapModel);
         gamePanel.setLocation(30, height / 2 - gamePanel.getHeight() / 2);
         this.add(gamePanel);
@@ -109,45 +125,81 @@ public class GameFrame extends JFrame {
 
         gamePanel.setStepLabel(stepLabel);
 
-        this.restartBtn.addActionListener(e -> {
-            controller.restartGame();
-            gameTimer.reset(); // 重置计时器
-            gameTimer.start();//重启计时器
-            gamePanel.requestFocusInWindow();
-        });
-        this.loadBtn.addActionListener(e -> {
-            if (currentUser != null) {
-                try {
-                    controller.loadGame(currentUser); // 直接加载当前用户的存档
-                    JOptionPane.showMessageDialog(this, "加载成功");
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "加载失败: " + ex.getMessage());
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "请先登录以加载存档");
+        restartBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                restartBtn.setIcon(resetPressedIcon);
+                restartBtn.setLocation(gamePanel.getWidth() + 80, 122);
             }
-            gamePanel.requestFocusInWindow();
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                restartBtn.setLocation(gamePanel.getWidth() + 80, 120);
+                restartBtn.setIcon(resetIcon);
+                controller.restartGame();
+                gameTimer.reset(); // 重置计时器
+                gameTimer.start();//重启计时器
+                gamePanel.requestFocusInWindow();
+            }
+        });
+
+        loadBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                loadBtn.setIcon(loadPressedIcon);
+                loadBtn.setLocation(gamePanel.getWidth() + 60, 212);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                loadBtn.setLocation(gamePanel.getWidth() + 60, 210);
+                loadBtn.setIcon(loadIcon);
+                if (currentUser != null) {
+                    try {
+                        controller.loadGame(currentUser); // 直接加载当前用户的存档
+                        JOptionPane.showMessageDialog(gamePanel, "加载成功");
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(gamePanel, "加载失败: " + ex.getMessage());
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(gamePanel, "请先登录以加载存档");
+                }
+                gamePanel.requestFocusInWindow();
+            }
         });
 
         this.saveBtn = FrameUtil.createButton(this, saveIcon,new Point(gamePanel.getWidth() + 80, 300), 91, 47);
         saveBtn.setBorderPainted(false);
         saveBtn.setContentAreaFilled(false);
         saveBtn.setFocusPainted(false);
-        saveBtn.addActionListener(e -> {
-            if (currentUser != null) {
-                try {
-                    controller.saveGame(currentUser);
-                    JOptionPane.showMessageDialog(this, "保存成功");
-                    loadBtn.setEnabled(true);
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "保存失败");
-                }
-            }else {
-                JOptionPane.showMessageDialog(this, "游客模式无法保存游戏");
+
+        saveBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                saveBtn.setIcon(savePressedIcon);
+                saveBtn.setLocation(gamePanel.getWidth() + 80, 302);
             }
 
-            gamePanel.requestFocusInWindow();
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                saveBtn.setLocation(gamePanel.getWidth() + 80, 300);
+                saveBtn.setIcon(saveIcon);
+                if (currentUser != null) {
+                    try {
+                        controller.saveGame(currentUser);
+                        JOptionPane.showMessageDialog(gamePanel, "保存成功");
+                        loadBtn.setEnabled(true);
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(gamePanel, "保存失败");
+                    }
+                }else {
+                    JOptionPane.showMessageDialog(gamePanel, "游客模式无法保存游戏");
+                }
+
+                gamePanel.requestFocusInWindow();
+            }
         });
+
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -159,48 +211,121 @@ public class GameFrame extends JFrame {
         exitBtn.setBorderPainted(false);
         exitBtn.setContentAreaFilled(false);
         exitBtn.setFocusPainted(false);
-        exitBtn.addActionListener(e -> returnToLevel());
+
+        exitBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                exitBtn.setIcon(exitPressedIcon);
+                exitBtn.setLocation(50, 52);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                exitBtn.setLocation(50, 50);
+                exitBtn.setIcon(exitIcon);
+                returnToLevel();
+            }
+        });
 
         this.returnBtn = FrameUtil.createButton(this, returnIcon,new Point(gamePanel.getWidth() + 80, 390), 93, 49);
         returnBtn.setBorderPainted(false);
         returnBtn.setContentAreaFilled(false);
         returnBtn.setFocusPainted(false);
-        returnBtn.addActionListener(e -> {
-            controller.backStep();
-            gamePanel.requestFocusInWindow();
+
+        returnBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                returnBtn.setIcon(returnPressedIcon);
+                returnBtn.setLocation(gamePanel.getWidth() + 80, 392);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                returnBtn.setLocation(gamePanel.getWidth() + 80, 390);
+                returnBtn.setIcon(returnIcon);
+                controller.backStep();
+                gamePanel.requestFocusInWindow();
+            }
         });
 
-        this.rightBtn.addActionListener(e -> {
-            try {
-                gamePanel.doMoveRight();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
+        rightBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                rightBtn.setIcon(rightPressedIcon);
+                rightBtn.setLocation(gamePanel.getWidth() + 450, 122);
             }
-            gamePanel.requestFocusInWindow();
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                rightBtn.setLocation(gamePanel.getWidth() + 450, 120);
+                rightBtn.setIcon(rightIcon);
+                try {
+                    gamePanel.doMoveRight();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                gamePanel.requestFocusInWindow();
+            }
         });
-        this.leftBtn.addActionListener(e -> {
-            try {
-                gamePanel.doMoveLeft();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
+
+        leftBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                leftBtn.setIcon(leftPressedIcon);
+                leftBtn.setLocation(gamePanel.getWidth() + 350, 122);
             }
-            gamePanel.requestFocusInWindow();
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                leftBtn.setLocation(gamePanel.getWidth() + 350, 120);
+                leftBtn.setIcon(leftIcon);
+                try {
+                    gamePanel.doMoveLeft();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                gamePanel.requestFocusInWindow();
+            }
         });
-        this.upBtn.addActionListener(e -> {
-            try {
-                gamePanel.doMoveUp();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
+
+        upBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                upBtn.setIcon(upPressedIcon);
+                upBtn.setLocation(gamePanel.getWidth() + 400, 82);
             }
-            gamePanel.requestFocusInWindow();
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                upBtn.setLocation(gamePanel.getWidth() + 400, 80);
+                upBtn.setIcon(upIcon);
+                try {
+                    gamePanel.doMoveUp();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                gamePanel.requestFocusInWindow();
+            }
         });
-        this.downBtn.addActionListener(e -> {
-            try {
-                gamePanel.doMoveDown();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
+
+        downBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                downBtn.setIcon(downPressedIcon);
+                downBtn.setLocation(gamePanel.getWidth() + 400, 162);
             }
-            gamePanel.requestFocusInWindow();
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                downBtn.setLocation(gamePanel.getWidth() + 400, 160);
+                downBtn.setIcon(downIcon);
+                try {
+                    gamePanel.doMoveDown();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                gamePanel.requestFocusInWindow();
+            }
         });
 
         this.leaderboardBtn = FrameUtil.createButton(this, downIcon,new Point(400, 400), 50, 50);
