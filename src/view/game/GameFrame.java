@@ -1,6 +1,7 @@
 package view.game;
 
 import controller.GameController;
+import controller.MusicController;
 import model.Constants;
 import model.GameTimer;
 import model.MapModel;
@@ -41,6 +42,8 @@ public class GameFrame extends JFrame {
 
     private User currentUser;
     private String levelName;
+
+    private MusicController musicController;
 
     ImageIcon downIcon = new ImageIcon("Picture/buttonPic/downBtn.png");
     ImageIcon upIcon = new ImageIcon("Picture/buttonPic/upBtn.png");
@@ -122,10 +125,12 @@ public class GameFrame extends JFrame {
 
         gameTimer.setTimeoutAction(() -> {
             gameTimer.pause();
+            MusicController.playLoseSound();
             JOptionPane.showMessageDialog(this,
                     "游戏超时（超过30分钟）！",
                     "游戏结束",
                     JOptionPane.WARNING_MESSAGE);
+
             returnToLevel();
         });
 
@@ -136,6 +141,7 @@ public class GameFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 restartBtn.setIcon(resetPressedIcon);
                 restartBtn.setLocation(100, 122);
+                MusicController.playClickSound();
             }
 
             @Override
@@ -154,6 +160,7 @@ public class GameFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 loadBtn.setIcon(loadPressedIcon);
                 loadBtn.setLocation(80, 182);
+                MusicController.playClickSound();
             }
 
             @Override
@@ -184,6 +191,7 @@ public class GameFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 saveBtn.setIcon(savePressedIcon);
                 saveBtn.setLocation(105, 242);
+                MusicController.playClickSound();
             }
 
             @Override
@@ -223,12 +231,14 @@ public class GameFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 exitBtn.setIcon(exitPressedIcon);
                 exitBtn.setLocation(50, 52);
+                MusicController.playClickSound();
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
                 exitBtn.setLocation(50, 50);
                 exitBtn.setIcon(exitIcon);
+                musicController.stopMusic();
                 returnToLevel();
             }
         });
@@ -243,6 +253,7 @@ public class GameFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 returnBtn.setIcon(returnPressedIcon);
                 returnBtn.setLocation(105, 302);
+                MusicController.playClickSound();
             }
 
             @Override
@@ -259,6 +270,7 @@ public class GameFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 rightBtn.setIcon(rightPressedIcon);
                 rightBtn.setLocation(gamePanel.getWidth() + 450, 122);
+                MusicController.playMoveSound();
             }
 
             @Override
@@ -279,6 +291,7 @@ public class GameFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 leftBtn.setIcon(leftPressedIcon);
                 leftBtn.setLocation(gamePanel.getWidth() + 350, 122);
+                MusicController.playMoveSound();
             }
 
             @Override
@@ -299,6 +312,7 @@ public class GameFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 upBtn.setIcon(upPressedIcon);
                 upBtn.setLocation(gamePanel.getWidth() + 400, 82);
+                MusicController.playMoveSound();
             }
 
             @Override
@@ -319,6 +333,7 @@ public class GameFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 downBtn.setIcon(downPressedIcon);
                 downBtn.setLocation(gamePanel.getWidth() + 400, 162);
+                MusicController.playMoveSound();
             }
 
             @Override
@@ -344,6 +359,7 @@ public class GameFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 leaderboardBtn.setIcon(leaderboardPressedIcon);
                 leaderboardBtn.setLocation(550, 302);
+                MusicController.playClickSound();
             }
 
             @Override

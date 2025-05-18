@@ -187,12 +187,14 @@ public class GameController {
                     )
             );
         }
+        MusicController.playVictorySound();
 
         gameTimer.pause();
         JOptionPane.showMessageDialog(view,
                 "恭喜您游戏胜利！\n步数: " + steps + "\n" + gameframe.getTime(),
                 "胜利",
                 JOptionPane.INFORMATION_MESSAGE);
+
         gameframe.returnToLevel(); // 可选：胜利后自动重置游戏
     }
 

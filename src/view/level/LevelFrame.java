@@ -3,6 +3,7 @@ package view.level;
 在这个文件中完成关卡选择功能
  */
 
+import controller.MusicController;
 import model.Constants;
 import model.MapModel;
 import model.User;
@@ -32,6 +33,8 @@ public class LevelFrame extends JFrame {
 
     private User currentUser;
     private MapModel mapModel;
+
+    private MusicController musicController_level1 = new MusicController("Music/BGM/level1.wav");
 
     public LevelFrame(int width, int height, LoginFrame loginFrame) {
         this.loginFrame = loginFrame;
@@ -105,7 +108,9 @@ public class LevelFrame extends JFrame {
                 gameFrame.setVisible(true);
                 if (currentUser != null) {
                     gameFrame.setUser(currentUser);
+                    gameFrame.setTitle("兵分三路 当前用户:" + currentUser.getUsername());
                 }
+                musicController_level1.startMusic();
             }
         });
 
@@ -114,6 +119,7 @@ public class LevelFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 level2Button.setIcon(level2PressedIcon);
                 level2Button.setLocation(163, 134);
+                MusicController.playClickSound();
             }
 
             @Override
@@ -128,7 +134,9 @@ public class LevelFrame extends JFrame {
                 gameFrame.setVisible(true);
                 if (currentUser != null) {
                     gameFrame.setUser(currentUser);
+                    gameFrame.setTitle(currentUser.getUsername());
                 }
+                MusicController.playLevel2Sound();
             }
         });
 
@@ -137,6 +145,7 @@ public class LevelFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 level3Button.setIcon(level3PressedIcon);
                 level3Button.setLocation(163, 212);
+                MusicController.playClickSound();
             }
 
             @Override
@@ -151,7 +160,9 @@ public class LevelFrame extends JFrame {
                 gameFrame.setVisible(true);
                 if (currentUser != null) {
                     gameFrame.setUser(currentUser);
+                    gameFrame.setTitle(currentUser.getUsername());
                 }
+                MusicController.playLevel3Sound();
             }
         });
 
@@ -160,6 +171,7 @@ public class LevelFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 level4Button.setIcon(level4PressedIcon);
                 level4Button.setLocation(167, 292);
+                MusicController.playClickSound();
             }
 
             @Override
@@ -174,7 +186,9 @@ public class LevelFrame extends JFrame {
                 gameFrame.setVisible(true);
                 if (currentUser != null) {
                     gameFrame.setUser(currentUser);
+                    gameFrame.setTitle(currentUser.getUsername());
                 }
+                MusicController.playLevel4Sound();
             }
         });
 
@@ -183,6 +197,7 @@ public class LevelFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 level5Button.setIcon(level5PressedIcon);
                 level5Button.setLocation(165, 372);
+                MusicController.playClickSound();
             }
 
             @Override
@@ -197,7 +212,9 @@ public class LevelFrame extends JFrame {
                 gameFrame.setVisible(true);
                 if (currentUser != null) {
                     gameFrame.setUser(currentUser);
+                    gameFrame.setTitle(currentUser.getUsername());
                 }
+                MusicController.playLevel5Sound();
             }
         });
 
@@ -206,6 +223,7 @@ public class LevelFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 returnBtn.setIcon(returnPressedIcon);
                 returnBtn.setLocation(40, 42);
+                MusicController.playClickSound();
             }
 
             @Override
@@ -213,6 +231,7 @@ public class LevelFrame extends JFrame {
                 returnBtn.setLocation(40,40);
                 returnBtn.setIcon(exitIcon);
                 returnToLogin();
+                musicController_level1.stopMusic();
             }
         });
 

@@ -1,6 +1,7 @@
 package view.login;
 
 import controller.GameController;
+import controller.MusicController;
 import model.Constants;
 import model.UserManager;
 import view.FrameUtil;
@@ -71,6 +72,7 @@ public class LoginFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 submitBtn.setIcon(loginPressedIcon);
                 submitBtn.setLocation(200, 352);
+                MusicController.playClickSound();
             }
 
             @Override
@@ -99,6 +101,7 @@ public class LoginFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 resetBtn.setIcon(resetPressedIcon);
                 resetBtn.setLocation(330, 352);
+                MusicController.playClickSound();
             }
 
             @Override
@@ -121,6 +124,7 @@ public class LoginFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 registerBtn.setIcon(registerPressedIcon);
                 registerBtn.setLocation(460, 352);
+                MusicController.playClickSound();
             }
 
             @Override
@@ -176,6 +180,7 @@ public class LoginFrame extends JFrame {
 
     private void startGameAsUser() {
         this.levelFrame.setUser(userManager.getCurrentUser());
+        this.levelFrame.setTitle("关卡选择 当前用户：" + userManager.getCurrentUser().getUsername());
         this.levelFrame.setVisible(true);
         this.setVisible(false);
     }

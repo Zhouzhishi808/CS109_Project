@@ -1,6 +1,7 @@
 package view.game;
 
 import controller.GameController;
+import controller.MusicController;
 import model.Direction;
 import model.MapModel;
 
@@ -123,6 +124,7 @@ public class GamePanel extends ListenerPanel {
         if (selectedBox != null) {
             if (controller.doMove(selectedBox.getRow(), selectedBox.getCol(), Direction.RIGHT)) {
                 afterMove();
+                MusicController.playMoveSound();
             }
         }
     }
@@ -133,6 +135,7 @@ public class GamePanel extends ListenerPanel {
         if (selectedBox != null) {
             if (controller.doMove(selectedBox.getRow(), selectedBox.getCol(), Direction.LEFT)) {
                 afterMove();
+                MusicController.playMoveSound();
             }
         }
     }
@@ -143,6 +146,7 @@ public class GamePanel extends ListenerPanel {
         if (selectedBox != null) {
             if (controller.doMove(selectedBox.getRow(), selectedBox.getCol(), Direction.UP)) {
                 afterMove();
+                MusicController.playMoveSound();
             }
         }
     }
@@ -153,6 +157,7 @@ public class GamePanel extends ListenerPanel {
         if (selectedBox != null) {
             if (controller.doMove(selectedBox.getRow(), selectedBox.getCol(), Direction.DOWN)) {
                 afterMove();
+                MusicController.playMoveSound();
             }
         }
     }
