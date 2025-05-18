@@ -36,6 +36,7 @@ public class GameFrame extends JFrame {
 
     private JLabel stepLabel;
     private JLabel timeLabel;
+    private JLabel userLabel;
     private GamePanel gamePanel;
 
     private User currentUser;
@@ -50,6 +51,7 @@ public class GameFrame extends JFrame {
     ImageIcon loadIcon = new ImageIcon("Picture/buttonPic/loadBtn.png");
     ImageIcon saveIcon = new ImageIcon("Picture/buttonPic/saveBtn.png");
     ImageIcon returnIcon = new ImageIcon("Picture/buttonPic/returnBtn.png");
+    ImageIcon leaderboardIcon = new ImageIcon("Picture/buttonPic/leaderboardBtn.png");
     ImageIcon downPressedIcon = new ImageIcon("Picture/buttonPic/downPressedBtn.png");
     ImageIcon upPressedIcon = new ImageIcon("Picture/buttonPic/upPressedBtn.png");
     ImageIcon leftPressedIcon = new ImageIcon("Picture/buttonPic/leftPressedBtn.png");
@@ -60,6 +62,7 @@ public class GameFrame extends JFrame {
     ImageIcon savePressedIcon = new ImageIcon("Picture/buttonPic/savePressedBtn.png");
     ImageIcon returnPressedIcon = new ImageIcon("Picture/buttonPic/returnPressedBtn.png");
     ImageIcon gameFrameIcon = new ImageIcon("Picture/framePic/gameFrameSanGuo.png");
+    ImageIcon leaderboardPressedIcon = new ImageIcon("Picture/buttonPic/leaderboardPressedBtn.png");
 
     public GameFrame(int width, int height, MapModel mapModel, LevelFrame levelFrame) {
         this.levelFrame = levelFrame;
@@ -71,17 +74,17 @@ public class GameFrame extends JFrame {
         backgroundLabel.setLayout(null);
         this.setContentPane(backgroundLabel);
         gamePanel = new GamePanel(mapModel);
-        gamePanel.setLocation(30, height / 2 - gamePanel.getHeight() / 2);
+        gamePanel.setLocation(290, height / 2 - gamePanel.getHeight() / 2);
         this.add(gamePanel);
         this.controller = new GameController(gamePanel, mapModel, this);
 
         controller.addInitialState();
 
-        this.restartBtn = FrameUtil.createButton(this, resetIcon,new Point(gamePanel.getWidth() + 80, 120), 90, 49);
+        this.restartBtn = FrameUtil.createButton(this, resetIcon,new Point(100, 120), 90, 49);
         restartBtn.setBorderPainted(false);
         restartBtn.setContentAreaFilled(false);
         restartBtn.setFocusPainted(false);
-        this.loadBtn = FrameUtil.createButton(this,loadIcon, new Point(gamePanel.getWidth() + 60, 210), 138, 46);
+        this.loadBtn = FrameUtil.createButton(this,loadIcon, new Point(80, 180), 138, 46);
         loadBtn.setBorderPainted(false);
         loadBtn.setContentAreaFilled(false);
         loadBtn.setFocusPainted(false);
@@ -109,6 +112,9 @@ public class GameFrame extends JFrame {
         this.timeLabel = FrameUtil.createJLabel(this, "时间: 00:00",
                 new Font("serif", Font.ITALIC, 22),
                 new Point(gamePanel.getWidth() + 80, 90), 180, 30);
+        //this.userLabel = FrameUtil.createJLabel(this, "用户：%",
+        //        new Font("serif", Font.ITALIC, 22),
+        //        new Point(gamePanel.getWidth() + 80, 10), 180, 30);
 
         gameTimer = new GameTimer(timeLabel);// 进入游戏时自动开始计时
         controller.setGameTimer(gameTimer);
@@ -129,12 +135,12 @@ public class GameFrame extends JFrame {
             @Override
             public void mousePressed(MouseEvent e) {
                 restartBtn.setIcon(resetPressedIcon);
-                restartBtn.setLocation(gamePanel.getWidth() + 80, 122);
+                restartBtn.setLocation(100, 122);
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                restartBtn.setLocation(gamePanel.getWidth() + 80, 120);
+                restartBtn.setLocation(100, 120);
                 restartBtn.setIcon(resetIcon);
                 controller.restartGame();
                 gameTimer.reset(); // 重置计时器
@@ -147,12 +153,12 @@ public class GameFrame extends JFrame {
             @Override
             public void mousePressed(MouseEvent e) {
                 loadBtn.setIcon(loadPressedIcon);
-                loadBtn.setLocation(gamePanel.getWidth() + 60, 212);
+                loadBtn.setLocation(80, 182);
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                loadBtn.setLocation(gamePanel.getWidth() + 60, 210);
+                loadBtn.setLocation(80, 180);
                 loadBtn.setIcon(loadIcon);
                 if (currentUser != null) {
                     try {
@@ -168,7 +174,7 @@ public class GameFrame extends JFrame {
             }
         });
 
-        this.saveBtn = FrameUtil.createButton(this, saveIcon,new Point(gamePanel.getWidth() + 80, 300), 91, 47);
+        this.saveBtn = FrameUtil.createButton(this, saveIcon,new Point(105, 240), 91, 47);
         saveBtn.setBorderPainted(false);
         saveBtn.setContentAreaFilled(false);
         saveBtn.setFocusPainted(false);
@@ -177,12 +183,12 @@ public class GameFrame extends JFrame {
             @Override
             public void mousePressed(MouseEvent e) {
                 saveBtn.setIcon(savePressedIcon);
-                saveBtn.setLocation(gamePanel.getWidth() + 80, 302);
+                saveBtn.setLocation(105, 242);
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                saveBtn.setLocation(gamePanel.getWidth() + 80, 300);
+                saveBtn.setLocation(105, 240);
                 saveBtn.setIcon(saveIcon);
                 if (currentUser != null) {
                     try {
@@ -227,7 +233,7 @@ public class GameFrame extends JFrame {
             }
         });
 
-        this.returnBtn = FrameUtil.createButton(this, returnIcon,new Point(gamePanel.getWidth() + 80, 390), 93, 49);
+        this.returnBtn = FrameUtil.createButton(this, returnIcon,new Point(105, 300), 93, 49);
         returnBtn.setBorderPainted(false);
         returnBtn.setContentAreaFilled(false);
         returnBtn.setFocusPainted(false);
@@ -236,12 +242,12 @@ public class GameFrame extends JFrame {
             @Override
             public void mousePressed(MouseEvent e) {
                 returnBtn.setIcon(returnPressedIcon);
-                returnBtn.setLocation(gamePanel.getWidth() + 80, 392);
+                returnBtn.setLocation(105, 302);
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                returnBtn.setLocation(gamePanel.getWidth() + 80, 390);
+                returnBtn.setLocation(105, 300);
                 returnBtn.setIcon(returnIcon);
                 controller.backStep();
                 gamePanel.requestFocusInWindow();
@@ -328,10 +334,25 @@ public class GameFrame extends JFrame {
             }
         });
 
-        this.leaderboardBtn = FrameUtil.createButton(this, downIcon,new Point(400, 400), 50, 50);
-        leaderboardBtn.addActionListener(e -> {
-            showLeaderboard();
-            gamePanel.requestFocusInWindow();
+        this.leaderboardBtn = FrameUtil.createButton(this, leaderboardIcon,new Point(550, 300), 154, 50);
+        leaderboardBtn.setBorderPainted(false);
+        leaderboardBtn.setContentAreaFilled(false);
+        leaderboardBtn.setFocusPainted(false);
+
+        leaderboardBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                leaderboardBtn.setIcon(leaderboardPressedIcon);
+                leaderboardBtn.setLocation(550, 302);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                leaderboardBtn.setLocation(550, 300);
+                leaderboardBtn.setIcon(leaderboardIcon);
+                showLeaderboard();
+                gamePanel.requestFocusInWindow();
+            }
         });
 
         this.setLocationRelativeTo(null);

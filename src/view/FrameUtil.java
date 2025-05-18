@@ -24,6 +24,15 @@ public class FrameUtil {
         return label;
     }
 
+    public static JLabel createJLabel(JFrame frame,Point location, int width, int height,ImageIcon image) {
+        JLabel label = new JLabel(image);
+        label.setLayout(null);
+        label.setLocation(location);
+        label.setSize(width, height);
+        frame.add(label);
+        return label;
+    }
+
     public static JTextField createJTextField(JFrame frame, Point location, int width, int height) {
         JTextField jTextField = new JTextField();
         jTextField.setSize(width, height);

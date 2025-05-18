@@ -1,6 +1,7 @@
 package view.login;
 
 import controller.GameController;
+import model.Constants;
 import model.UserManager;
 import view.FrameUtil;
 import view.game.GameFrame;
@@ -8,6 +9,8 @@ import view.level.LevelFrame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 public class LoginFrame extends JFrame {
@@ -31,6 +34,11 @@ public class LoginFrame extends JFrame {
         ImageIcon loginIcon = new ImageIcon("Picture/buttonPic/loginBtn.png");
         ImageIcon registerIcon = new ImageIcon("Picture/buttonPic/registerBtn.png");
         ImageIcon resetIcon = new ImageIcon("Picture/buttonPic/resetBtn.png");
+        ImageIcon loginPressedIcon = new ImageIcon("Picture/buttonPic/loginPressedBtn.png");
+        ImageIcon registerPressedIcon = new ImageIcon("Picture/buttonPic/registerPressedBtn.png");
+        ImageIcon resetPressedIcon = new ImageIcon("Picture/buttonPic/resetPressedBtn.png");
+        ImageIcon userIcon = new ImageIcon("Picture/buttonPic/userName.png");
+        ImageIcon passwordIcon = new ImageIcon("Picture/buttonPic/password.png");
         ImageIcon loginFrameIcon = new ImageIcon("Picture/framePic/loginFrame.png");
 
         JLabel backgroundLabel = new JLabel(loginFrameIcon);
@@ -38,19 +46,19 @@ public class LoginFrame extends JFrame {
         this.setContentPane(backgroundLabel);
 
         // 用户名标签和输入框
-        JLabel userLabel = FrameUtil.createJLabel(this, new Point(500, 120), 70, 30, "用户名:");
-        username = FrameUtil.createJTextField(this, new Point(570, 120), 120, 30);
+        JLabel userLabel = FrameUtil.createJLabel(this, new Point(220, 220), 74, 33,userIcon);
+        username = FrameUtil.createJTextField(this, new Point(320, 220), 120, 30);
 
         // 密码标签和输入框
-        JLabel passLabel = FrameUtil.createJLabel(this, new Point(500, 180), 70, 30, "密码:");
+        JLabel passLabel = FrameUtil.createJLabel(this, new Point(220, 280), 75, 39,passwordIcon);
         password = new JPasswordField();
-        password.setLocation(570, 180);
+        password.setLocation(320, 285);
         password.setSize(120, 30);
         this.add(password);
 
         // 确认和重置按钮
-        submitBtn = FrameUtil.createButton(this, loginIcon, new Point(480, 250), 95, 42);
-        resetBtn = FrameUtil.createButton(this, resetIcon,new Point(680, 250), 90, 49);
+        submitBtn = FrameUtil.createButton(this, loginIcon, new Point(200, 350), 95, 42);
+        resetBtn = FrameUtil.createButton(this, resetIcon,new Point(330, 350), 90, 49);
         submitBtn.setBorderPainted(false);
         submitBtn.setContentAreaFilled(false);
         submitBtn.setFocusPainted(false);
@@ -58,34 +66,70 @@ public class LoginFrame extends JFrame {
         resetBtn.setContentAreaFilled(false);
         resetBtn.setFocusPainted(false);
 
-        submitBtn.addActionListener(e -> {
-            String inputUser = username.getText();
-            char[] inputPassChars = password.getPassword();
-            String inputPass = new String(inputPassChars);
+        submitBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                submitBtn.setIcon(loginPressedIcon);
+                submitBtn.setLocation(200, 352);
+            }
 
-            if (inputUser.isEmpty()) {
-                startAsGuest();
-            } else {
-                if (userManager.login(inputUser, inputPass)) {
-                    startGameAsUser();
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                submitBtn.setLocation(200, 350);
+                submitBtn.setIcon(loginIcon);
+                String inputUser = username.getText();
+                char[] inputPassChars = password.getPassword();
+                String inputPass = new String(inputPassChars);
+
+                if (inputUser.isEmpty()) {
+                    startAsGuest();
                 } else {
-                    JOptionPane.showMessageDialog(this, "用户名或密码错误");
+                    if (userManager.login(inputUser, inputPass)) {
+                        startGameAsUser();
+                    } else {
+                        JOptionPane.showMessageDialog(LoginFrame.this, "用户名或密码错误");
+                    }
                 }
             }
         });
 
         // 重置按钮监听器
-        resetBtn.addActionListener(e -> {
-            username.setText("");
-            password.setText("");
+        resetBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                resetBtn.setIcon(resetPressedIcon);
+                resetBtn.setLocation(330, 352);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                resetBtn.setLocation(330, 350);
+                resetBtn.setIcon(resetIcon);
+                username.setText("");
+                password.setText("");
+            }
         });
 
         // 注册按钮
-        JButton registerBtn = FrameUtil.createButton(this, registerIcon, new Point(580, 250), 92, 45);
+        JButton registerBtn = FrameUtil.createButton(this, registerIcon, new Point(460, 350), 92, 45);
         registerBtn.setBorderPainted(false);
         registerBtn.setContentAreaFilled(false);
         registerBtn.setFocusPainted(false);
-        registerBtn.addActionListener(e -> showRegisterDialog());
+
+        registerBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                registerBtn.setIcon(registerPressedIcon);
+                registerBtn.setLocation(460, 352);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                registerBtn.setLocation(460, 350);
+                registerBtn.setIcon(registerIcon);
+                showRegisterDialog();
+            }
+        });
 
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
