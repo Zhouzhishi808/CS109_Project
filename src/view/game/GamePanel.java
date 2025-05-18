@@ -125,7 +125,6 @@ public class GamePanel extends ListenerPanel {
         if (selectedBox != null) {
             if (controller.doMove(selectedBox.getRow(), selectedBox.getCol(), Direction.RIGHT)) {
                 afterMove();
-                musicController.playMoveSound();
             }
         }
     }
@@ -136,7 +135,6 @@ public class GamePanel extends ListenerPanel {
         if (selectedBox != null) {
             if (controller.doMove(selectedBox.getRow(), selectedBox.getCol(), Direction.LEFT)) {
                 afterMove();
-                musicController.playMoveSound();
             }
         }
     }
@@ -147,7 +145,6 @@ public class GamePanel extends ListenerPanel {
         if (selectedBox != null) {
             if (controller.doMove(selectedBox.getRow(), selectedBox.getCol(), Direction.UP)) {
                 afterMove();
-                musicController.playMoveSound();
             }
         }
     }
@@ -158,7 +155,6 @@ public class GamePanel extends ListenerPanel {
         if (selectedBox != null) {
             if (controller.doMove(selectedBox.getRow(), selectedBox.getCol(), Direction.DOWN)) {
                 afterMove();
-                musicController.playMoveSound();
             }
         }
     }

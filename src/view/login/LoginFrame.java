@@ -34,7 +34,6 @@ public class LoginFrame extends JFrame {
         confirmFrame.setSize(280,280);
 
         MusicController musicController = new MusicController();
-        levelFrame.setMusicController(musicController);
 
         ImageIcon loginIcon = new ImageIcon("Picture/buttonPic/loginBtn.png");
         ImageIcon registerIcon = new ImageIcon("Picture/buttonPic/registerBtn.png");
@@ -49,6 +48,8 @@ public class LoginFrame extends JFrame {
         JLabel backgroundLabel = new JLabel(loginFrameIcon);
         backgroundLabel.setLayout(null);
         this.setContentPane(backgroundLabel);
+
+        MusicController.playBackgroundMusic("Music/BGM/loginFrame.wav");
 
         // 用户名标签和输入框
         JLabel userLabel = FrameUtil.createJLabel(this, new Point(220, 220), 74, 33,userIcon);
@@ -76,7 +77,7 @@ public class LoginFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 submitBtn.setIcon(loginPressedIcon);
                 submitBtn.setLocation(200, 352);
-                musicController.playClickSound();
+                MusicController.playClickSound();
             }
 
             @Override
@@ -105,7 +106,7 @@ public class LoginFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 resetBtn.setIcon(resetPressedIcon);
                 resetBtn.setLocation(330, 352);
-                musicController.playClickSound();
+                MusicController.playClickSound();
             }
 
             @Override
@@ -128,7 +129,7 @@ public class LoginFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 registerBtn.setIcon(registerPressedIcon);
                 registerBtn.setLocation(460, 352);
-                musicController.playClickSound();
+                MusicController.playClickSound();
             }
 
             @Override
@@ -180,6 +181,7 @@ public class LoginFrame extends JFrame {
         this.levelFrame.setUser(null);
         this.levelFrame.setVisible(true);
         this.setVisible(false);
+        MusicController.playBackgroundMusic("Music/BGM/levelFrame.wav");
     }
 
     private void startGameAsUser() {
@@ -187,6 +189,7 @@ public class LoginFrame extends JFrame {
         this.levelFrame.setTitle("关卡选择 当前用户：" + userManager.getCurrentUser().getUsername());
         this.levelFrame.setVisible(true);
         this.setVisible(false);
+        MusicController.playBackgroundMusic("Music/BGM/levelFrame.wav");
     }
 
     public void setLevelFrame(LevelFrame levelFrame) {

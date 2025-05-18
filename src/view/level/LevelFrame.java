@@ -34,8 +34,6 @@ public class LevelFrame extends JFrame {
     private User currentUser;
     private MapModel mapModel;
 
-    private MusicController musicController;
-
     public LevelFrame(int width, int height, LoginFrame loginFrame) {
         this.loginFrame = loginFrame;
         this.setTitle("选择关卡");
@@ -43,6 +41,8 @@ public class LevelFrame extends JFrame {
         this.setSize(width, height);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+
+
 
         ImageIcon exitIcon = new ImageIcon("Picture/buttonPic/exitBtn.png");
         ImageIcon level1Icon = new ImageIcon("Picture/buttonPic/level1Btn.png");
@@ -94,7 +94,7 @@ public class LevelFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 level1Button.setIcon(level1PressedIcon);
                 level1Button.setLocation(160, 52);
-                musicController.playClickSound();
+                MusicController.playClickSound();
             }
 
             @Override
@@ -104,7 +104,7 @@ public class LevelFrame extends JFrame {
                 Level1();
                 mapModel.setName("横刀立马");
                 mapModel.setMatrix(Constants.MAP);
-                gameFrame = new GameFrame(800, 500,mapModel, LevelFrame.this, musicController);
+                gameFrame = new GameFrame(800, 500,mapModel, LevelFrame.this);
                 LevelFrame.this.setVisible(false);
                 gameFrame.setVisible(true);
                 if (currentUser != null) {
@@ -120,7 +120,7 @@ public class LevelFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 level2Button.setIcon(level2PressedIcon);
                 level2Button.setLocation(163, 134);
-                musicController.playClickSound();
+                MusicController.playClickSound();
             }
 
             @Override
@@ -130,7 +130,7 @@ public class LevelFrame extends JFrame {
                 Level2();
                 mapModel.setName("层层设防");
                 mapModel.setMatrix(Constants.MAP);
-                gameFrame = new GameFrame( 800, 500,mapModel, LevelFrame.this, musicController);
+                gameFrame = new GameFrame( 800, 500,mapModel, LevelFrame.this);
                 LevelFrame.this.setVisible(false);
                 gameFrame.setVisible(true);
                 if (currentUser != null) {
@@ -146,7 +146,7 @@ public class LevelFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 level3Button.setIcon(level3PressedIcon);
                 level3Button.setLocation(163, 212);
-                musicController.playClickSound();
+                MusicController.playClickSound();
             }
 
             @Override
@@ -156,7 +156,7 @@ public class LevelFrame extends JFrame {
                 Level3();
                 mapModel.setName("四将连关");
                 mapModel.setMatrix(Constants.MAP);
-                gameFrame = new GameFrame(800, 500,mapModel, LevelFrame.this, musicController);
+                gameFrame = new GameFrame(800, 500,mapModel, LevelFrame.this);
                 LevelFrame.this.setVisible(false);
                 gameFrame.setVisible(true);
                 if (currentUser != null) {
@@ -172,7 +172,7 @@ public class LevelFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 level4Button.setIcon(level4PressedIcon);
                 level4Button.setLocation(167, 292);
-                musicController.playClickSound();
+                MusicController.playClickSound();
             }
 
             @Override
@@ -182,7 +182,7 @@ public class LevelFrame extends JFrame {
                 Level4();
                 mapModel.setName("水泄不通");
                 mapModel.setMatrix(Constants.MAP);
-                gameFrame = new GameFrame(800, 500,mapModel, LevelFrame.this, musicController);
+                gameFrame = new GameFrame(800, 500,mapModel, LevelFrame.this);
                 LevelFrame.this.setVisible(false);
                 gameFrame.setVisible(true);
                 if (currentUser != null) {
@@ -198,7 +198,7 @@ public class LevelFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 level5Button.setIcon(level5PressedIcon);
                 level5Button.setLocation(165, 372);
-                musicController.playClickSound();
+                MusicController.playClickSound();
             }
 
             @Override
@@ -208,7 +208,7 @@ public class LevelFrame extends JFrame {
                 Level5();
                 mapModel.setName("兵分三路");
                 mapModel.setMatrix(Constants.MAP);
-                gameFrame = new GameFrame(800, 500,mapModel, LevelFrame.this, musicController);
+                gameFrame = new GameFrame(800, 500,mapModel, LevelFrame.this);
                 LevelFrame.this.setVisible(false);
                 gameFrame.setVisible(true);
                 if (currentUser != null) {
@@ -224,7 +224,7 @@ public class LevelFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 returnBtn.setIcon(returnPressedIcon);
                 returnBtn.setLocation(40, 42);
-                musicController.playClickSound();
+                MusicController.playClickSound();
             }
 
             @Override
@@ -232,7 +232,8 @@ public class LevelFrame extends JFrame {
                 returnBtn.setLocation(40,40);
                 returnBtn.setIcon(exitIcon);
                 returnToLogin();
-                musicController.stopBackgroundMusic();
+                MusicController.stopBackgroundMusic();
+                MusicController.playBackgroundMusic("Music/BGM/loginFrame.wav");
             }
         });
 
@@ -310,10 +311,6 @@ public class LevelFrame extends JFrame {
 
     private void returnToLogin() {
         this.dispose(); // 销毁当前游戏窗口
-        loginFrame.setVisible(true); // 显示关卡选择界面
-    }
-
-    public void setMusicController(MusicController musicController) {
-        this.musicController = musicController;
+        loginFrame.setVisible(true);// 显示关卡选择界面
     }
 }
