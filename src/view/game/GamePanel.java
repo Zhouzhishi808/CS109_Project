@@ -63,17 +63,17 @@ public class GamePanel extends ListenerPanel {
                     box = new BoxComponent(Color.ORANGE, i, j);
                     box.setSize(GRID_SIZE, GRID_SIZE);
                     map[i][j] = 0;
-                } else if (map[i][j] == 2) {
+                } else if (map[i][j] >= 2 && map[i][j] <= 4) {
                     box = new BoxComponent(Color.PINK, i, j);
                     box.setSize(GRID_SIZE * 2, GRID_SIZE);
                     map[i][j] = 0;
                     map[i][j + 1] = 0;
-                } else if (map[i][j] == 3) {
+                } else if (map[i][j] >= 5 && map[i][j] <= 8) {
                     box = new BoxComponent(Color.BLUE, i, j);
                     box.setSize(GRID_SIZE, GRID_SIZE * 2);
                     map[i][j] = 0;
                     map[i + 1][j] = 0;
-                } else if (map[i][j] == 4) {
+                } else if (map[i][j] == 9) {
                     box = new BoxComponent(Color.GREEN, i, j);
                     box.setSize(GRID_SIZE * 2, GRID_SIZE * 2);
                     map[i][j] = 0;
@@ -218,6 +218,15 @@ public class GamePanel extends ListenerPanel {
 
     public BoxComponent getSelectedBox() {
         return selectedBox;
+    }
+
+    public BoxComponent findBoxByPosition(int row, int col) {
+        for (BoxComponent box : boxes) {
+            if (box.getRow() == row && box.getCol() == col) {
+                return box;
+            }
+        }
+        return null;
     }
 
     public int getGRID_SIZE() {

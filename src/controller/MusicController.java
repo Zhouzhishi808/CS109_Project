@@ -28,6 +28,8 @@ public class MusicController {
         try {
             if (soundEffect != null) {
                 soundEffect.stop(); // 停止之前的音效
+                soundEffect.close();
+                soundEffect = null;
             }
             soundEffect = AudioSystem.getClip();
             AudioInputStream ais = AudioSystem.getAudioInputStream(new File(path));

@@ -20,7 +20,7 @@ public class GameController {
     private final GameFrame gameframe;
     private GameTimer gameTimer;
     private final int[][] initialMap;
-    public static final int CAO_CAO_ID = 4;
+    public static final int CAO_CAO_ID = 9;
 
     private ArrayList<MapModel> mapModels = new ArrayList<>();
 
@@ -40,72 +40,116 @@ public class GameController {
         int blockId = model.getId(row, col);
         if (blockId == 0) return false; // 空位置不可移动
 
-        int width = 1, height = 1;
+        int width = getWidth(blockId), height = getHeight(blockId);
         // 根据方块类型确定尺寸
-        switch (blockId) {
-            case 2:  // 1x2普通方块
-                width = 2;
-                break;
-            case 3:  // 2x1关羽方块
-                height = 2;
-                break;
-            case 4:  // 2x2曹操方块
-                width = 2;
-                height = 2;
-                break;
-        }
+
 
         // 计算移动后的目标区域
         int nextRow = row + direction.getRow();
         int nextCol = col + direction.getCol();
 
-        // 检查边界合法性
-        if (!isMoveValid(row, col, nextRow, nextCol, width, height, direction)) {
+        // 检查边界合法性、和目标区域是否是空的
+        if (!isMoveValid(row, col, nextRow, nextCol, width, height, direction, blockId)) {
             return false;
         }
 
-        // 执行移动：清空原位置，填充新位置
+        // 执行所有相关棋子的移动
+        performChainMovement(row, col, nextRow, nextCol, width, height, direction, blockId);
+
+        // 更新视图和状态
+
+        mapModels.add(new MapModel(deepCopy(model.getMatrix()), model.getName()));
+        if (checkWin()) showWinDialog();
+        return true;
+    }
+
+    private void performChainMovement(int row, int col, int nextRow, int nextCol, int width, int height, Direction direction, int blockId) {
+        for (int i = nextRow; i < nextRow + height; i++) {
+            for (int j = nextCol; j < nextCol + width; j++) {
+                if (i >= row && i < row + height && j >= col && j < col + width) {
+                    continue; // 跳过原位置
+                }
+                int targetBlockId = model.getId(i, j);
+                if (targetBlockId != 0 && getType(targetBlockId) == getType(blockId)) {
+                    // 检查是否为方块的左上角
+                    boolean isTopLeft = (i == 0 || model.getId(i - 1, j) != targetBlockId) &&
+                            (j == 0 || model.getId(i, j - 1) != targetBlockId);
+                    if (blockId != 1) {
+                        if (j > 0 && model.getId(i, j - 1) == targetBlockId) {
+                            isTopLeft = false;
+                        }
+                    }
+                    if (isTopLeft) {
+                        int targetWidth = getWidth(targetBlockId);
+                        int targetHeight = getHeight(targetBlockId);
+                        int newTargetNextRow = i + direction.getRow();
+                        int newTargetNextCol = j + direction.getCol();
+                        performChainMovement(i, j, newTargetNextRow, newTargetNextCol,
+                                targetWidth, targetHeight, direction, targetBlockId);
+                    }
+                }
+            }
+        }
+
+        // 移动当前方块
         clearOriginalPosition(row, col, width, height);
         fillNewPosition(nextRow, nextCol, blockId, width, height);
-
-        //记录当前地图
-        mapModels.add(new MapModel(deepCopy(model.getMatrix()), model.getName()));
-
-        // 更新界面组件位置
         updateBoxComponentPosition(row, col, nextRow, nextCol, blockId, direction);
-
-        //在每次移动后检查是否胜利
-        if (checkWin()) {
-            showWinDialog();
-        }
-        return true;
     }
 
     // 检查移动是否合法
     private boolean isMoveValid(int row, int col, int nextRow, int nextCol,
-                                int width, int height, Direction dir) {
-        // 检查目标区域是否越界
+                                int width, int height, Direction dir,int blockId) {
+        // 原始边界检查
+        if (nextRow < 0 || (nextRow + height) > model.getHeight() ||
+                nextCol < 0 || (nextCol + width) > model.getWidth()) {
+            System.out.println("no1");
+            return false;
+        }
+
+        // 递归检查连续推动
+        return checkChainMovement(row, col, nextRow, nextCol, width, height, dir, blockId);
+    }
+
+    private boolean checkChainMovement(int row, int col, int nextRow, int nextCol,
+                                       int width, int height, Direction dir, int blockId) {
+        // 检查当前棋子的目标区域是否合法
         if (nextRow < 0 || (nextRow + height) > model.getHeight() ||
                 nextCol < 0 || (nextCol + width) > model.getWidth()) {
             return false;
         }
-
-        // 检查目标区域是否全为空
+        System.out.println(row + " " + col + " " + nextRow + " " + nextCol);
         for (int i = nextRow; i < nextRow + height; i++) {
             for (int j = nextCol; j < nextCol + width; j++) {
-                // 跳过当前方块原位置
                 if (i >= row && i < row + height && j >= col && j < col + width) {
-                    continue;
+                    continue; // 跳过原位置
                 }
-                if (model.getId(i, j) != 0) {
-                    return false;
+                int targetBlockId = model.getId(i, j);
+                if (targetBlockId != 0) {
+                    // 检查类型是否一致
+                    if (getType(targetBlockId) != getType(blockId)) {
+                        System.out.println("no2");
+                        return false; // 类型不同，直接返回失败
+                    }
+                    // 递归检查
+                    int nextBlockWidth = getWidth(targetBlockId);
+                    int nextBlockHeight = getHeight(targetBlockId);
+                    int nextBlockNewRow = i + dir.getRow();
+                    int nextBlockNewCol = j + dir.getCol();
+                    if (!checkChainMovement(i, j, nextBlockNewRow, nextBlockNewCol,
+                            nextBlockWidth, nextBlockHeight, dir, blockId)) {
+                        System.out.println(row + " " + height + " " + col + " " + width);
+                        System.out.println("no3"+i+j+blockId);
+                        return false;
+                    }
                 }
             }
         }
+        System.out.println("yes");
         return true;
     }
 
-    // 清空原位置
+        // 清空原位置
     private void clearOriginalPosition(int row, int col, int width, int height) {
         for (int i = row; i < row + height; i++) {
             for (int j = col; j < col + width; j++) {
@@ -127,7 +171,7 @@ public class GameController {
     // 更新方块组件位置
     private void updateBoxComponentPosition(int row, int col, int nextRow, int nextCol,
                                             int blockId, Direction dir) {
-        BoxComponent box = view.getSelectedBox();
+        BoxComponent box = view.findBoxByPosition(row, col);
         if (box != null && box.getRow() == row && box.getCol() == col) {
             // 根据方向更新位置（需考虑方块尺寸）
             int deltaX = (nextCol - col) * view.getGRID_SIZE();
@@ -281,5 +325,31 @@ public class GameController {
 
     public void addTimeUpdateListener(){
         gameTimer.addTimeUpdateListener(this.view::setTimeInSeconds);
+    }
+
+    public int getHeight(int id) {
+        return switch (id) {
+            case 1, 2, 3, 4 -> 1;
+            case 5, 6, 7, 8, 9 -> 2;
+            default -> 0;
+        };
+    }
+
+    public int getWidth(int id) {
+        return switch (id) {
+            case 1, 5, 6, 7, 8 -> 1;
+            case 2, 3, 4, 9 -> 2;
+            default -> 0;
+        };
+    }
+
+    public int getType(int id) {
+        return switch (id) {
+            case 1 -> 1;
+            case 2, 3, 4 -> 2;
+            case 5, 6, 7, 8 -> 3;
+            case 9 -> 4;
+            default -> 0;
+        };
     }
 }
