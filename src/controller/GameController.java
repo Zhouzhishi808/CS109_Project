@@ -20,7 +20,7 @@ public class GameController {
     private final GameFrame gameframe;
     private GameTimer gameTimer;
     private final int[][] initialMap;
-    public static final int CAO_CAO_ID = 4;
+    public static final int CAO_CAO_ID = 9;
 
     private ArrayList<MapModel> mapModels = new ArrayList<>();
 
@@ -40,20 +40,8 @@ public class GameController {
         int blockId = model.getId(row, col);
         if (blockId == 0) return false; // 空位置不可移动
 
-        int width = 1, height = 1;
+        int width = getWidth(blockId), height = getHeight(blockId);
         // 根据方块类型确定尺寸
-        switch (blockId) {
-            case 2:  // 1x2普通方块
-                width = 2;
-                break;
-            case 3:  // 2x1关羽方块
-                height = 2;
-                break;
-            case 4:  // 2x2曹操方块
-                width = 2;
-                height = 2;
-                break;
-        }
 
         // 计算移动后的目标区域
         int nextRow = row + direction.getRow();
@@ -81,6 +69,40 @@ public class GameController {
         return true;
     }
 
+    private void performChainMovement(int row, int col, int nextRow, int nextCol, int width, int height, Direction direction, int blockId) {
+        for (int i = nextRow; i < nextRow + height; i++) {
+            for (int j = nextCol; j < nextCol + width; j++) {
+                if (i >= row && i < row + height && j >= col && j < col + width) {
+                    continue; // 跳过原位置
+                }
+                int targetBlockId = model.getId(i, j);
+                if (targetBlockId != 0 && getType(targetBlockId) == getType(blockId)) {
+                    // 检查是否为方块的左上角
+                    boolean isTopLeft = (i == 0 || model.getId(i - 1, j) != targetBlockId) &&
+                            (j == 0 || model.getId(i, j - 1) != targetBlockId);
+                    if (blockId != 1) {
+                        if (j > 0 && model.getId(i, j - 1) == targetBlockId) {
+                            isTopLeft = false;
+                        }
+                    }
+                    if (isTopLeft) {
+                        int targetWidth = getWidth(targetBlockId);
+                        int targetHeight = getHeight(targetBlockId);
+                        int newTargetNextRow = i + direction.getRow();
+                        int newTargetNextCol = j + direction.getCol();
+                        performChainMovement(i, j, newTargetNextRow, newTargetNextCol,
+                                targetWidth, targetHeight, direction, targetBlockId);
+                    }
+                }
+            }
+        }
+
+        // 移动当前方块
+        clearOriginalPosition(row, col, width, height);
+        fillNewPosition(nextRow, nextCol, blockId, width, height);
+        updateBoxComponentPosition(row, col, nextRow, nextCol, blockId, direction);
+    }
+
     // 检查移动是否合法
     private boolean isMoveValid(int row, int col, int nextRow, int nextCol,
                                 int width, int height, Direction dir) {
@@ -105,7 +127,7 @@ public class GameController {
         return true;
     }
 
-    // 清空原位置
+        // 清空原位置
     private void clearOriginalPosition(int row, int col, int width, int height) {
         for (int i = row; i < row + height; i++) {
             for (int j = col; j < col + width; j++) {
@@ -195,7 +217,6 @@ public class GameController {
                 "恭喜您游戏胜利！\n步数: " + steps + "\n" + gameframe.getTime(),
                 "胜利",
                 JOptionPane.INFORMATION_MESSAGE);
-        MusicController.playBackgroundMusic("Music/BGM/levelFrame.wav");
         gameframe.returnToLevel(); // 可选：胜利后自动重置游戏
     }
 
@@ -281,5 +302,31 @@ public class GameController {
 
     public void addTimeUpdateListener(){
         gameTimer.addTimeUpdateListener(this.view::setTimeInSeconds);
+    }
+
+    public int getHeight(int id) {
+        return switch (id) {
+            case 1, 2, 3, 4 -> 1;
+            case 5, 6, 7, 8, 9 -> 2;
+            default -> 0;
+        };
+    }
+
+    public int getWidth(int id) {
+        return switch (id) {
+            case 1, 5, 6, 7, 8 -> 1;
+            case 2, 3, 4, 9 -> 2;
+            default -> 0;
+        };
+    }
+
+    public int getType(int id) {
+        return switch (id) {
+            case 1 -> 1;
+            case 2, 3, 4 -> 2;
+            case 5, 6, 7, 8 -> 3;
+            case 9 -> 4;
+            default -> 0;
+        };
     }
 }

@@ -246,11 +246,16 @@ public class LevelFrame extends JFrame {
 
     private void Level1() {//横刀立马
         int [][] map = {
-                {3,4,4,3},
-                {3,4,4,3},
-                {3,0,0,3},
-                {3,0,0,3},
-                {1,0,0,1},
+                {0,0,0,0},
+                {0,1,1,0},
+                {0,9,9,0},
+                {0,9,9,0},
+                {0,0,0,0},
+//                {6,9,9,7},
+//                {6,9,9,7},
+//                {5,2,2,8},
+//                {5,1,1,8},
+//                {1,0,0,1},
         };
         for (int row = 0; row < map.length; row++) {
             System.arraycopy(map[row], 0, Constants.MAP[row], 0, map[row].length);
@@ -259,10 +264,10 @@ public class LevelFrame extends JFrame {
 
     private void Level2() {//层层设防
         int [][] map = {
-                {1,4,4,1},
-                {1,4,4,1},
-                {3,3,2,2},
-                {3,3,2,2},
+                {1,9,9,1},
+                {1,9,9,1},
+                {6,7,3,3},
+                {6,7,4,4},
                 {0,2,2,0},
         };
         for (int row = 0; row < map.length; row++) {
@@ -272,10 +277,10 @@ public class LevelFrame extends JFrame {
 
     private void Level3() {//四将连关
         int [][] map = {
-                {4,4,2,2},
-                {4,4,2,2},
-                {3,3,2,2},
-                {3,3,1,1},
+                {9,9,2,2},
+                {9,9,3,3},
+                {6,7,4,4},
+                {6,7,1,1},
                 {1,0,0,1},
         };
         for (int row = 0; row < map.length; row++) {
@@ -285,10 +290,10 @@ public class LevelFrame extends JFrame {
 
     private void Level4() {//水泄不通
         int [][] map = {
-                {3,4,4,1},
-                {3,4,4,1},
-                {2,2,2,2},
-                {2,2,2,2},
+                {6,9,9,1},
+                {6,9,9,1},
+                {2,2,3,3},
+                {2,2,4,4},
                 {1,0,0,1},
         };
         for (int row = 0; row < map.length; row++) {
@@ -298,11 +303,11 @@ public class LevelFrame extends JFrame {
 
     private void Level5() {//兵分三路
         int [][] map = {
-                {1,4,4,1},
-                {3,4,4,3},
-                {3,2,2,3},
-                {3,1,1,3},
-                {3,0,0,3},
+                {1,9,9,1},
+                {5,9,9,8},
+                {5,2,2,8},
+                {6,1,1,7},
+                {6,0,0,7},
         };
         for (int row = 0; row < map.length; row++) {
             System.arraycopy(map[row], 0, Constants.MAP[row], 0, map[row].length);
