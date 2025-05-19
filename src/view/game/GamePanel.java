@@ -220,6 +220,15 @@ public class GamePanel extends ListenerPanel {
         return selectedBox;
     }
 
+    public BoxComponent getBox(int row, int col) {
+        for (BoxComponent box : boxes) {
+            if (box.getRow() == row && box.getCol() == col) {
+                return box;
+            }
+        }
+        return null;
+    }
+
     public int getGRID_SIZE() {
         return GRID_SIZE;
     }

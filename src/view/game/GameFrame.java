@@ -81,8 +81,6 @@ public class GameFrame extends JFrame {
         this.add(gamePanel);
         this.controller = new GameController(gamePanel, mapModel, this);
 
-        controller.addInitialState();
-
         this.restartBtn = FrameUtil.createButton(this, resetIcon,new Point(100, 120), 90, 49);
         restartBtn.setBorderPainted(false);
         restartBtn.setContentAreaFilled(false);
@@ -261,7 +259,11 @@ public class GameFrame extends JFrame {
             public void mouseReleased(MouseEvent e) {
                 returnBtn.setLocation(105, 300);
                 returnBtn.setIcon(returnIcon);
-                controller.backStep();
+                try {
+                    controller.backStep();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
                 gamePanel.requestFocusInWindow();
             }
         });

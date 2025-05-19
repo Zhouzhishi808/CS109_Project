@@ -25,10 +25,11 @@ public class GameController {
     private long animationStartTime;
     private Timer moveTimer;
     private boolean isMoving = false;
-    private static final int ANIMATION_DURATION = 200;
-    private static final int FRAME_INTERVAL = 16;
+    private boolean isUndoing = false;
+    private static final int ANIMATION_DURATION = 160;
+    private static final int FRAME_INTERVAL = 10;
 
-    private ArrayList<MapModel> mapModels = new ArrayList<>();
+    private ArrayList<Move> Moves = new ArrayList<>();
 
     public GameController(GamePanel view, MapModel model, GameFrame gameframe) {
         this.gameframe = gameframe;
@@ -63,7 +64,9 @@ public class GameController {
         fillNewPosition(nextRow, nextCol, blockId, width, height);
 
         //记录当前地图
-        mapModels.add(new MapModel(deepCopy(model.getMatrix()), model.getName()));
+        if (!isUndoing) {
+            Moves.add(new Move(row, col, direction));
+        }
 
         // 更新界面组件位置
         updateBoxComponentPosition(row, col, nextRow, nextCol, blockId, direction);
@@ -125,8 +128,8 @@ public class GameController {
     // 更新方块组件位置
     private void updateBoxComponentPosition(int row, int col, int nextRow, int nextCol,
                                             int blockId, Direction dir) {
-        BoxComponent box = view.getSelectedBox();
-        if (box == null || !box.isSelected() || isMoving) return;
+        BoxComponent box = view.getBox(row, col);
+        if (box == null || isMoving) return;
 
         // 计算目标坐标
         int targetX = nextCol * view.getGRID_SIZE() + 2;
@@ -147,6 +150,8 @@ public class GameController {
                 box.setLocation(targetX, targetY);
                 box.setRow(nextRow);
                 box.setCol(nextCol);
+                view.repaint();
+                view.revalidate();
                 moveTimer.stop();
                 isMoving = false;
             } else {
@@ -173,7 +178,7 @@ public class GameController {
         // 重置模型数据
         model.setMatrix(deepCopy(initialMap));
         //清楚移动记录
-        mapModels.clear();
+        Moves.clear();
         // 通知视图重置
         view.resetGame();
     }
@@ -234,7 +239,7 @@ public class GameController {
             }
         }
 
-        GameSave save = new GameSave(deepCopy(model.getMatrix()), view.getSteps(), levelName, view.getTimeInSeconds(), this.mapModels);
+        GameSave save = new GameSave(deepCopy(model.getMatrix()), view.getSteps(), levelName, view.getTimeInSeconds(), this.Moves);
         user.setSaveData(save);
         System.out.println(view.getTimeInSeconds());
 
@@ -256,8 +261,10 @@ public class GameController {
             model.setMatrix(deepCopy(save.getMapState()));
             view.resetGame();
             view.setSteps(save.getSteps());
-            this.mapModels = save.getMapModels();
-
+            view.refreshBoxes();// 强制刷新视图以确保组件位置同步
+            this.Moves = save.getMoves();
+            // 加载后重置回退标志位
+            isUndoing = false;
             gameTimer.continueFrom(save.getTimeInSeconds());
             view.setTimeInSeconds(save.getTimeInSeconds());
         } catch (FileNotFoundException e) {
@@ -265,32 +272,29 @@ public class GameController {
         }
     }
 
-    public void backStep() {
-        if (mapModels.size() <= 1) { // 至少保留初始状态
+    public void backStep() throws IOException {
+        if (Moves.isEmpty()) {
             JOptionPane.showMessageDialog(view, "无法回退，已无历史步骤", "提示", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        // 移除当前状态，恢复到上一个状态
-        mapModels.removeLast(); // 移除当前状态
-        MapModel previousModel = mapModels.getLast(); // 获取上一个状态
-        model.setMatrix(deepCopy(previousModel.getMatrix()));
+        // 标记为回退中
+        isUndoing = true;
 
-        // 更新步数（确保不小于0）
-        int currentSteps = view.getSteps();
-        view.setSteps(currentSteps - 1);
+        // 获取最后一个操作并计算逆向移动参数
+        Move lastMove = Moves.removeLast();
+        Direction reverseDir = lastMove.getDir().getOpposite();
+        int targetRow = lastMove.getRow() + lastMove.getDir().getRow();
+        int targetCol = lastMove.getCol() + lastMove.getDir().getCol();
 
-        // 强制刷新视图（包括清除旧方块和重新生成）
-        view.refreshBoxes();
-        BoxComponent selectedBox = view.getSelectedBox();
-        if (selectedBox != null) {
-            selectedBox.setSelected(false);
-            view.repaint();
-        }
-    }
+        // 执行逆向移动（会触发动画，但不会记录到 Moves）
+        doMove(targetRow, targetCol, reverseDir);
 
-    public void addInitialState() {
-        mapModels.add(new MapModel(deepCopy(model.getMatrix()), model.getName()));
+        // 恢复标志位
+        isUndoing = false;
+
+        // 更新步数
+        view.setSteps(view.getSteps() - 1);
     }
 
     public void setGameTimer(GameTimer gameTimer) {

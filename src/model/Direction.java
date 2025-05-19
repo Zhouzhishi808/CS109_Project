@@ -18,4 +18,13 @@ public enum Direction {
     public int getCol() {
         return col;
     }
+
+    public Direction getOpposite() {
+        return switch (this) {
+            case LEFT -> RIGHT;
+            case UP -> DOWN;
+            case RIGHT -> LEFT;
+            case DOWN -> UP;
+        };
+    }
 }
