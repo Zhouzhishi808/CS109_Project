@@ -109,7 +109,7 @@ public class LevelFrame extends JFrame {
                 gameFrame.setVisible(true);
                 if (currentUser != null) {
                     gameFrame.setUser(currentUser);
-                    gameFrame.setTitle("兵分三路 当前用户:" + currentUser.getUsername());
+                    gameFrame.setTitle("横刀立马 当前用户:" + currentUser.getUsername());
                 }
                 MusicController.playBackgroundMusic("Music/BGM/level1.wav");
             }
@@ -135,7 +135,7 @@ public class LevelFrame extends JFrame {
                 gameFrame.setVisible(true);
                 if (currentUser != null) {
                     gameFrame.setUser(currentUser);
-                    gameFrame.setTitle(currentUser.getUsername());
+                    gameFrame.setTitle("层层设防 当前用户:" + currentUser.getUsername());
                 }
                 MusicController.playBackgroundMusic("Music/BGM/level2.wav");
             }
@@ -161,7 +161,7 @@ public class LevelFrame extends JFrame {
                 gameFrame.setVisible(true);
                 if (currentUser != null) {
                     gameFrame.setUser(currentUser);
-                    gameFrame.setTitle(currentUser.getUsername());
+                    gameFrame.setTitle("四将连关 当前用户:" + currentUser.getUsername());
                 }
                 MusicController.playBackgroundMusic("Music/BGM/level3.wav");
             }
@@ -187,7 +187,7 @@ public class LevelFrame extends JFrame {
                 gameFrame.setVisible(true);
                 if (currentUser != null) {
                     gameFrame.setUser(currentUser);
-                    gameFrame.setTitle(currentUser.getUsername());
+                    gameFrame.setTitle("水泄不通 当前用户:" + currentUser.getUsername());
                 }
                 MusicController.playBackgroundMusic("Music/BGM/level4.wav");
             }
@@ -213,7 +213,7 @@ public class LevelFrame extends JFrame {
                 gameFrame.setVisible(true);
                 if (currentUser != null) {
                     gameFrame.setUser(currentUser);
-                    gameFrame.setTitle(currentUser.getUsername());
+                    gameFrame.setTitle("兵分三路 当前用户:" + currentUser.getUsername());
                 }
                 MusicController.playBackgroundMusic("Music/BGM/level5.wav");
             }
@@ -246,16 +246,16 @@ public class LevelFrame extends JFrame {
 
     private void Level1() {//横刀立马
         int [][] map = {
-                {0,0,0,0},
-                {0,1,1,0},
-                {0,9,9,0},
-                {0,9,9,0},
-                {0,0,0,0},
-//                {6,9,9,7},
-//                {6,9,9,7},
-//                {5,2,2,8},
-//                {5,1,1,8},
-//                {1,0,0,1},
+//                {0,0,0,0},
+//                {0,1,1,0},
+//                {0,9,9,0},
+//                {0,9,9,0},
+//                {0,0,0,0},
+                {6,9,9,7},
+                {6,9,9,7},
+                {5,2,2,8},
+                {5,1,1,8},
+                {1,0,0,1},
         };
         for (int row = 0; row < map.length; row++) {
             System.arraycopy(map[row], 0, Constants.MAP[row], 0, map[row].length);
