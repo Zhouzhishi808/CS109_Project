@@ -170,6 +170,8 @@ public class GameController {
 
     private void showWinDialog() throws IOException{
         int steps = view.getSteps();
+        MusicController.stopBackgroundMusic();
+        MusicController.playVictorySound();
 
         File rankDir = new File(Constants.RANK_DIRECTORY);
         if (!rankDir.exists()) {

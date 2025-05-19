@@ -65,4 +65,8 @@ public class MusicController {
     public static void playMoveSound() {
         playSoundEffect("Music/sound/move.wav");
     }
+
+    public static void playVictorySound() {
+        playSoundEffect("Music/sound/victory.wav");
+    }
 }
