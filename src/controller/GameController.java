@@ -6,6 +6,7 @@ import view.game.GameFrame;
 import view.game.GamePanel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,6 +22,11 @@ public class GameController {
     private GameTimer gameTimer;
     private final int[][] initialMap;
     public static final int CAO_CAO_ID = 4;
+    private long animationStartTime;
+    private Timer moveTimer;
+    private boolean isMoving = false;
+    private static final int ANIMATION_DURATION = 200;
+    private static final int FRAME_INTERVAL = 16;
 
     private ArrayList<MapModel> mapModels = new ArrayList<>();
 
@@ -93,6 +99,10 @@ public class GameController {
         return true;
     }
 
+    public boolean isMoving() {
+        return isMoving;
+    }
+
     // 清空原位置
     private void clearOriginalPosition(int row, int col, int width, int height) {
         for (int i = row; i < row + height; i++) {
@@ -148,7 +158,7 @@ public class GameController {
             view.repaint(); // 刷新视图
         });
 
-        moveTimer.start();
+        moveTimer.start(); // 启动计时器
     }
 
     private int[][] deepCopy(int[][] matrix) {
