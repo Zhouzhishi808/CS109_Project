@@ -19,7 +19,7 @@ public class LoginFrame extends JFrame {
     private JPasswordField password; // 修正为 JPasswordField
     private JButton submitBtn;
     private JButton resetBtn;
-    private LevelFrame levelFrame = new LevelFrame(480, 492, this);;
+    private LevelFrame levelFrame = new LevelFrame(480, 492, this);
     private MusicController musicController;
     private final UserManager userManager = new UserManager();
 
@@ -32,8 +32,6 @@ public class LoginFrame extends JFrame {
         confirmFrame.setLocationRelativeTo(null);
         confirmFrame.setAlwaysOnTop(true);
         confirmFrame.setSize(280,280);
-
-        MusicController musicController = new MusicController();
 
         ImageIcon loginIcon = new ImageIcon("Picture/buttonPic/loginBtn.png");
         ImageIcon registerIcon = new ImageIcon("Picture/buttonPic/registerBtn.png");

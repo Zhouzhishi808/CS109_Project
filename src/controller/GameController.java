@@ -20,7 +20,7 @@ public class GameController {
     private final GameFrame gameframe;
     private GameTimer gameTimer;
     private final int[][] initialMap;
-    public static final int CAO_CAO_ID = 9;
+    public static final int CAO_CAO_ID = 4;
 
     private ArrayList<MapModel> mapModels = new ArrayList<>();
 
@@ -69,40 +69,6 @@ public class GameController {
         return true;
     }
 
-    private void performChainMovement(int row, int col, int nextRow, int nextCol, int width, int height, Direction direction, int blockId) {
-        for (int i = nextRow; i < nextRow + height; i++) {
-            for (int j = nextCol; j < nextCol + width; j++) {
-                if (i >= row && i < row + height && j >= col && j < col + width) {
-                    continue; // 跳过原位置
-                }
-                int targetBlockId = model.getId(i, j);
-                if (targetBlockId != 0 && getType(targetBlockId) == getType(blockId)) {
-                    // 检查是否为方块的左上角
-                    boolean isTopLeft = (i == 0 || model.getId(i - 1, j) != targetBlockId) &&
-                            (j == 0 || model.getId(i, j - 1) != targetBlockId);
-                    if (blockId != 1) {
-                        if (j > 0 && model.getId(i, j - 1) == targetBlockId) {
-                            isTopLeft = false;
-                        }
-                    }
-                    if (isTopLeft) {
-                        int targetWidth = getWidth(targetBlockId);
-                        int targetHeight = getHeight(targetBlockId);
-                        int newTargetNextRow = i + direction.getRow();
-                        int newTargetNextCol = j + direction.getCol();
-                        performChainMovement(i, j, newTargetNextRow, newTargetNextCol,
-                                targetWidth, targetHeight, direction, targetBlockId);
-                    }
-                }
-            }
-        }
-
-        // 移动当前方块
-        clearOriginalPosition(row, col, width, height);
-        fillNewPosition(nextRow, nextCol, blockId, width, height);
-        updateBoxComponentPosition(row, col, nextRow, nextCol, blockId, direction);
-    }
-
     // 检查移动是否合法
     private boolean isMoveValid(int row, int col, int nextRow, int nextCol,
                                 int width, int height, Direction dir) {
@@ -127,7 +93,7 @@ public class GameController {
         return true;
     }
 
-        // 清空原位置
+    // 清空原位置
     private void clearOriginalPosition(int row, int col, int width, int height) {
         for (int i = row; i < row + height; i++) {
             for (int j = col; j < col + width; j++) {
@@ -150,15 +116,39 @@ public class GameController {
     private void updateBoxComponentPosition(int row, int col, int nextRow, int nextCol,
                                             int blockId, Direction dir) {
         BoxComponent box = view.getSelectedBox();
-        if (box != null && box.getRow() == row && box.getCol() == col) {
-            // 根据方向更新位置（需考虑方块尺寸）
-            int deltaX = (nextCol - col) * view.getGRID_SIZE();
-            int deltaY = (nextRow - row) * view.getGRID_SIZE();
-            box.setLocation(box.getX() + deltaX, box.getY() + deltaY);
-            box.setRow(nextRow);
-            box.setCol(nextCol);
-            box.repaint();
-        }
+        if (box == null || !box.isSelected() || isMoving) return;
+
+        // 计算目标坐标
+        int targetX = nextCol * view.getGRID_SIZE() + 2;
+        int targetY = nextRow * view.getGRID_SIZE() + 2;
+        Point startPos = box.getLocation();
+
+        // 锁定移动状态并记录开始时间
+        isMoving = true;
+        animationStartTime = System.currentTimeMillis(); // 使用成员变量
+
+        // 初始化计时器
+        moveTimer = new Timer(FRAME_INTERVAL, e -> {
+            long currentTime = System.currentTimeMillis();
+            float progress = (float) (currentTime - animationStartTime) / ANIMATION_DURATION;
+
+            if (progress >= 1.0f) {
+                // 动画结束
+                box.setLocation(targetX, targetY);
+                box.setRow(nextRow);
+                box.setCol(nextCol);
+                moveTimer.stop();
+                isMoving = false;
+            } else {
+                // 线性插值计算中间位置
+                int dx = (int) (startPos.x + (targetX - startPos.x) * progress);
+                int dy = (int) (startPos.y + (targetY - startPos.y) * progress);
+                box.setLocation(dx, dy);
+            }
+            view.repaint(); // 刷新视图
+        });
+
+        moveTimer.start();
     }
 
     private int[][] deepCopy(int[][] matrix) {
@@ -217,6 +207,7 @@ public class GameController {
                 "恭喜您游戏胜利！\n步数: " + steps + "\n" + gameframe.getTime(),
                 "胜利",
                 JOptionPane.INFORMATION_MESSAGE);
+        MusicController.playBackgroundMusic("Music/BGM/levelFrame.wav");
         gameframe.returnToLevel(); // 可选：胜利后自动重置游戏
     }
 

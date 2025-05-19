@@ -14,6 +14,9 @@ public class BoxComponent extends JComponent {
     private int col;
     private boolean isSelected;
 
+    public boolean isSelected() {
+        return isSelected;
+    }
 
     public BoxComponent(String imagePath, int row, int col) {
         try {
