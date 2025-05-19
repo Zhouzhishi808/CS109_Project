@@ -71,4 +71,6 @@ public class MusicController {
     public static void playVictorySound() {
         playSoundEffect("Music/sound/victory.wav");
     }
+
+    public static void playLoseSound() {playSoundEffect("Music/sound/lose.wav");}
 }

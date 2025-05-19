@@ -125,7 +125,8 @@ public class GameFrame extends JFrame {
 
         gameTimer.setTimeoutAction(() -> {
             gameTimer.pause();
-//            this.musicController.startMusic("Music/");
+            MusicController.stopBackgroundMusic();
+            MusicController.playLoseSound();
             JOptionPane.showMessageDialog(this,
                     "游戏超时（超过30分钟）！",
                     "游戏结束",
@@ -403,6 +404,7 @@ public class GameFrame extends JFrame {
     }
 
     public void returnToLevel() {
+        MusicController.playBackgroundMusic("Music/BGM/levelFrame.wav");
         this.dispose(); // 销毁当前游戏窗口
         levelFrame.setVisible(true); // 显示关卡选择界面
     }

@@ -43,23 +43,29 @@ public class GameController {
         int width = getWidth(blockId), height = getHeight(blockId);
         // 根据方块类型确定尺寸
 
-
         // 计算移动后的目标区域
         int nextRow = row + direction.getRow();
         int nextCol = col + direction.getCol();
 
-        // 检查边界合法性、和目标区域是否是空的
-        if (!isMoveValid(row, col, nextRow, nextCol, width, height, direction, blockId)) {
+        // 检查边界合法性
+        if (!isMoveValid(row, col, nextRow, nextCol, width, height, direction)) {
             return false;
         }
 
-        // 执行所有相关棋子的移动
-        performChainMovement(row, col, nextRow, nextCol, width, height, direction, blockId);
+        // 执行移动：清空原位置，填充新位置
+        clearOriginalPosition(row, col, width, height);
+        fillNewPosition(nextRow, nextCol, blockId, width, height);
 
-        // 更新视图和状态
-
+        //记录当前地图
         mapModels.add(new MapModel(deepCopy(model.getMatrix()), model.getName()));
-        if (checkWin()) showWinDialog();
+
+        // 更新界面组件位置
+        updateBoxComponentPosition(row, col, nextRow, nextCol, blockId, direction);
+
+        //在每次移动后检查是否胜利
+        if (checkWin()) {
+            showWinDialog();
+        }
         return true;
     }
 
@@ -99,53 +105,25 @@ public class GameController {
 
     // 检查移动是否合法
     private boolean isMoveValid(int row, int col, int nextRow, int nextCol,
-                                int width, int height, Direction dir,int blockId) {
-        // 原始边界检查
-        if (nextRow < 0 || (nextRow + height) > model.getHeight() ||
-                nextCol < 0 || (nextCol + width) > model.getWidth()) {
-            System.out.println("no1");
-            return false;
-        }
-
-        // 递归检查连续推动
-        return checkChainMovement(row, col, nextRow, nextCol, width, height, dir, blockId);
-    }
-
-    private boolean checkChainMovement(int row, int col, int nextRow, int nextCol,
-                                       int width, int height, Direction dir, int blockId) {
-        // 检查当前棋子的目标区域是否合法
+                                int width, int height, Direction dir) {
+        // 检查目标区域是否越界
         if (nextRow < 0 || (nextRow + height) > model.getHeight() ||
                 nextCol < 0 || (nextCol + width) > model.getWidth()) {
             return false;
         }
-        System.out.println(row + " " + col + " " + nextRow + " " + nextCol);
+
+        // 检查目标区域是否全为空
         for (int i = nextRow; i < nextRow + height; i++) {
             for (int j = nextCol; j < nextCol + width; j++) {
+                // 跳过当前方块原位置
                 if (i >= row && i < row + height && j >= col && j < col + width) {
-                    continue; // 跳过原位置
+                    continue;
                 }
-                int targetBlockId = model.getId(i, j);
-                if (targetBlockId != 0) {
-                    // 检查类型是否一致
-                    if (getType(targetBlockId) != getType(blockId)) {
-                        System.out.println("no2");
-                        return false; // 类型不同，直接返回失败
-                    }
-                    // 递归检查
-                    int nextBlockWidth = getWidth(targetBlockId);
-                    int nextBlockHeight = getHeight(targetBlockId);
-                    int nextBlockNewRow = i + dir.getRow();
-                    int nextBlockNewCol = j + dir.getCol();
-                    if (!checkChainMovement(i, j, nextBlockNewRow, nextBlockNewCol,
-                            nextBlockWidth, nextBlockHeight, dir, blockId)) {
-                        System.out.println(row + " " + height + " " + col + " " + width);
-                        System.out.println("no3"+i+j+blockId);
-                        return false;
-                    }
+                if (model.getId(i, j) != 0) {
+                    return false;
                 }
             }
         }
-        System.out.println("yes");
         return true;
     }
 
@@ -171,7 +149,7 @@ public class GameController {
     // 更新方块组件位置
     private void updateBoxComponentPosition(int row, int col, int nextRow, int nextCol,
                                             int blockId, Direction dir) {
-        BoxComponent box = view.findBoxByPosition(row, col);
+        BoxComponent box = view.getSelectedBox();
         if (box != null && box.getRow() == row && box.getCol() == col) {
             // 根据方向更新位置（需考虑方块尺寸）
             int deltaX = (nextCol - col) * view.getGRID_SIZE();
@@ -239,7 +217,6 @@ public class GameController {
                 "恭喜您游戏胜利！\n步数: " + steps + "\n" + gameframe.getTime(),
                 "胜利",
                 JOptionPane.INFORMATION_MESSAGE);
-        MusicController.playBackgroundMusic("Music/BGM/levelFrame.wav");
         gameframe.returnToLevel(); // 可选：胜利后自动重置游戏
     }
 
