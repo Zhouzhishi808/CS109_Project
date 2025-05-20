@@ -100,6 +100,14 @@ public class LoginFrame extends JFrame {
                     JOptionPane.INFORMATION_MESSAGE);
         });
 
+        JMenuItem messageItem = new JMenuItem("项目信息");
+        aboutMenu.add(messageItem);
+        messageItem.addActionListener(e -> {
+            JOptionPane.showMessageDialog(this,
+                    "本项目为南方科技大学CS109课程期末小组作业",  "项目信息",
+                    JOptionPane.INFORMATION_MESSAGE);
+        });
+
         // 用户名标签和输入框
         JLabel userLabel = FrameUtil.createJLabel(this, new Point(220, 220), 74, 33,userIcon);
         username = FrameUtil.createJTextField(this, new Point(320, 220), 120, 30);

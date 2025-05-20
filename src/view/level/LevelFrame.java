@@ -97,6 +97,15 @@ public class LevelFrame extends JFrame {
                     JOptionPane.INFORMATION_MESSAGE);
         });
 
+        JMenuItem messageItem = new JMenuItem("项目信息");
+        menuBar.add(aboutMenu);
+        aboutMenu.add(messageItem);
+        messageItem.addActionListener(e -> {
+            JOptionPane.showMessageDialog(this,
+                    "本项目为南方科技大学CS109课程期末小组作业",  "项目信息",
+                    JOptionPane.INFORMATION_MESSAGE);
+        });
+
         ImageIcon exitIcon = new ImageIcon("Picture/buttonPic/exitBtn.png");
         ImageIcon level1Icon = new ImageIcon("Picture/buttonPic/level1Btn.png");
         ImageIcon level2Icon = new ImageIcon("Picture/buttonPic/level2Btn.png");

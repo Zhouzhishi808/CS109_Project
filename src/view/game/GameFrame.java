@@ -136,6 +136,15 @@ public class GameFrame extends JFrame {
                     JOptionPane.INFORMATION_MESSAGE);
         });
 
+        JMenuItem messageItem = new JMenuItem("项目信息");
+        menuBar.add(aboutMenu);
+        aboutMenu.add(messageItem);
+        messageItem.addActionListener(e -> {
+            JOptionPane.showMessageDialog(this,
+                    "本项目为南方科技大学CS109课程期末小组作业",  "项目信息",
+                    JOptionPane.INFORMATION_MESSAGE);
+        });
+
         JMenu styleMenu = new JMenu("主题");
         menuBar.add(styleMenu);
         JMenuItem styleItem1 = new JMenuItem("美漫风格");
