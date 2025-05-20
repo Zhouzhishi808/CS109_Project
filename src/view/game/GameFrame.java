@@ -138,8 +138,8 @@ public class GameFrame extends JFrame {
 
         JMenu styleMenu = new JMenu("主题");
         menuBar.add(styleMenu);
-        JMenuItem styleItem1 = new JMenuItem("美漫风");
-        JMenuItem styleItem2 = new JMenuItem("三国杀1");
+        JMenuItem styleItem1 = new JMenuItem("美漫风格");
+        JMenuItem styleItem2 = new JMenuItem("三国杀风格");
         JMenuItem styleItem3 = new JMenuItem("极简写实风");
         JMenuItem styleItem4 = new JMenuItem("AI山海经");
         JMenuItem styleItem5 = new JMenuItem("<UNK>");

@@ -21,7 +21,7 @@ public class GameController {
     private final GameFrame gameframe;
     private GameTimer gameTimer;
     private final int[][] initialMap;
-    public static final int CAO_CAO_ID = 4;
+    public static final int CAO_CAO_ID = 9;
     private long animationStartTime;
     private Timer moveTimer;
     private boolean isMoving = false;
