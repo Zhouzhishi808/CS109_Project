@@ -70,12 +70,12 @@ public class GamePanel extends ListenerPanel {
                     map[i][j] = 0;
                     map[i][j + 1] = 0;
                 } else if (map[i][j] >= 5 && map[i][j] <= 8) {
-                    box = new BoxComponent("Picture/chequerPic/" + Constants.THEME + "_3.png", i, j);
+                    box = new BoxComponent("Picture/chequerPic/" + Constants.THEME + "_" + map[i][j] +".png", i, j);
                     box.setSize(GRID_SIZE, GRID_SIZE * 2);
                     map[i][j] = 0;
                     map[i + 1][j] = 0;
                 } else if (map[i][j] == 9) {
-                    box = new BoxComponent("Picture/chequerPic/" + Constants.THEME + "_4.png", i, j);
+                    box = new BoxComponent("Picture/chequerPic/" + Constants.THEME + "_9.png", i, j);
                     box.setSize(GRID_SIZE * 2, GRID_SIZE * 2);
                     map[i][j] = 0;
                     map[i + 1][j] = 0;
