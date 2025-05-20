@@ -87,6 +87,16 @@ public class LevelFrame extends JFrame {
             soundEffects.setText("关闭音效");
         }});
 
+        JMenu aboutMenu = new JMenu("关于");
+        JMenuItem aboutItem = new JMenuItem("特别鸣谢");
+        menuBar.add(aboutMenu);
+        aboutMenu.add(aboutItem);
+        aboutItem.addActionListener(e -> {
+            JOptionPane.showMessageDialog(this,
+                    "作者：咒之师，菲瑞特尔\n美术：豆包AI，游卡桌游\n音乐：复仇者联盟，传说之下等\n内测玩家：刘佳一，王启淇",  "特别鸣谢",
+                    JOptionPane.INFORMATION_MESSAGE);
+        });
+
         ImageIcon exitIcon = new ImageIcon("Picture/buttonPic/exitBtn.png");
         ImageIcon level1Icon = new ImageIcon("Picture/buttonPic/level1Btn.png");
         ImageIcon level2Icon = new ImageIcon("Picture/buttonPic/level2Btn.png");

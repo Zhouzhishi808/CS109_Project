@@ -90,6 +90,16 @@ public class LoginFrame extends JFrame {
 
         MusicController.playBackgroundMusic("Music/BGM/loginFrame.wav");
 
+        JMenu aboutMenu = new JMenu("关于");
+        JMenuItem aboutItem = new JMenuItem("特别鸣谢");
+        menuBar.add(aboutMenu);
+        aboutMenu.add(aboutItem);
+        aboutItem.addActionListener(e -> {
+            JOptionPane.showMessageDialog(this,
+                    "作者：咒之师，菲瑞特尔\n美术：豆包，游卡桌游\n音乐：复仇者联盟，传说之下等\n内测玩家：刘佳一，王启淇",  "特别鸣谢",
+                    JOptionPane.INFORMATION_MESSAGE);
+        });
+
         // 用户名标签和输入框
         JLabel userLabel = FrameUtil.createJLabel(this, new Point(220, 220), 74, 33,userIcon);
         username = FrameUtil.createJTextField(this, new Point(320, 220), 120, 30);

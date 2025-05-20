@@ -126,6 +126,35 @@ public class GameFrame extends JFrame {
                 soundEffects.setText("关闭音效");
             }});
 
+        JMenu aboutMenu = new JMenu("关于");
+        JMenuItem aboutItem = new JMenuItem("特别鸣谢");
+        menuBar.add(aboutMenu);
+        aboutMenu.add(aboutItem);
+        aboutItem.addActionListener(e -> {
+            JOptionPane.showMessageDialog(this,
+                    "作者：咒之师，菲瑞特尔\n美术：豆包，游卡桌游\n音乐：复仇者联盟，传说之下等\n内测玩家：刘佳一，王启淇",  "特别鸣谢",
+                    JOptionPane.INFORMATION_MESSAGE);
+        });
+
+        JMenu styleMenu = new JMenu("主题");
+        menuBar.add(styleMenu);
+        JMenuItem styleItem1 = new JMenuItem("美漫风");
+        JMenuItem styleItem2 = new JMenuItem("三国杀1");
+        JMenuItem styleItem3 = new JMenuItem("极简写实风");
+        JMenuItem styleItem4 = new JMenuItem("AI山海经");
+        JMenuItem styleItem5 = new JMenuItem("<UNK>");
+        styleMenu.add(styleItem1);
+        styleMenu.add(styleItem2);
+        styleMenu.add(styleItem3);
+        styleMenu.add(styleItem4);
+        styleMenu.add(styleItem5);
+
+        styleItem1.addActionListener(e -> {Constants.THEME = 1;gamePanel.refreshBoxes();});
+        styleItem2.addActionListener(e -> {Constants.THEME = 2;gamePanel.refreshBoxes();});
+        styleItem3.addActionListener(e -> {Constants.THEME = 3;gamePanel.refreshBoxes();});
+        styleItem4.addActionListener(e -> {Constants.THEME = 4;gamePanel.refreshBoxes();});
+        styleItem5.addActionListener(e -> {Constants.THEME = 5;gamePanel.refreshBoxes();});
+
         this.restartBtn = FrameUtil.createButton(this, resetIcon,new Point(100, 120), 90, 49);
         restartBtn.setBorderPainted(false);
         restartBtn.setContentAreaFilled(false);
