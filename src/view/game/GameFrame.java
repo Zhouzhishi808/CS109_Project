@@ -68,7 +68,7 @@ public class GameFrame extends JFrame {
     ImageIcon loadPressedIcon = new ImageIcon("Picture/buttonPic/loadPressedBtn.png");
     ImageIcon savePressedIcon = new ImageIcon("Picture/buttonPic/savePressedBtn.png");
     ImageIcon returnPressedIcon = new ImageIcon("Picture/buttonPic/returnPressedBtn.png");
-    ImageIcon gameFrameIcon = new ImageIcon("Picture/framePic/gameFrameSanGuo.png");
+    ImageIcon gameFrameIcon = new ImageIcon("Picture/framePic/gameFrame"+Constants.THEME+".png");
     ImageIcon leaderboardPressedIcon = new ImageIcon("Picture/buttonPic/leaderboardPressedBtn.png");
 
     public GameFrame(int width, int height, MapModel mapModel, LevelFrame levelFrame) {
@@ -158,11 +158,16 @@ public class GameFrame extends JFrame {
         styleMenu.add(styleItem4);
         styleMenu.add(styleItem5);
 
-        styleItem1.addActionListener(e -> {Constants.THEME = 1;gamePanel.refreshBoxes();});
-        styleItem2.addActionListener(e -> {Constants.THEME = 2;gamePanel.refreshBoxes();});
-        styleItem3.addActionListener(e -> {Constants.THEME = 3;gamePanel.refreshBoxes();});
-        styleItem4.addActionListener(e -> {Constants.THEME = 4;gamePanel.refreshBoxes();});
-        styleItem5.addActionListener(e -> {Constants.THEME = 5;gamePanel.refreshBoxes();});
+        styleItem1.addActionListener(e -> {Constants.THEME = 1;gamePanel.refreshBoxes();
+            backgroundLabel.setIcon(new ImageIcon("Picture/framePic/gameFrame"+Constants.THEME+".png"));});
+        styleItem2.addActionListener(e -> {Constants.THEME = 2;gamePanel.refreshBoxes();
+            backgroundLabel.setIcon(new ImageIcon("Picture/framePic/gameFrame"+Constants.THEME+".png"));});
+        styleItem3.addActionListener(e -> {Constants.THEME = 3;gamePanel.refreshBoxes();
+            backgroundLabel.setIcon(new ImageIcon("Picture/framePic/gameFrame"+Constants.THEME+".png"));});
+        styleItem4.addActionListener(e -> {Constants.THEME = 4;gamePanel.refreshBoxes();
+            backgroundLabel.setIcon(new ImageIcon("Picture/framePic/gameFrame"+Constants.THEME+".png"));});
+        styleItem5.addActionListener(e -> {Constants.THEME = 5;gamePanel.refreshBoxes();
+            backgroundLabel.setIcon(new ImageIcon("Picture/framePic/gameFrame"+Constants.THEME+".png"));});
 
         this.restartBtn = FrameUtil.createButton(this, resetIcon,new Point(100, 120), 90, 49);
         restartBtn.setBorderPainted(false);
