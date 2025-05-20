@@ -200,7 +200,7 @@ public class GameFrame extends JFrame {
             MusicController.stopBackgroundMusic();
             MusicController.playLoseSound();
             JOptionPane.showMessageDialog(this,
-                    "游戏超时（超过30分钟）！",
+                    "游戏超时（超过10分钟）！",
                     "游戏结束",
                     JOptionPane.WARNING_MESSAGE);
 
