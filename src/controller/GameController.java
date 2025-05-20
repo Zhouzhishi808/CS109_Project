@@ -200,6 +200,7 @@ public class GameController {
 
     private void showWinDialog() throws IOException{
         int steps = view.getSteps();
+        steps++;
         MusicController.stopBackgroundMusic();
         MusicController.playVictorySound();
 
@@ -215,7 +216,8 @@ public class GameController {
                     model.getName(),
                     new Rank(
                             gameframe.getUser().getUsername(),
-                            gameTimer.getTimeInSeconds()
+                            gameTimer.getTimeInSeconds(),
+                            view.getSteps()
                     )
             );
         }

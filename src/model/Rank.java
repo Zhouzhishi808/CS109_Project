@@ -8,10 +8,12 @@ public class Rank implements Comparable<Rank>, Serializable {
     private static final long serialVersionUID = 2579108766831477121L;
     private final String username;
     private final int finishTime;
+    private final int step;
 
-    public Rank(String username, int finishTime) {
+    public Rank(String username, int finishTime, int step) {
         this.username = username;
         this.finishTime = finishTime;
+        this.step = step;
     }
 
     @Override
@@ -21,4 +23,5 @@ public class Rank implements Comparable<Rank>, Serializable {
 
     public String getUsername() {return this.username;}
     public int getFinishTime() {return this.finishTime;}
+    public int getStep() {return this.step;}
 }
