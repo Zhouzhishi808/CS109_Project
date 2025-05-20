@@ -52,27 +52,41 @@ public class LoginFrame extends JFrame {
         JMenu musicMenu = new JMenu("音乐");
         menuBar.add(musicMenu);
 
-        JMenuItem backGroundMusicOff = new JMenuItem("关闭背景音乐");
-        musicMenu.add(backGroundMusicOff);
-        backGroundMusicOff.addActionListener(e -> {
-            MusicController.stopBackgroundMusic();
-            isBGMMuted = true;
+        JMenuItem backGroundMusic = new JMenuItem("背景音乐");
+        if (!isBGMMuted) {
+            backGroundMusic.setText("关闭背景音乐");
+        }
+        else {
+            backGroundMusic.setText("开启背景音乐");
+        }
+        musicMenu.add(backGroundMusic);
+        backGroundMusic.addActionListener(e -> {
+            MusicController.changeMusic();
+            if (isBGMMuted) {
+                MusicController.stopBackgroundMusic();
+                backGroundMusic.setText("开启背景音乐");
+            }
+            else {
+                MusicController.playBackgroundMusic("Music/BGM/loginFrame.wav");
+                backGroundMusic.setText("关闭背景音乐");
+            }
         });
 
-        JMenuItem backGroundMusicOn = new JMenuItem("开启背景音乐");
-        musicMenu.add(backGroundMusicOn);
-        backGroundMusicOn.addActionListener(e -> {
-            isBGMMuted = false;
-            MusicController.playBackgroundMusic("Music/BGM/loginFrame.wav");
-        });
-
-        JMenuItem soundEffectsOff = new JMenuItem("关闭音效");
-        musicMenu.add(soundEffectsOff);
-        soundEffectsOff.addActionListener(e -> {isSEMuted = true;});
-
-        JMenuItem soundEffectsOn = new JMenuItem("开启音效");
-        musicMenu.add(soundEffectsOn);
-        soundEffectsOn.addActionListener(e -> {isSEMuted = false;});
+        JMenuItem soundEffects = new JMenuItem("音效");
+        if (!isSEMuted) {
+            soundEffects.setText("关闭音效");
+        }
+        else {
+            soundEffects.setText("开启音效");
+        }
+        musicMenu.add(soundEffects);
+        soundEffects.addActionListener(e -> {MusicController.changeSoundEffect();
+            if (isSEMuted) {
+                soundEffects.setText("开启音效");
+            }
+            else {
+                soundEffects.setText("关闭音效");
+            }});
 
         MusicController.playBackgroundMusic("Music/BGM/loginFrame.wav");
 

@@ -51,27 +51,41 @@ public class LevelFrame extends JFrame {
         JMenu musicMenu = new JMenu("音乐");
         menuBar.add(musicMenu);
 
-        JMenuItem backGroundMusicOff = new JMenuItem("关闭背景音乐");
-        musicMenu.add(backGroundMusicOff);
-        backGroundMusicOff.addActionListener(e -> {
-            MusicController.stopBackgroundMusic();
-            isBGMMuted = true;
+        JMenuItem backGroundMusic = new JMenuItem("背景音乐");
+        if (!isBGMMuted) {
+            backGroundMusic.setText("关闭背景音乐");
+        }
+        else {
+            backGroundMusic.setText("开启背景音乐");
+        }
+        musicMenu.add(backGroundMusic);
+        backGroundMusic.addActionListener(e -> {
+            MusicController.changeMusic();
+            if (isBGMMuted) {
+                MusicController.stopBackgroundMusic();
+                backGroundMusic.setText("开启背景音乐");
+            }
+            else {
+                MusicController.playBackgroundMusic("Music/BGM/levelFrame.wav");
+                backGroundMusic.setText("关闭背景音乐");
+            }
         });
 
-        JMenuItem backGroundMusicOn = new JMenuItem("开启背景音乐");
-        musicMenu.add(backGroundMusicOn);
-        backGroundMusicOn.addActionListener(e -> {
-            isBGMMuted = false;
-            MusicController.playBackgroundMusic("Music/BGM/levelFrame.wav");
-        });
-
-        JMenuItem soundEffectsOff = new JMenuItem("关闭音效");
-        musicMenu.add(soundEffectsOff);
-        soundEffectsOff.addActionListener(e -> {isSEMuted = true;});
-
-        JMenuItem soundEffectsOn = new JMenuItem("开启音效");
-        musicMenu.add(soundEffectsOn);
-        soundEffectsOn.addActionListener(e -> {isSEMuted = false;});
+        JMenuItem soundEffects = new JMenuItem("音效");
+        if (!isSEMuted) {
+            soundEffects.setText("关闭音效");
+        }
+        else {
+            soundEffects.setText("开启音效");
+        }
+        musicMenu.add(soundEffects);
+        soundEffects.addActionListener(e -> {MusicController.changeSoundEffect();
+        if (isSEMuted) {
+            soundEffects.setText("开启音效");
+        }
+        else {
+            soundEffects.setText("关闭音效");
+        }});
 
         ImageIcon exitIcon = new ImageIcon("Picture/buttonPic/exitBtn.png");
         ImageIcon level1Icon = new ImageIcon("Picture/buttonPic/level1Btn.png");
@@ -140,7 +154,7 @@ public class LevelFrame extends JFrame {
                     gameFrame.setUser(currentUser);
                     gameFrame.setTitle("横刀立马 当前用户:" + currentUser.getUsername());
                 }
-                MusicController.playBackgroundMusic("Music/BGM/level1.wav");
+                MusicController.playBackgroundMusic("Music/BGM/横刀立马.wav");
             }
         });
 
@@ -166,7 +180,7 @@ public class LevelFrame extends JFrame {
                     gameFrame.setUser(currentUser);
                     gameFrame.setTitle("层层设防 当前用户:" + currentUser.getUsername());
                 }
-                MusicController.playBackgroundMusic("Music/BGM/level2.wav");
+                MusicController.playBackgroundMusic("Music/BGM/层层设防.wav");
             }
         });
 
@@ -192,7 +206,7 @@ public class LevelFrame extends JFrame {
                     gameFrame.setUser(currentUser);
                     gameFrame.setTitle("四将连关 当前用户:" + currentUser.getUsername());
                 }
-                MusicController.playBackgroundMusic("Music/BGM/level3.wav");
+                MusicController.playBackgroundMusic("Music/BGM/四将连关.wav");
             }
         });
 
@@ -218,7 +232,7 @@ public class LevelFrame extends JFrame {
                     gameFrame.setUser(currentUser);
                     gameFrame.setTitle("水泄不通 当前用户:" + currentUser.getUsername());
                 }
-                MusicController.playBackgroundMusic("Music/BGM/level4.wav");
+                MusicController.playBackgroundMusic("Music/BGM/水泄不通.wav");
             }
         });
 
@@ -244,7 +258,7 @@ public class LevelFrame extends JFrame {
                     gameFrame.setUser(currentUser);
                     gameFrame.setTitle("兵分三路 当前用户:" + currentUser.getUsername());
                 }
-                MusicController.playBackgroundMusic("Music/BGM/level5.wav");
+                MusicController.playBackgroundMusic("Music/BGM/兵分三路.wav");
             }
         });
 

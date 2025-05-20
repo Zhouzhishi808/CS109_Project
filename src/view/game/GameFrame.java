@@ -17,6 +17,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 
+import static controller.MusicController.isBGMMuted;
+import static controller.MusicController.isSEMuted;
+
 public class GameFrame extends JFrame {
     private LevelFrame levelFrame;
     private JMenuBar menuBar = new JMenuBar();
@@ -81,7 +84,47 @@ public class GameFrame extends JFrame {
         gamePanel.setLocation(290, height / 2 - gamePanel.getHeight() / 2);
         this.add(gamePanel);
         this.controller = new GameController(gamePanel, mapModel, this);
+
         this.setJMenuBar(menuBar);
+
+        JMenu musicMenu = new JMenu("音乐");
+        menuBar.add(musicMenu);
+
+        JMenuItem backGroundMusic = new JMenuItem("背景音乐");
+        if (!isBGMMuted) {
+            backGroundMusic.setText("关闭背景音乐");
+        }
+        else {
+            backGroundMusic.setText("开启背景音乐");
+        }
+        musicMenu.add(backGroundMusic);
+        backGroundMusic.addActionListener(e -> {
+            MusicController.changeMusic();
+            if (isBGMMuted) {
+                MusicController.stopBackgroundMusic();
+                backGroundMusic.setText("开启背景音乐");
+            }
+            else {
+                MusicController.playBackgroundMusic("Music/BGM/" + levelName + ".wav");
+                backGroundMusic.setText("关闭背景音乐");
+            }
+        });
+
+        JMenuItem soundEffects = new JMenuItem("音效");
+        if (!isSEMuted) {
+            soundEffects.setText("关闭音效");
+        }
+        else {
+            soundEffects.setText("开启音效");
+        }
+        musicMenu.add(soundEffects);
+        soundEffects.addActionListener(e -> {MusicController.changeSoundEffect();
+            if (isSEMuted) {
+                soundEffects.setText("开启音效");
+            }
+            else {
+                soundEffects.setText("关闭音效");
+            }});
 
         this.restartBtn = FrameUtil.createButton(this, resetIcon,new Point(100, 120), 90, 49);
         restartBtn.setBorderPainted(false);

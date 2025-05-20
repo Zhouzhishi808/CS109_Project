@@ -63,6 +63,9 @@ public class GameController {
         clearOriginalPosition(row, col, width, height);
         fillNewPosition(nextRow, nextCol, blockId, width, height);
 
+        //播放音效
+        MusicController.playMoveSound();
+
         //记录当前地图
         if (!isUndoing) {
             Moves.add(new Move(row, col, direction));

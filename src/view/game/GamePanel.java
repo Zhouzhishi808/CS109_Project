@@ -161,7 +161,6 @@ public class GamePanel extends ListenerPanel {
     }
 
     public void afterMove() {
-        MusicController.playMoveSound();
         this.steps++;
         this.stepLabel.setText(String.format("步数: %d", this.steps));
     }

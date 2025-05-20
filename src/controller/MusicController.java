@@ -82,4 +82,14 @@ public class MusicController {
     public static void playLoseSound() {
         if (isSEMuted) return;
         playSoundEffect("Music/sound/lose.wav");}
+
+    public static void changeMusic()
+    {
+        isBGMMuted = !isBGMMuted;
+    }
+
+    public static void changeSoundEffect()
+    {
+        isSEMuted = !isSEMuted;
+    }
 }
