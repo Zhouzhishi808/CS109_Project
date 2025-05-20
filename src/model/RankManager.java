@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 
 public class RankManager {
-    private static final int MAX_ARRAY = 20;
+    private static final int MAX_ARRAY = 5;
 
     public static void saveRankData(String levelName, Rank rank) {
         String path = Constants.RANK_DIRECTORY +  levelName + ".rank";
