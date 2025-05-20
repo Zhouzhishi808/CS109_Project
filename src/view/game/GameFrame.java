@@ -481,6 +481,8 @@ public class GameFrame extends JFrame {
 
     public void returnToLevel() {
         MusicController.playBackgroundMusic("Music/BGM/levelFrame.wav");
+        gameTimer.pause();
+        gameTimer.reset();
         this.dispose(); // 销毁当前游戏窗口
         levelFrame.setVisible(true); // 显示关卡选择界面
     }
