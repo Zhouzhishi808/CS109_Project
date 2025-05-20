@@ -8,9 +8,12 @@ public class MusicController {
     // 分离背景音乐和音效的 Clip
     private static Clip backgroundMusic;
     private static Clip soundEffect;
+    public static boolean isSEMuted = false;
+    public static boolean isBGMMuted = false;
 
     // 播放背景音乐（不停止音效）
     public static void playBackgroundMusic(String path) {
+        if (isBGMMuted) return;
         try {
             stopBackgroundMusic(); // 停止之前的背景音乐
             backgroundMusic = AudioSystem.getClip();
@@ -25,6 +28,7 @@ public class MusicController {
 
     // 播放音效（不停止背景音乐）
     public static void playSoundEffect(String path) {
+        if (isSEMuted) return;
         try {
             if (soundEffect != null) {
                 soundEffect.stop(); // 停止之前的音效
@@ -60,17 +64,22 @@ public class MusicController {
 
     // 点击音效
     public static void playClickSound() {
+        if (isSEMuted) return;
         playSoundEffect("Music/sound/click.wav");
     }
 
     // 移动音效
     public static void playMoveSound() {
+        if (isSEMuted) return;
         playSoundEffect("Music/sound/move.wav");
     }
 
     public static void playVictorySound() {
+        if (isSEMuted) return;
         playSoundEffect("Music/sound/victory.wav");
     }
 
-    public static void playLoseSound() {playSoundEffect("Music/sound/lose.wav");}
+    public static void playLoseSound() {
+        if (isSEMuted) return;
+        playSoundEffect("Music/sound/lose.wav");}
 }

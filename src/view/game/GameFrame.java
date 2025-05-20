@@ -19,6 +19,7 @@ import java.io.IOException;
 
 public class GameFrame extends JFrame {
     private LevelFrame levelFrame;
+    private JMenuBar menuBar = new JMenuBar();
 
     private GameController controller;
     private GameTimer gameTimer;
@@ -80,6 +81,7 @@ public class GameFrame extends JFrame {
         gamePanel.setLocation(290, height / 2 - gamePanel.getHeight() / 2);
         this.add(gamePanel);
         this.controller = new GameController(gamePanel, mapModel, this);
+        this.setJMenuBar(menuBar);
 
         this.restartBtn = FrameUtil.createButton(this, resetIcon,new Point(100, 120), 90, 49);
         restartBtn.setBorderPainted(false);

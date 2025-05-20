@@ -1,20 +1,20 @@
 package view.login;
 
-import controller.GameController;
 import controller.MusicController;
-import model.Constants;
 import model.UserManager;
 import view.FrameUtil;
-import view.game.GameFrame;
 import view.level.LevelFrame;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
+
+import static controller.MusicController.isBGMMuted;
+import static controller.MusicController.isSEMuted;
 
 public class LoginFrame extends JFrame {
+    private JMenuBar menuBar = new JMenuBar();
     private JTextField username;
     private JPasswordField password; // 修正为 JPasswordField
     private JButton submitBtn;
@@ -46,6 +46,33 @@ public class LoginFrame extends JFrame {
         JLabel backgroundLabel = new JLabel(loginFrameIcon);
         backgroundLabel.setLayout(null);
         this.setContentPane(backgroundLabel);
+
+        this.setJMenuBar(menuBar);
+
+        JMenu musicMenu = new JMenu("音乐");
+        menuBar.add(musicMenu);
+
+        JMenuItem backGroundMusicOff = new JMenuItem("关闭背景音乐");
+        musicMenu.add(backGroundMusicOff);
+        backGroundMusicOff.addActionListener(e -> {
+            MusicController.stopBackgroundMusic();
+            isBGMMuted = true;
+        });
+
+        JMenuItem backGroundMusicOn = new JMenuItem("开启背景音乐");
+        musicMenu.add(backGroundMusicOn);
+        backGroundMusicOn.addActionListener(e -> {
+            isBGMMuted = false;
+            MusicController.playBackgroundMusic("Music/BGM/loginFrame.wav");
+        });
+
+        JMenuItem soundEffectsOff = new JMenuItem("关闭音效");
+        musicMenu.add(soundEffectsOff);
+        soundEffectsOff.addActionListener(e -> {isSEMuted = true;});
+
+        JMenuItem soundEffectsOn = new JMenuItem("开启音效");
+        musicMenu.add(soundEffectsOn);
+        soundEffectsOn.addActionListener(e -> {isSEMuted = false;});
 
         MusicController.playBackgroundMusic("Music/BGM/loginFrame.wav");
 

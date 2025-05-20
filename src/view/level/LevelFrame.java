@@ -19,10 +19,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
+import static controller.MusicController.isBGMMuted;
+import static controller.MusicController.isSEMuted;
+
 public class LevelFrame extends JFrame {
     //界面初始化
     private GameFrame gameFrame;
     private LoginFrame loginFrame;
+    private JMenuBar menuBar = new JMenuBar();
 
     private final JButton level1Button;
     private final JButton level2Button;
@@ -42,7 +46,32 @@ public class LevelFrame extends JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
 
+        this.setJMenuBar(menuBar);
 
+        JMenu musicMenu = new JMenu("音乐");
+        menuBar.add(musicMenu);
+
+        JMenuItem backGroundMusicOff = new JMenuItem("关闭背景音乐");
+        musicMenu.add(backGroundMusicOff);
+        backGroundMusicOff.addActionListener(e -> {
+            MusicController.stopBackgroundMusic();
+            isBGMMuted = true;
+        });
+
+        JMenuItem backGroundMusicOn = new JMenuItem("开启背景音乐");
+        musicMenu.add(backGroundMusicOn);
+        backGroundMusicOn.addActionListener(e -> {
+            isBGMMuted = false;
+            MusicController.playBackgroundMusic("Music/BGM/levelFrame.wav");
+        });
+
+        JMenuItem soundEffectsOff = new JMenuItem("关闭音效");
+        musicMenu.add(soundEffectsOff);
+        soundEffectsOff.addActionListener(e -> {isSEMuted = true;});
+
+        JMenuItem soundEffectsOn = new JMenuItem("开启音效");
+        musicMenu.add(soundEffectsOn);
+        soundEffectsOn.addActionListener(e -> {isSEMuted = false;});
 
         ImageIcon exitIcon = new ImageIcon("Picture/buttonPic/exitBtn.png");
         ImageIcon level1Icon = new ImageIcon("Picture/buttonPic/level1Btn.png");
