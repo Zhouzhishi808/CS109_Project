@@ -142,7 +142,7 @@ public class GameFrame extends JFrame {
         JMenuItem styleItem2 = new JMenuItem("三国杀风格");
         JMenuItem styleItem3 = new JMenuItem("极简写实风");
         JMenuItem styleItem4 = new JMenuItem("AI山海经");
-        JMenuItem styleItem5 = new JMenuItem("<UNK>");
+        JMenuItem styleItem5 = new JMenuItem("PVZ");
         styleMenu.add(styleItem1);
         styleMenu.add(styleItem2);
         styleMenu.add(styleItem3);
