@@ -50,7 +50,7 @@ public class GameTimer {
             listener.onTimeUpdate(secondsElapsed);
         }
 
-        if (secondsElapsed >= 5) {
+        if (secondsElapsed >= 600) {
             timeoutAction.run();
         }
     }

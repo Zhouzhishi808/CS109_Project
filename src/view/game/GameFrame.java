@@ -203,7 +203,7 @@ public class GameFrame extends JFrame {
                     "游戏超时（超过10分钟）！",
                     "游戏结束",
                     JOptionPane.WARNING_MESSAGE);
-
+            MusicController.stopSoundEffects();
             returnToLevel();
         });
 
